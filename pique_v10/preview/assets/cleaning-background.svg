@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef8ff"/>
+      <stop offset="55%" stop-color="#d7edff"/>
+      <stop offset="100%" stop-color="#bfe4ff"/>
+    </linearGradient>
+    <radialGradient id="glow1" cx="75%" cy="25%" r="45%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sprayBottle" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4da9ff"/>
+      <stop offset="100%" stop-color="#1f7eea"/>
+    </linearGradient>
+    <linearGradient id="liquid" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#74ddff"/>
+      <stop offset="100%" stop-color="#36b4eb"/>
+    </linearGradient>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="900" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1600" height="900" fill="url(#glow1)"/>
+
+  <g opacity="0.35">
+    <circle cx="1220" cy="185" r="135" fill="#ffffff"/>
+    <circle cx="1315" cy="300" r="54" fill="#ffffff"/>
+    <circle cx="1120" cy="312" r="42" fill="#ffffff"/>
+    <circle cx="990" cy="170" r="26" fill="#ffffff"/>
+  </g>
+
+  <g opacity="0.42">
+    <ellipse cx="1325" cy="690" rx="210" ry="72" fill="#9dd9ff"/>
+    <ellipse cx="1085" cy="775" rx="300" ry="88" fill="#d6efff"/>
+  </g>
+
+  <!-- Spray bottle -->
+  <g transform="translate(1040 165) rotate(-7)">
+    <ellipse cx="155" cy="560" rx="180" ry="58" fill="#90cbff" opacity="0.35" filter="url(#soft)"/>
+    <path d="M98 96h118c22 0 40 18 40 40v68H58v-68c0-22 18-40 40-40Z" fill="#2b7de3" opacity="0.18"/>
+    <path d="M172 26h96c18 0 32 14 32 32v48h-72l-26 22h-30V26Z" fill="#285da8" opacity="0.96"/>
+    <path d="M286 42h90c16 0 30 12 30 28v18H286V42Z" fill="#1f3559"/>
+    <path d="M374 55h110c18 0 34 14 34 34v10H374V55Z" fill="#f8fdff" opacity="0.88"/>
+    <path d="M470 72h72c16 0 28 12 28 28v9h-100V72Z" fill="#1f7eea" opacity="0.88"/>
+    <path d="M478 110c90 0 162 20 210 46" stroke="#c3e7ff" stroke-width="20" stroke-linecap="round" opacity="0.88"/>
+    <path d="M110 145h132c68 0 123 55 123 123v230c0 69-55 124-123 124H110C42 622-13 567-13 498V268c0-68 55-123 123-123Z" fill="url(#sprayBottle)"/>
+    <path d="M146 208h74c50 0 91 41 91 91v164c0 50-41 91-91 91h-74c-50 0-91-41-91-91V299c0-50 41-91 91-91Z" fill="url(#liquid)" opacity="0.9"/>
+    <rect x="97" y="198" width="165" height="78" rx="20" fill="#ffffff" opacity="0.88"/>
+    <rect x="132" y="222" width="95" height="12" rx="6" fill="#7cbfff" opacity="0.8"/>
+    <rect x="132" y="245" width="65" height="12" rx="6" fill="#a8d7ff" opacity="0.85"/>
+  </g>
+
+  <!-- Sponge -->
+  <g transform="translate(855 552) rotate(-12)">
+    <ellipse cx="150" cy="152" rx="160" ry="50" fill="#8bcdf5" opacity="0.25" filter="url(#soft)"/>
+    <rect x="25" y="35" width="290" height="132" rx="34" fill="#ffd86a"/>
+    <rect x="25" y="35" width="290" height="55" rx="34" fill="#ffef9b" opacity="0.9"/>
+    <g fill="#f4c441" opacity="0.55">
+      <circle cx="80" cy="92" r="12"/>
+      <circle cx="145" cy="118" r="10"/>
+      <circle cx="235" cy="95" r="13"/>
+      <circle cx="198" cy="136" r="9"/>
+      <circle cx="110" cy="142" r="8"/>
+    </g>
+  </g>
+
+  <!-- Glove -->
+  <g transform="translate(118 555) rotate(9)">
+    <ellipse cx="265" cy="144" rx="200" ry="60" fill="#a4ddff" opacity="0.23" filter="url(#soft)"/>
+    <path d="M104 214c-27-15-39-46-30-78l36-131c8-28 44-34 59-10l14 23 8-26c7-23 34-31 51-16 10 8 14 22 10 35l-4 16 14-16c18-21 52-17 63 8 5 12 5 26-1 38l-5 11 11-6c23-13 52 2 56 28 2 10 0 20-5 29l-57 101c-13 22-34 39-59 48l-58 20c-36 12-76 8-108-11Z" fill="#61befe"/>
+    <path d="M179 19c16 11 24 30 19 49l-18 69" stroke="#d9f2ff" stroke-width="18" stroke-linecap="round" opacity="0.7"/>
+    <path d="M245 28c14 11 20 30 15 48l-16 65" stroke="#d9f2ff" stroke-width="16" stroke-linecap="round" opacity="0.7"/>
+    <path d="M309 47c12 11 16 28 10 44l-13 51" stroke="#d9f2ff" stroke-width="15" stroke-linecap="round" opacity="0.7"/>
+    <path d="M363 85c10 12 11 28 4 41l-13 24" stroke="#d9f2ff" stroke-width="14" stroke-linecap="round" opacity="0.7"/>
+  </g>
+
+  <!-- Bubbles -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.9">
+    <circle cx="368" cy="195" r="34" stroke-width="12"/>
+    <circle cx="451" cy="124" r="18" stroke-width="8"/>
+    <circle cx="538" cy="226" r="23" stroke-width="9"/>
+    <circle cx="642" cy="161" r="14" stroke-width="6"/>
+    <circle cx="820" cy="104" r="26" stroke-width="10"/>
+    <circle cx="918" cy="222" r="17" stroke-width="7"/>
+  </g>
+
+  <path d="M0 760c152-28 274-44 446-30 187 15 266 80 448 82 214 3 355-113 706-123v211H0V760Z" fill="#e8f6ff" opacity="0.75"/>
+</svg>
