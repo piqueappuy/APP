@@ -120,7 +120,7 @@ function requesterDashboard(ownProfile){
  const rows=userOrders(),done=o=>orderStatus(o)==='FINALIZADO';
 
  const pending=rows.filter(o=>!orderIsArchived(o)&&!done(o)),resolved=rows.filter(o=>!orderIsArchived(o)&&done(o));
- const inProgress=pending.filter(o=>Boolean(o.selected||o.assigned));
+ const inProgress=pending.filter(o=>Boolean(o.selected||o.assigned)).sort(ongoingPiquePriority);
  const activePending=pending.filter(o=>!inProgress.includes(o));
  const meta=authUser.user_metadata||{};
  const name=[meta.first_name,meta.last_name].filter(Boolean).join(' ')||meta.full_name||meta.name||'TU CUENTA';
@@ -134,9 +134,10 @@ function requesterDashboard(ownProfile){
 
  </div>`;
 }
+function ongoingPiquePriority(a,b){const rank=o=>{const state=typeof coordinationRows!=='undefined'?coordinationRows.get(o.id)?.state:null;return ['confirmed','on_way','arrived'].includes(state)?0:state==='finished'?2:1;};return rank(a)-rank(b);}
 function home(){
  const all=userOrders().filter(o=>orderStatus(o)==='PENDIENTE');
- const coordinating=all.filter(o=>o.selected||o.assigned);
+ const coordinating=all.filter(o=>o.selected||o.assigned).sort(ongoingPiquePriority);
  const urgent=all.filter(o=>!o.selected&&!o.assigned&&['Hoy','Ahora'].includes(o.urgency));
  const regular=all.filter(o=>!o.selected&&!o.assigned&&!['Hoy','Ahora'].includes(o.urgency));
  const regularFiltered=regular.filter(o=>requesterMatches(o,'active'));
@@ -310,7 +311,7 @@ function ordersView(){
  if(dashboardFilter==='resolved')return orderHistorySection('resolved',resolved.length===1?'PIQUE RESUELTO':'PIQUES RESUELTOS',resolved,'TODAVÍA NO TENÉS PIQUES RESUELTOS.');
  if(dashboardFilter==='archived')return orderHistorySection('archived','PIQUES ARCHIVADOS',archived,'NO TENÉS PIQUES ARCHIVADOS.');
  const activeRows=rows.filter(o=>!orderIsArchived(o)&&!done(o));
- const executing=activeRows.filter(o=>Boolean(o.selected||o.assigned));
+ const executing=activeRows.filter(o=>Boolean(o.selected||o.assigned)).sort(ongoingPiquePriority);
  const executionSection=['all','execution'].includes(dashboardFilter)&&executing.length?`<section class="requester-execution-section"><div class="history-card-list">${executing.map(o=>orderCard(o,true)).join('')}</div></section>`:'';
  if(dashboardFilter==='execution')return executionSection;
  const pending=activeRows.filter(o=>!executing.includes(o));
