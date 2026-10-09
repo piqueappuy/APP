@@ -7,6 +7,17 @@ let piqueCustomerOwner=null;const piqueCustomers=new Map();
 const coordinationLabels={proposed:'HORARIOS PROPUESTOS',confirmed:'COORDINADO',on_way:'EN CAMINO',arrived:'EN EL LUGAR',finished:'TERMINADO',resolved:'PIQUE RESUELTO',issue:'REVISAR EL RESULTADO'};
 function coordinationDate(value){return new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(value));}
 function coordinationOrder(id){return userOrders().find(o=>o.id===id)||matchingRequests.find(o=>o.id===id&&o.quoteStatus==='accepted')||(typeof professionalResolvedPiques!=='undefined'?professionalResolvedPiques.find(o=>o.id===id):null);}
+// Refresh only ongoing pique sections; never replace an open form.
+function refreshOngoingPiquesView(){
+ if(!authReady||!authUser||!['inicio','pedidos'].includes(route().name))return;
+ if(app.querySelector('form, details[open]')||(app.contains(document.activeElement)&&document.activeElement.matches('input,textarea,select,[contenteditable="true"]')))return;
+ const next=document.createElement('template');next.innerHTML=route().name==='inicio'?home():piquesView();
+ for(const selector of ['.requester-coordinating-section','.requester-execution-section','.professional-coordinating-section','.professional-profile-process']){
+  const updated=[...next.content.querySelectorAll(selector)];
+  [...app.querySelectorAll(selector)].forEach((section,index)=>{const replacement=updated[index];if(replacement&&section.innerHTML!==replacement.innerHTML)section.replaceWith(replacement);});
+ }
+ applySectionLogoCounts();scheduleSessionFit();requestAnimationFrame(syncExecutionColumnHeight);
+}
 async function refreshCoordination(){
  const owner=authUser?.id;
  if(coordinationOwner!==owner){coordinationOwner=owner;coordinationRows=new Map();coordinationLoaded=false;coordinationError=false;}
@@ -21,9 +32,9 @@ async function refreshCoordination(){
   coordinationRows=new Map((data||[]).map(r=>[r.request_id,r]));
   const changed=!coordinationLoaded||previous!==JSON.stringify(data||[]);
   coordinationLoaded=true;coordinationError=false;
-  if(changed)render();
+  if(changed)refreshOngoingPiquesView();
   if(notices.length&&!coordinationBusy.size)toast(coordinationLabels[notices[0].state]+'. REVISÁ LA COORDINACIÓN DEL PIQUE.');
- }catch(error){if(authUser?.id===owner){const first=!coordinationLoaded;coordinationError=true;coordinationLoaded=true;if(first)render();}console.warn('PIQUE: coordinación no disponible',error.code);}
+ }catch(error){if(authUser?.id===owner){const first=!coordinationLoaded;coordinationError=true;coordinationLoaded=true;if(first)refreshOngoingPiquesView();}console.warn('PIQUE: coordinación no disponible',error.code);}
  finally{coordinationLoading=false;}
 }
 function coordinationForm(o,row){
@@ -63,7 +74,7 @@ function completionEvidenceOnly(o){const row=coordinationRows.get(o.id);if(!row?
 function hasAgreedSchedule(o){return coordinationOwner===authUser?.id&&Boolean(coordinationRows.get(o.id)?.appointment_at);}
 function customerPiqueDetails(o){
  const owner=authUser?.id;if(piqueCustomerOwner!==owner){piqueCustomerOwner=owner;piqueCustomers.clear();}
- if(!piqueCustomers.has(o.id)){piqueCustomers.set(o.id,null);void authClient.rpc('pique_customer',{p_request_id:o.id}).then(({data,error})=>{if(authUser?.id!==owner)return;piqueCustomers.set(o.id,error?{}:data||{});render();});}
+ if(!piqueCustomers.has(o.id)){piqueCustomers.set(o.id,null);void authClient.rpc('pique_customer',{p_request_id:o.id}).then(({data,error})=>{if(authUser?.id!==owner)return;piqueCustomers.set(o.id,error?{}:data||{});refreshOngoingPiquesView();});}
  const person=piqueCustomers.get(o.id);if(person===null)return '<p class="small muted">CARGANDO SOLICITANTE…</p>';
  const name=[person?.first_name,person?.last_name].filter(Boolean).join(' ')||'SOLICITANTE';const initials=name.split(/\s+/).map(n=>n[0]).slice(0,2).join('');
  return `<div class="pique-customer-details"><div class="person"><div class="avatar">${esc(initials)}</div><strong><span>${esc(name.split(/\s+/)[0])}</span><span>${esc(name.split(/\s+/).slice(1).join(' '))}</span></strong></div><span class="pique-meta-tag">📍 ${esc(String(o.zone||'').replace(/,?\s*MONTEVIDEO\s*$/i,''))}</span></div>`;
@@ -120,7 +131,7 @@ function readApplicationNotices(){try{return new Set(JSON.parse(localStorage.get
 function unreadApplicationCount(){const read=readApplicationNotices();return applicationNotices().filter(n=>!read.has(n.id)).length;}
 app.addEventListener('click',e=>{const link=e.target.closest('[data-application-notice]');if(!link||!authUser)return;const read=readApplicationNotices();read.add(link.dataset.applicationNotice);localStorage.setItem('pique-notifications-read:'+authUser.id,JSON.stringify([...read]));});
 let refreshingApplications=false;
-async function refreshApplicationNotices(){if(!authUser||refreshingApplications)return;refreshingApplications=true;const owner=authUser.id;try{await Promise.allSettled([loadRemoteOrders(),loadMatchingRequests()]);if(authUser?.id===owner)render();}finally{refreshingApplications=false;}}
+async function refreshApplicationNotices(){if(!authUser||refreshingApplications)return;refreshingApplications=true;const owner=authUser.id;try{await Promise.allSettled([loadRemoteOrders(),loadMatchingRequests()]);if(authUser?.id===owner)refreshOngoingPiquesView();}finally{refreshingApplications=false;}}
 const renderWithoutCoordination=render;
 render=function(){const draftOwner=authUser?.id;const completionDrafts=[...app.querySelectorAll('[data-completion]')];const availabilityDrafts=[...app.querySelectorAll('[data-availability]')].map(form=>({id:form.dataset.availability,version:form.dataset.version,values:[0,1,2].map(n=>form.elements['slot'+n]?.value||'')}));renderWithoutCoordination();if(authUser?.id===draftOwner)for(const form of completionDrafts){const row=coordinationRows.get(form.dataset.completion);if(row?.state!=='arrived'||String(row.version)!==form.dataset.version)continue;const button=[...app.querySelectorAll('[data-open-completion]')].find(b=>b.dataset.request===form.dataset.completion);if(button){const panel=button.closest('.coordination-panel');panel.classList.add('completing-work');button.replaceWith(form);const section=panel.closest('.professional-coordinating-section,.professional-profile-process');const heading=section?.querySelector('.pique-section-title h2,.profile-process-heading h2');if(heading){heading.textContent='REGISTRÁ EL TRABAJO TERMINADO';form.querySelector('.completion-section-title').hidden=true;}}}if(authUser?.id===draftOwner)for(const draft of availabilityDrafts){const form=[...app.querySelectorAll('[data-availability]')].find(f=>f.dataset.availability===draft.id&&f.dataset.version===draft.version);if(form)draft.values.forEach((value,n)=>{if(form.elements['slot'+n])form.elements['slot'+n].value=value;});}if(route().name==='coordinar'&&sessionStorage.getItem('pique-open-reprogram')===route().args[0]){const details=app.querySelector('.reschedule-visit');if(details)details.open=true;}const badge=document.querySelector('.notification-count');if(badge){const count=authUser&&coordinationOwner===authUser.id?[...coordinationRows.values()].filter(r=>r.state!=='resolved').length:0;const total=count+unreadApplicationCount()+professionalQuoteNotices().length+unreadAcceptedQuoteCount();badge.textContent=total;badge.hidden=!total;}if(coordinationOwner!==authUser?.id||!coordinationLoaded)void refreshCoordination();};
 notifications=function(){

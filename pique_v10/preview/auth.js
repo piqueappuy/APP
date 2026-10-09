@@ -57,7 +57,7 @@ async function loadMatchingRequests(){
 }
 async function loadRemoteProviders(){
  if(!authClient)return;
- try{const {data,error}=await authClient.from('professional_profiles').select('*').eq('active',true);if(error)throw error;providers=(data||[]).map(p=>({id:p.user_id,trades:p.trades||[],name:`${p.first_name||''} ${p.last_name||''}`.trim(),initials:`${(p.first_name||'P')[0]}${(p.last_name||'')[0]||''}`.toUpperCase(),rating:5,reviews:0,price:0,time:0,arrival:'A coordinar',distance:'',years:0,verified:false}));render();}catch(e){console.warn('PIQUE: no se pudieron cargar profesionales',e);}
+ try{const {data,error}=await authClient.from('professional_profiles').select('*').eq('active',true);if(error)throw error;providers=(data||[]).map(p=>({id:p.user_id,trades:p.trades||[],name:`${p.first_name||''} ${p.last_name||''}`.trim(),initials:`${(p.first_name||'P')[0]}${(p.last_name||'')[0]||''}`.toUpperCase(),rating:5,reviews:0,price:0,time:0,arrival:'A coordinar',distance:'',years:0,verified:false}));if(authReady&&authUser&&!authRoutes.includes(route().name)&&!app.querySelector('form'))render();}catch(e){console.warn('PIQUE: no se pudieron cargar profesionales',e);}
 }
 async function loadRemoteOrders(){
  if(!authClient||!authUser)return;
@@ -126,12 +126,12 @@ async function initializeAuth(){
    if(changed){
     professionalAccount=null;
     localStorage.removeItem('pique-professional-v1');
-    if(authReady&&!authBusy&&authUser)setTimeout(async()=>{await Promise.all([loadRemoteProfessional(),loadRemoteOrders()]);render();},0);
+    if(authReady&&!authBusy&&authUser)setTimeout(async()=>{await Promise.all([loadRemoteProfessional(),loadRemoteOrders()]);if(!authRoutes.includes(route().name))render();},0);
    }
    const headerSignout=document.getElementById('auth-header-signout');if(headerSignout)headerSignout.hidden=!authUser;
    if(event==='PASSWORD_RECOVERY')location.hash='#actualizar-clave';
    // Avoid replacing a form while credentials are being entered.
-   if(authReady&&!authBusy&&!['ingresar','registro','recuperar','actualizar-clave'].includes(route().name))setTimeout(()=>render(),0);
+   if(changed&&authReady&&!authBusy&&!authRoutes.includes(route().name))setTimeout(()=>render(),0);
   });
   const {data,error}=await authClient.auth.getSession();if(error)throw error;
   authUser=data.session?.user||null;
