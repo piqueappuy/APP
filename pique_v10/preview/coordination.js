@@ -5,6 +5,7 @@ const coordinationBusy=new Set();
 const selectedVisitSlots=new Map();
 let piqueCustomerOwner=null;const piqueCustomers=new Map();
 const coordinationLabels={proposed:'HORARIOS PROPUESTOS',confirmed:'COORDINADO',on_way:'EN CAMINO',arrived:'EN EL LUGAR',finished:'TERMINADO',resolved:'PIQUE RESUELTO',issue:'REVISAR EL RESULTADO'};
+function visitDayReached(appointment,now=Date.now()){if(!appointment||!Number.isFinite(Date.parse(appointment)))return false;const day=value=>new Intl.DateTimeFormat('en-CA',{timeZone:'America/Montevideo',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date(value));return day(now)>=day(appointment);}
 function coordinationDate(value){return new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(value));}
 function coordinationOrder(id){return userOrders().find(o=>o.id===id)||matchingRequests.find(o=>o.id===id&&o.quoteStatus==='accepted')||(typeof professionalResolvedPiques!=='undefined'?professionalResolvedPiques.find(o=>o.id===id):null);}
 // Refresh only ongoing pique sections; never replace an open form.
@@ -62,7 +63,7 @@ function coordinationPanel(o){
  }else{
   body=`<ol class="visit-steps">${['confirmed','on_way','arrived','finished'].map((s,i)=>`<li class="${['confirmed','on_way','arrived','finished','resolved'].indexOf(row.state)>=i?'done':''}">${esc(coordinationLabels[s])}</li>`).join('')}</ol>`;
   if(row.state==='confirmed')body+=professional?`<div class="visit-action-row"><button class="btn primary full" data-coordination-action="on_way" data-request="${esc(o.id)}">${svg('truck')}<span>ESTOY EN CAMINO</span></button><details class="reschedule-visit"><summary>REPROGRAMAR VISITA</summary>${coordinationForm(o,row)}</details></div>`:'<p class="coordination-note professional-arrival-note">EL PROFESIONAL TE AVISARÁ CUANDO ESTÉ EN CAMINO.</p>';
-  if(row.state==='on_way')body+=professional?`<button class="btn primary full" data-coordination-action="arrived" data-request="${esc(o.id)}">${svg('check')}<span>LLEGUÉ AL LUGAR</span></button>`:'<p class="coordination-note professional-arrival-note">EL PROFESIONAL TE AVISARÁ CUANDO LLEGUE A TU DIRECCIÓN.</p>';
+  if(row.state==='on_way')body+=professional?`<button class="btn primary full" data-coordination-action="arrived" data-request="${esc(o.id)}" ${visitDayReached(row.appointment_at)?'':'disabled aria-disabled="true"'}>${svg('check')}<span>LLEGUÉ AL LUGAR</span></button>`:'<p class="coordination-note professional-arrival-note">EL PROFESIONAL TE AVISARÁ CUANDO LLEGUE A TU DIRECCIÓN.</p>';
   if(row.state==='arrived')body+=professional?`<button class="btn primary full" data-open-completion="1" data-request="${esc(o.id)}">${svg('check')}<span>TERMINÉ EL TRABAJO</span></button>`:'<p class="coordination-note professional-arrival-note">EL PROFESIONAL YA ESTÁ EN EL LUGAR.</p>';
   if(row.state==='finished')body+=customer?`<p class="coordination-note professional-arrival-note">EL PROFESIONAL INDICÓ QUE RESOLVIÓ TU PIQUE.</p><div class="coordination-actions"><button class="btn primary" data-coordination-action="resolved" data-request="${esc(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></svg><span>CONFIRMAR</span></button><button class="btn" data-coordination-action="issue" data-request="${esc(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>RECHAZAR</span></button></div>`:'<p class="coordination-note professional-arrival-note completion-waiting">ESPERANDO LA CONFIRMACIÓN DEL SOLICITANTE.</p>';
   if(row.state==='issue'||(row.state==='confirmed'&&!professional))body+=`<details class="reschedule-visit"><summary>${row.state==='issue'?'COORDINAR UNA NUEVA VISITA':'REPROGRAMAR VISITA'}</summary>${coordinationForm(o,row)}</details>`;
@@ -119,6 +120,7 @@ app.addEventListener('click',async e=>{
  const b=e.target.closest('[data-coordination-action]');if(!b)return;
  const id=b.dataset.request,row=coordinationRows.get(id);if(!row)return;
  const action=b.dataset.coordinationAction,payload={state:action==='confirm-selection'?'confirmed':action};
+ if(action==='arrived'&&!visitDayReached(row.appointment_at)){toast('PODÉS REGISTRAR LA LLEGADA DESDE EL DÍA ACORDADO.');return;}
  if(action==='confirm-selection'){const choice=selectedVisitSlots.get(id);if(!choice||choice.owner!==authUser?.id||choice.version!==row.version||row.state!=='proposed'||!row.slots.includes(choice.slot)){toast('VOLVÉ A ELEGIR UN HORARIO.');render();return;}payload.appointment_at=choice.slot;}
 
  b.disabled=true;await coordinationSave(id,payload,row.version);
