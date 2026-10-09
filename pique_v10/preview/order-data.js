@@ -16,6 +16,7 @@
   }
   function orderStatus(order) {
     if(order.status==='completed')return 'FINALIZADO';
+    if(order.status==='selected')return 'PENDIENTE';
     if(order.status==='archived'||((['Hoy','Ahora'].includes(order.urgency)&&Number.isFinite(Date.parse(order.created_at||order.createdAt))&&Date.parse(order.created_at||order.createdAt)+86400000<=Date.now())||(order.urgency==='Esta semana'&&Number.isFinite(Date.parse(order.created_at||order.createdAt))&&Date.parse(order.created_at||order.createdAt)+604800000<=Date.now())))return 'ARCHIVADO';
     return 'PENDIENTE';
   }
