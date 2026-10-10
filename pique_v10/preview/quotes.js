@@ -1,3 +1,12 @@
+// A quote is valid for 24 hours from submission, never from request creation.
+function quoteHasExpired(quote,now=Date.now()){
+ const submitted=Date.parse(quote?.quoted_at);
+ return quote?.status==='quoted'&&Number.isFinite(submitted)&&now>=submitted+24*60*60*1000;
+}
+function currentQuote(quote,now=Date.now()){
+ return quoteHasExpired(quote,now)?{...quote,status:'cancelled',quoted_price:null,estimated_minutes:null}:quote;
+}
+
 let professionalUnfulfilled=[],professionalHistoryOwner=null;
 let professionalResolvedCount=null,professionalResolvedOwner=null,professionalResolvedPiques=[];
 // PIQUE quote workflow extension.
@@ -24,11 +33,11 @@ async function loadMatchingRequests(){
   let quoteRows=[];
   if(requestIds.length){
    const quotes=await authClient.from('quote_requests')
-     .select('id,service_request_id,status,quoted_price,estimated_minutes,created_at')
+     .select('id,service_request_id,status,quoted_at,quoted_price,estimated_minutes,created_at')
      .eq('professional_id',id)
      .in('service_request_id',requestIds);
    if(quotes.error)throw quotes.error;
-   quoteRows=quotes.data||[];
+   quoteRows=(quotes.data||[]).map(q=>currentQuote(q));
   }
   if(authUser?.id!==id)return;
   matchingRequests=rows.map(row=>{
@@ -37,7 +46,7 @@ async function loadMatchingRequests(){
     ...row,
     createdAt:row.created_at,
     quoteRequestId:quote?.id||null,
-    quoteStatus:quote?.status||'available',
+    quoteStatus:quote?.status==='cancelled'?'available':quote?.status||'available',
     quotedPrice:quote?.quoted_price??null,
     estimatedMinutes:quote?.estimated_minutes??null,
     hasProfessionalQuote:Boolean(quote&&['quoted','accepted'].includes(quote.status)),
@@ -45,7 +54,7 @@ async function loadMatchingRequests(){
     canQuote:Boolean(quote&&quote.status==='pending')
    };
   });
-  const history=await authClient.from('quote_requests').select('service_request_id,status,quoted_price,estimated_minutes,service_requests(*,pique_coordination(state,ever_confirmed,updated_at))').eq('professional_id',id);
+  const history=await authClient.from('quote_requests').select('service_request_id,status,quoted_at,quoted_price,estimated_minutes,service_requests(*,pique_coordination(state,ever_confirmed,updated_at))').eq('professional_id',id);
   if(authUser?.id!==id)return;
   if(!history.error){const entries=history.data||[];professionalUnfulfilled=[...new Map(entries.filter(q=>q.service_requests&&(q.status==='rejected'||(['applied','pending','quoted','accepted'].includes(q.status)&&orderIsArchived(q.service_requests)))).map(q=>[q.service_request_id,{...q.service_requests,createdAt:q.service_requests.created_at,unfulfilledReason:q.status==='rejected'?'COTIZACIÓN O POSTULACIÓN RECHAZADA':null}])).values()];professionalHistoryOwner=id;matchingRequests.push(...entries.filter(q=>q.status==='accepted'&&q.service_requests?.status==='selected'&&!orderIsArchived(q.service_requests)).map(q=>({...q.service_requests,createdAt:q.service_requests.created_at,quoteStatus:'accepted',hasProfessionalQuote:true,quotedPrice:q.quoted_price,estimatedMinutes:q.estimated_minutes})));professionalResolvedPiques=[...new Map(entries.filter(q=>q.status==='accepted'&&q.service_requests?.status==='completed').map(q=>[q.service_request_id,{...q.service_requests,createdAt:q.service_requests.created_at,quotedPrice:q.quoted_price,estimatedMinutes:q.estimated_minutes}])).values()];professionalResolvedCount=professionalResolvedPiques.length;professionalResolvedOwner=id;}
   matchingRequestsOwner=id;
@@ -101,7 +110,7 @@ async function applyToPique(button){
    // reporting failure so the UI reflects the authoritative server state.
    let recovered=null;
    try{
-    const lookup=await authClient.from('quote_requests').select('id,status,quoted_price,estimated_minutes').eq('service_request_id',orderId).eq('professional_id',userId).maybeSingle();
+    const lookup=await authClient.from('quote_requests').select('id,status,quoted_at,quoted_price,estimated_minutes').eq('service_request_id',orderId).eq('professional_id',userId).maybeSingle();
     if(!lookup.error)recovered=lookup.data;
    }catch{}
    if(recovered){
@@ -129,12 +138,19 @@ async function requestQuote(orderId,professionalId){
  if(!order||order.user_id!==authUser.id){toast('NO PUDIMOS IDENTIFICAR ESTE PEDIDO.');return;}
  try{
   const userId=authUser.id;
-  let {data,error}=await authClient.from('quote_requests').insert({service_request_id:orderId,customer_id:userId,professional_id:professionalId,status:'pending'}).select('id,service_request_id,professional_id,status,quoted_price,estimated_minutes').single();
+  let {data,error}=await authClient.from('quote_requests').insert({service_request_id:orderId,customer_id:userId,professional_id:professionalId,status:'pending'}).select('id,service_request_id,professional_id,status,quoted_at,quoted_price,estimated_minutes').single();
   if(error){
    if(error.code!=='23505')throw error;
-   const existing=await authClient.from('quote_requests').select('id,service_request_id,professional_id,status,quoted_price,estimated_minutes').eq('service_request_id',orderId).eq('customer_id',userId).eq('professional_id',professionalId).single();
+   const existing=await authClient.from('quote_requests').select('id,service_request_id,professional_id,status,quoted_at,quoted_price,estimated_minutes').eq('service_request_id',orderId).eq('customer_id',userId).eq('professional_id',professionalId).single();
    if(existing.error)throw existing.error;
    data=existing.data;
+   if(data.status==='cancelled'||quoteHasExpired(data)){
+    let retry=authClient.from('quote_requests').update({status:'pending',quoted_price:null,estimated_minutes:null,quoted_at:null}).eq('id',data.id).eq('customer_id',userId).eq('status',data.status);
+    if(data.status==='quoted')retry=retry.eq('quoted_at',data.quoted_at);
+    const renewed=await retry.select('id,service_request_id,professional_id,status,quoted_at,quoted_price,estimated_minutes').single();
+    if(renewed.error)throw renewed.error;
+    data=renewed.data;
+   }
   }
   if(authUser?.id!==userId)return;
   if(!data)throw new Error('No se pudo confirmar la solicitud');
@@ -174,10 +190,10 @@ async function loadRemoteOrders(){
   const {data,error}=await authClient.from('service_requests').select('*,pique_coordination(state,ever_confirmed)').eq('user_id',userId).order('created_at',{ascending:false});
   if(error)throw error;
   if(authUser?.id!==userId)return;
-  const quotes=await authClient.from('quote_requests').select('id,service_request_id,professional_id,status,quoted_price,estimated_minutes').eq('customer_id',userId);
+  const quotes=await authClient.from('quote_requests').select('id,service_request_id,professional_id,status,quoted_at,quoted_price,estimated_minutes').eq('customer_id',userId);
   if(quotes.error)console.warn('PIQUE: no se pudieron cargar cotizaciones',quotes.error);
   if(authUser?.id!==userId)return;
-  const quoteRows=quotes.data||[];
+  const quoteRows=(quotes.data||[]).map(q=>currentQuote(q));
   const remote=(data||[]).filter(o=>o.user_id===userId).map(o=>({
    ...o,
    createdAt:o.created_at,
@@ -213,6 +229,10 @@ const decidingQuotes=new Set();
 async function decideQuote(button){
  const id=button.dataset.quoteDecision,decision=button.dataset.decision,userId=authUser?.id;
  if(!userId||decidingQuotes.has(id)||!['accepted','rejected'].includes(decision))return;
+ const quote=orders.flatMap(o=>o.quotes||[]).find(q=>q.id===id);
+ if(quoteHasExpired(quote)||quote?.status==='cancelled'){
+  await loadRemoteOrders();render();toast('LA COTIZACIÓN VENCIÓ. SOLICITÁ UNA NUEVA.');return;
+ }
  decidingQuotes.add(id);
  const buttons=button.parentElement.querySelectorAll('button');buttons.forEach(b=>b.disabled=true);
  try{
@@ -238,3 +258,14 @@ async function publicProfessionalResolvedPiques(userId){
  if(result.error){console.warn('PIQUE: historial público no disponible',result.error.code);return [];}
  return result.data||[];
 }
+
+// Refresh expiry while the customer keeps the page open.
+setInterval(()=>{
+ if(typeof authUser==='undefined'||!authUser)return;
+ let changed=false;
+ for(const order of orders){
+  order.quotes=(order.quotes||[]).map(q=>{if(!quoteHasExpired(q))return q;changed=true;return currentQuote(q);});
+  order.quoteProfessionals=(order.quotes||[]).filter(q=>['pending','quoted','accepted'].includes(q.status)).map(q=>q.professional_id);
+ }
+ if(changed)render();
+},30000);
