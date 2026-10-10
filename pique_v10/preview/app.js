@@ -144,7 +144,8 @@ function home(){
  const urgentSection=urgent.length?`<section class="requester-urgent-section"><div class="requester-urgent-heading"><div><h2>PIQUES URGENTES <span class="requester-urgent-count">${urgent.length}</span></h2></div></div>${requesterFilters('urgent')}${requesterCarousel(urgent.filter(o=>requesterMatches(o,'urgent')),'Piques urgentes',requesterStates.urgent==='quoting')}</section>`:'';
  const activeSection=regular.length?`<section class="requester-home-section"><div class="section-heading"><h2>${regular.length===1?'PIQUE EN AGENDA':'PIQUES EN AGENDA'} <span class="pique-section-count">${regular.length}</span></h2></div>${regular.length===1?'':requesterFilters('active')}${requesterCarousel(regularFiltered,'Piques en agenda',requesterStates.active==='quoting')}</section>`:'';
  const coordinatingSection=[['PIQUES EN VALIDACIÓN',coordinating.filter(o=>coordinationRows.get(o.id)?.state==='finished')],['PIQUES EN COORDINACIÓN',coordinating.filter(o=>coordinationRows.get(o.id)?.state!=='finished')]].filter(([,list])=>list.length).map(([title,list])=>`<section class="requester-home-section requester-coordinating-section">${title==='PIQUES EN VALIDACIÓN'||list.some(o=>!hasAgreedSchedule(o))?`<div class="section-heading"><h2>${title}<span class="pique-section-count">${list.length}</span></h2></div>`:''}${requesterCarousel(list,title)}</section>`).join('');
- return coordinatingSection+matchingRequestsView()+urgentSection+activeSection;
+ const content=coordinatingSection+matchingRequestsView()+urgentSection+activeSection;
+ return content||'<p class="profile-empty-hint" role="status">'+svg('info')+'<span>POR AHORA NO TENÉS PIQUES ABIERTOS NI EN MARCHA.</span></p>';
 }
 function quoteTimeLabel(minutes){
  if(minutes<60)return `${minutes} MIN`;
