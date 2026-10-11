@@ -4090,3 +4090,7 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app .professional-application-layout .professional-application-summary strong{color:#946100!important;line-height:16px!important}
 
 #app .professional-active-section .professional-application-layout{grid-template-areas:none!important;grid-template-rows:auto auto!important;padding-bottom:14px!important}
+
+#app .professional-application-layout .professional-application-summary{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;background:#edf4ff!important;color:#0751ca!important;border-left:3px solid #80b4ff!important;text-align:left!important}
+#app .professional-application-layout .professional-application-summary strong{color:#0751ca!important}
+#app .professional-application-layout .professional-application-summary svg{width:17px!important;height:17px!important;flex:0 0 17px!important;fill:none;stroke:currentColor;stroke-width:1.8}
