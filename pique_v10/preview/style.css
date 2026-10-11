@@ -4076,3 +4076,7 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 .home-open-heading .home-open-owner{font-size:inherit;font-weight:800;color:#0751ca;margin-right:8px}
 .home-open-heading .section-logo-count{margin:0!important}
 .home-open-heading h2{margin:0!important}
+
+#app.home-soft-background .home-open-heading{font-size:clamp(16px,4.65vw,20px)}
+#app.home-soft-background .home-open-heading>.section-logo-count{order:0!important}
+#app.home-soft-background .home-open-heading>.home-open-owner,#app.home-soft-background .home-open-heading>h2{font-size:inherit!important}
