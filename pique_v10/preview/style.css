@@ -4098,3 +4098,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app .professional-discover-empty{display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:8px!important;box-sizing:border-box!important;width:100%!important;min-height:0!important;padding:12px!important;margin:0!important;background:#edf4ff!important;color:#0751ca!important;border:0!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;text-align:left!important;box-shadow:none!important}
 #app .professional-discover-empty svg{display:block!important;width:17px!important;height:17px!important;flex:0 0 17px!important;fill:none;stroke:currentColor;stroke-width:1.8}
 #app .professional-discover-empty span{font-size:11px!important;line-height:16px!important;min-width:0!important}
+
+#app .professional-discover-empty,
+#app .professional-application-layout .professional-application-summary{
+ border:1px solid #c4d9fa!important;
+ border-left:3px solid #80b4ff!important;
+}
