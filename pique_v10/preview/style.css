@@ -4179,3 +4179,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .coordination-customer-zone{
  grid-column:2!important;grid-row:1!important;width:100%!important;box-sizing:border-box!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0 10px!important;gap:2px!important;align-self:stretch!important;
 }
+
+#app#app#app .coordination-three-card .professional-quote-summary>div{border:1px solid #cddfff!important;border-left:3px solid #80b4ff!important;border-radius:8px!important}
+#app#app#app .coordination-three-card .professional-quote-summary>div:first-child{border-color:#bce8d8!important;border-left-color:#64c7a2!important}
+#app#app#app .coordination-three-card .professional-quote-summary span{display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important}
+#app#app#app .coordination-three-card .professional-quote-summary span svg{width:13px!important;height:13px!important;flex:0 0 13px!important;fill:none;stroke:currentColor;stroke-width:1.8}
+#app#app#app .coordination-three-card .professional-requester-summary{border:1px solid #cddfff!important;border-left:3px solid #80b4ff!important}
+#app#app#app .coordination-three-card .person .avatar{display:flex!important;align-items:center!important;justify-content:center!important;width:18px!important;height:18px!important}
+#app#app#app .coordination-three-card .person .avatar svg{width:15px!important;height:15px!important}
+#app#app#app .coordination-three-card .coordination-zone-place svg{display:block!important;width:15px!important;height:15px!important}
