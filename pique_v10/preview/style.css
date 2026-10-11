@@ -4070,3 +4070,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 .order-archived>.archive-republish-row{margin-top:0!important;gap:8px}
 .archive-republish-button{display:flex;align-items:center;justify-content:center;gap:8px}
 .archive-republish-button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+#app.home-soft-background .requester-filters,#app.home-soft-background .orders-filter-row,#app.home-soft-background .quote-request-filters{justify-content:flex-start!important;text-align:left}
+#app.home-soft-background .home-open-heading{display:flex;align-items:center;justify-content:center;gap:0}
+.home-open-heading .home-open-owner{font-size:inherit;font-weight:800;color:#0751ca;margin-right:8px}
+.home-open-heading .section-logo-count{margin:0!important}
+.home-open-heading h2{margin:0!important}
