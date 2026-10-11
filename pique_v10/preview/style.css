@@ -4108,3 +4108,7 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 .mobile-app #app #professional-unfulfilled .archive-policy-note.rejected{display:flex!important;align-items:center!important;gap:8px!important;box-sizing:border-box!important;min-width:0!important;width:100%!important;margin-bottom:0!important;padding:10px 12px!important;background:#fff0f2!important;color:#bf263b!important;border:1px solid #f7c6cf!important;border-left:3px solid #f04b62!important;border-radius:8px!important;line-height:16px!important;text-align:left!important}
 #app #professional-unfulfilled .archive-policy-note.rejected svg{width:17px!important;height:17px!important;flex:0 0 17px!important;fill:none;stroke:currentColor;stroke-width:1.8}
 #app #professional-unfulfilled .archive-policy-note.rejected span{min-width:0!important;white-space:normal!important}
+
+#app .quote-rejected{display:flex!important;align-items:center!important;gap:8px!important;box-sizing:border-box!important;width:100%!important;min-width:0!important;padding:10px 12px!important;background:#fff0f2!important;color:#bf263b!important;border:1px solid #f7c6cf!important;border-left:3px solid #f04b62!important;border-radius:8px!important;font-size:11px!important;line-height:16px!important;text-align:left!important}
+#app .quote-rejected svg{width:17px!important;height:17px!important;flex:0 0 17px!important;fill:none;stroke:currentColor;stroke-width:1.8}
+#app .quote-rejected span{min-width:0;white-space:normal}
