@@ -89,7 +89,8 @@ function orderCard(o,inProfile=false){
   return `<article class="panel order order-pending requester-photo-card ${categoryThemeClass(o.category)}">${pendingContent}${receivedResponsesHint(o)}<div class="pending-order-action"><a class="btn requester-open" href="#propuestas/${encodeURIComponent(o.id)}">${(o.quotes||[]).some(q=>q.status==='quoted')?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>`:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>`}<span>${(o.quotes||[]).some(q=>q.status==='quoted')?'VER COTIZACIONES':'BUSCAR UN PIQUE'}</span></a></div></article>`;
 }
 function categoryButton(name,label=name){const [symbol,tone]=categoryDesign[name]||['grid','gray'];return `<button class="category" data-new="${esc(name)}"><span class="category-icon filled tone-${tone}">${svg(symbol)}</span><span>${esc(label.toUpperCase())}</span></button>`;}
-function userOrders(){return typeof authUser!=='undefined'&&authUser?orders.filter(o=>o.user_id===authUser.id):[];}
+function visiblePiqueHistory(rows){const republished=new Set(rows.flatMap(o=>(o.coordination_history||[]).filter(event=>event.reason==='republished'&&event.original_request_id).map(event=>event.original_request_id)));return rows.filter(o=>!republished.has(o.id));}
+function userOrders(){return typeof authUser!=='undefined'&&authUser?visiblePiqueHistory(orders.filter(o=>o.user_id===authUser.id)):[];}
 function currentFirstName(){
  const meta=typeof authUser!=='undefined'&&authUser?.user_metadata?authUser.user_metadata:{};
  const raw=meta.first_name||meta.name||meta.full_name||'';
