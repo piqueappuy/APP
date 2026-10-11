@@ -4128,3 +4128,14 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app #professional-unfulfilled .archive-policy-note.rejected span{
  font-size:inherit!important;line-height:inherit!important;font-weight:inherit!important;
 }
+
+#app .quote-rejected,
+.mobile-app #app #professional-unfulfilled .archive-policy-note.rejected{
+ padding:8px 10px!important;
+ font-size:10px!important;
+ line-height:14px!important;
+}
+#app .quote-rejected svg,
+#app #professional-unfulfilled .archive-policy-note.rejected svg{
+ width:15px!important;height:15px!important;flex:0 0 15px!important;
+}
