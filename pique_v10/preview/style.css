@@ -4150,3 +4150,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 }
 
 @media(max-width:480px){#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{font-size:clamp(10px,14cqw,16px)!important;letter-spacing:-.35px!important}}
+
+@media(max-width:480px){#app#app#app .coordination-three-card .professional-quote-summary strong{font-size:clamp(11px,19cqw,20px)!important}#app#app#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{font-size:clamp(10px,14cqw,16px)!important}}
