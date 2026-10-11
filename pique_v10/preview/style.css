@@ -4148,3 +4148,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app .professional-quoted-layout .professional-quote-summary>div{container-type:inline-size;min-width:0!important}
  #app .professional-quoted-layout .professional-quote-summary strong{font-size:clamp(12px,16cqw,20px)!important;white-space:nowrap!important;line-height:1.25!important}
 }
+
+@media(max-width:480px){#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{font-size:clamp(10px,14cqw,16px)!important;letter-spacing:-.35px!important}}
