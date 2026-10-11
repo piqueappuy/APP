@@ -4082,3 +4082,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app.home-soft-background .home-open-heading>.home-open-owner,#app.home-soft-background .home-open-heading>h2{font-size:inherit!important}
 
 #app.home-soft-background .home-open-heading>.section-logo-count{margin-right:4px!important}
+
+/* Applied pique waiting hint: bordered status with no trailing empty row. */
+#app .professional-active-section .professional-application-layout{grid-template-rows:auto auto!important;grid-auto-rows:auto!important;height:auto!important;min-height:0!important;padding-bottom:14px!important}
+#app .professional-application-layout>.application-waiting-footer{height:auto!important;min-height:0!important;align-self:start!important;padding-bottom:0!important;margin-bottom:0!important}
+#app .professional-application-layout .professional-application-summary{border:0!important;border-left:3px solid #eab740!important;background:#fff6dc!important;color:#946100!important;border-radius:8px!important;padding:10px 12px!important;min-height:0!important;height:auto!important;margin:0!important;box-shadow:none!important}
+#app .professional-application-layout .professional-application-summary strong{color:#946100!important;line-height:16px!important}
