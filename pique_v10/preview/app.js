@@ -199,7 +199,7 @@ function professionalRequestCard(o,mode){
  }else if(o.quoteStatus==='applied'){
   cardClass=' professional-card-applied professional-application-layout';
   rightContent=resolvedRequestMetaTags(o);
-  footerAction='<div class="professional-card-footer application-waiting-footer"><div class="professional-application-summary"><strong>ESPERANDO RESPUESTA</strong></div></div>';
+  footerAction=`<div class="professional-card-footer application-waiting-footer"><div class="professional-application-summary">${svg('message')}<strong>ESPERANDO RESPUESTA</strong></div></div>`;
  }else if(['rejected','cancelled'].includes(o.quoteStatus)){
   cardClass=' professional-card-applied';
   leftContent+=detailTags;
