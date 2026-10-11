@@ -4063,3 +4063,6 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 .archive-republish-row .archive-policy-note{margin:0!important;min-width:0;white-space:normal!important;overflow-wrap:anywhere;display:flex;align-items:center}
 .archive-republish-button{align-self:stretch;padding:10px 12px;white-space:nowrap;font-size:11px}
 @media(max-width:360px){.archive-republish-button{padding:8px;font-size:10px}.archive-republish-row{gap:6px}}
+
+.archive-republish-row{grid-template-columns:minmax(0,1fr);gap:10px}
+.archive-republish-row .archive-republish-button{width:100%;min-height:42px;box-sizing:border-box}
