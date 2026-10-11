@@ -10,7 +10,7 @@ begin
  values(new_id,actor,original.category,original.title,original.description,original.zone,original.urgency,'proposals',
  original.coordination_history||jsonb_build_array(jsonb_build_object('reason','republished','original_request_id',original.id,'recorded_at',clock_timestamp())));
  insert into public.quote_requests(service_request_id,customer_id,professional_id,status,quoted_price,estimated_minutes,quoted_at)
- select new_id,actor,professional_id,case when status='accepted' then 'quoted' else status end,quoted_price,estimated_minutes,quoted_at
+ select new_id,actor,professional_id,case when status='accepted' then 'quoted' else status end,quoted_price,estimated_minutes,case when status in ('quoted','accepted') then clock_timestamp() else quoted_at end
  from public.quote_requests where service_request_id=original.id;
  return new_id;
 end $$;
