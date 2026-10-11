@@ -4139,3 +4139,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app #professional-unfulfilled .archive-policy-note.rejected svg{
  width:15px!important;height:15px!important;flex:0 0 15px!important;
 }
+
+@media(max-width:480px){
+ #app .coordination-three-card .coordination-inside-title{font-size:clamp(14px,4.2vw,19px)!important;line-height:1.3!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;white-space:nowrap!important}
+ #app .coordination-three-card .professional-quote-summary>div{container-type:inline-size!important;min-width:0!important;padding:8px 5px!important;box-sizing:border-box!important}
+ #app .coordination-three-card .professional-quote-summary strong{display:block!important;max-width:100%!important;white-space:nowrap!important;font-size:clamp(11px,19cqw,20px)!important;line-height:1.25!important;letter-spacing:-.3px!important}
+ #app .coordination-three-card .professional-quote-summary span{font-size:8px!important;line-height:12px!important}
+ #app .professional-quoted-layout .professional-quote-summary>div{container-type:inline-size;min-width:0!important}
+ #app .professional-quoted-layout .professional-quote-summary strong{font-size:clamp(12px,16cqw,20px)!important;white-space:nowrap!important;line-height:1.25!important}
+}
