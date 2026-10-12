@@ -4485,3 +4485,25 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .professional-coordinating-section .quote-requests-list>.coordination-three-card:only-child,
  #app#app#app .professional-profile-process>.coordination-three-card:only-child{width:100%!important;max-width:680px!important;margin-left:auto!important;margin-right:auto!important}
 }
+
+/* Offer inputs use the same caption and value alignment as coordination. */
+#app#app#app .professional-card-pending .quote-slider{
+ border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;
+ padding:12px 6px 8px!important;box-sizing:border-box!important;
+}
+#app#app#app .professional-card-pending .quote-slider-head{
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;grid-template-rows:26px 20px!important;gap:2px!important;justify-items:center!important;align-content:center!important;
+}
+#app#app#app .professional-card-pending .quote-slider-head b{
+ display:block!important;height:26px!important;min-height:26px!important;font-size:9px!important;line-height:13px!important;font-weight:400!important;text-align:center!important;margin:0!important;padding:0!important;
+}
+#app#app#app .professional-card-pending .quote-slider-head strong{
+ display:flex!important;align-items:center!important;justify-content:center!important;height:20px!important;min-height:20px!important;font-size:14px!important;line-height:20px!important;white-space:nowrap!important;margin:0!important;padding:0!important;
+}
+#app#app#app .professional-card-pending .quote-slider:first-child{background:#e2f6ed!important;color:#00825f!important}
+#app#app#app .professional-card-pending .quote-slider:nth-child(2){background:#e8f2ff!important;color:#0751ca!important}
+@media(max-width:600px){
+ #app#app#app .professional-card-pending .quote-slider-head{grid-template-rows:30px 30px!important;gap:4px!important}
+ #app#app#app .professional-card-pending .quote-slider-head b{height:30px!important;min-height:30px!important;font-size:11px!important;line-height:15px!important}
+ #app#app#app .professional-card-pending .quote-slider-head strong{height:30px!important;min-height:30px!important;font-size:18px!important;line-height:26px!important}
+}
