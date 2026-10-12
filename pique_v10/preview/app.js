@@ -215,7 +215,7 @@ function professionalRequestCard(o,mode){
   cardClass+=' professional-quoted-layout';
   leftContent=leftBase;
   rightContent=resolvedRequestMetaTags(o);
-  footerAction=`<div class="professional-card-footer quoted-summary-footer"><div class="professional-quote-summary"><div><span>PRECIO COTIZADO</span><strong>${o.quotedPrice!=null?money(o.quotedPrice):'SIN ESPECIFICAR'}</strong></div><div><span>TIEMPO ESTIMADO</span><strong>${o.estimatedMinutes!=null?quoteTimeLabel(o.estimatedMinutes):'SIN ESPECIFICAR'}</strong></div></div></div>`;
+  footerAction=`<div class="professional-card-footer quoted-summary-footer"><div class="professional-quote-summary"><div><span>PRECIO<br>OFRECIDO</span><strong>${o.quotedPrice!=null?money(o.quotedPrice):'SIN ESPECIFICAR'}</strong></div><div><span>TIEMPO<br>ESTIMADO</span><strong>${o.estimatedMinutes!=null?quoteTimeLabel(o.estimatedMinutes):'SIN ESPECIFICAR'}</strong></div></div></div>`;
  }
  if(['home-process','profile-process'].includes(mode)&&o.quoteStatus==='accepted'&&typeof hasAgreedSchedule==='function'&&!hasAgreedSchedule(o)){
  leftContent=`<div class="coordination-request-heading">${leftBase}</div>${detailTags}`;
