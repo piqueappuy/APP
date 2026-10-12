@@ -4261,3 +4261,15 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 @media(max-width:600px){
  #app#app#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){border-left:1px solid #c2d5f3!important;padding-left:12px!important;align-self:stretch!important}
 }
+
+#app#app#app .professional-profile-button{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+#app#app#app .professional-profile-button svg{width:18px!important;height:18px!important;flex:0 0 18px!important;margin:0!important}
+#app#app#app .chosen-person{justify-content:center!important;align-items:center!important;column-gap:18px!important}
+#app#app#app .chosen-person .chosen-professional-name{padding-left:10px!important;text-align:center!important}
+#app#app#app .order-completed .pique-on-way-tag{display:none!important}
+#app#app#app .order-completed .order-request>:is(.request-title,.order-description){text-align:center!important;align-self:center!important}
+#app#app#app .pique-meta-tag .meta-icon{display:flex!important;align-items:center!important;justify-content:center!important;align-self:center!important;flex:0 0 16px!important;line-height:1!important}
+#app#app#app .pique-meta-tag .meta-icon svg{display:block!important;width:16px!important;height:16px!important;stroke:currentColor;fill:none;stroke-width:1.8}
+#app#app#app .metadata-date-time{align-items:center!important}
+#app#app#app .coordination-card-hint{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:8px!important}
+#app#app#app .coordination-card-hint svg{width:17px!important;height:17px!important;flex:0 0 17px!important;margin:0!important}
