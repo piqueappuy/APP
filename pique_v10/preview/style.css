@@ -4524,3 +4524,10 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .professional-active-section>.quote-requests-heading:empty{display:none!important}
 
 .mobile-app .dashboard-stats .dashboard-execution-count::before{top:0!important}
+
+#app#app#app .professional-discover-empty{
+ display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important;gap:12px!important;padding:18px 16px!important;margin-top:0!important;
+}
+#app#app#app .professional-discover-empty>span{display:flex!important;flex-direction:column!important;align-items:center!important;gap:6px!important}
+#app#app#app .professional-discover-empty strong{font-size:clamp(13px,2.8vw,18px)!important;line-height:1.3!important;color:#0751ca!important;font-weight:800!important}
+#app#app#app .professional-discover-empty small{font-size:11px!important;line-height:1.4!important}
