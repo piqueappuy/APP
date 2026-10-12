@@ -4191,3 +4191,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 
 .mobile-app:has(#auth-form) .bottom-nav{display:none!important}
 .mobile-app:has(#auth-form){padding-bottom:24px!important}
+
+@media(max-width:600px){
+ #app#app#app .coordination-inside-title{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:4px!important;font-size:clamp(9px,3.15cqw,18px)!important;line-height:1.4!important;white-space:nowrap!important;width:100%!important;min-width:0!important;margin-bottom:16px!important}
+ #app#app#app .coordination-inside-title :is(.progress-pique-word,.coordination-pique-word){display:inline-flex!important;align-items:center!important;gap:0!important;font-size:inherit!important;white-space:nowrap!important;flex-shrink:0!important}
+ #app#app#app .coordination-inside-title svg{width:1em!important;height:1.3em!important;flex-shrink:0!important}
+}
