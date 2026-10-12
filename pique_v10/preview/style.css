@@ -4242,3 +4242,16 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{
  height:20px!important;min-height:20px!important;line-height:20px!important;
 }
+
+@media(max-width:600px){
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:10px 12px!important;align-items:start!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.order-request{display:contents!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.pique-state-row{grid-column:1!important;grid-row:1!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.request-title{grid-column:1!important;grid-row:2!important;font-size:13px!important;line-height:18px!important;white-space:normal!important;margin:0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.order-description{grid-column:1!important;grid-row:3!important;margin:0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){grid-column:2!important;grid-row:1/4!important;margin:0!important;min-width:0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.pique-card-divider{display:none!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.order-professional{grid-column:1/-1!important;grid-row:4!important;width:100%!important;min-width:0!important;border:0!important;border-top:1px solid #cbdcf6!important;padding:12px 0 0!important;margin:2px 0 0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .chosen-person{width:100%!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .requester-agreed-summary{width:100%!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:8px!important}
+}
