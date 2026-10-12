@@ -4542,3 +4542,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 }
 #app#app#app .professional-discover-empty::before,
 #app#app#app .professional-discover-empty::after{display:none!important}
+
+#app#app#app :is(.professional-discover-empty strong,.postulation-inside-title,.pique-section-title h2,.section-heading h2,.quote-requests-heading h2,.coordination-inside-title){font-family:'Nunito',Arial,sans-serif!important}
