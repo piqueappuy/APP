@@ -4227,3 +4227,18 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  height:26px!important;min-height:26px!important;font-size:14px!important;line-height:20px!important;
  margin:0!important;white-space:nowrap!important;
 }
+
+#app#app#app .requester-agreed-summary .coordination-quote-hint,
+#app#app#app .coordination-three-card .professional-quote-summary>div{
+ grid-template-rows:26px 20px!important;gap:2px!important;
+ padding:12px 6px 8px!important;height:auto!important;min-height:68px!important;align-content:center!important;
+}
+#app#app#app .requester-agreed-summary .coordination-quote-hint small,
+#app#app#app .coordination-three-card .professional-quote-summary>div>span{
+ position:static!important;transform:none!important;top:auto!important;margin:0!important;padding:0!important;
+}
+#app#app#app .requester-agreed-summary .coordination-quote-hint strong,
+#app#app#app .coordination-three-card .professional-quote-summary>div strong,
+#app#app#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{
+ height:20px!important;min-height:20px!important;line-height:20px!important;
+}
