@@ -4549,3 +4549,10 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#toast,#toast *{
  font-family:'Nunito',Arial,sans-serif!important;
 }
+
+/* Keep one boundary between coordination and applications. */
+#app#app#app :is(.professional-profile-process,.professional-coordinating-section):has(+.professional-active-section){
+ border-bottom:0!important;
+}
+#app#app#app .professional-active-section:has(>.quote-requests-heading:empty){border-top:0!important}
+#app#app#app .professional-coordinating-section+.professional-active-section{border-top:1px solid #d6e3f5!important}
