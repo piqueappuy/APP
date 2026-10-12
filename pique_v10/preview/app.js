@@ -151,9 +151,9 @@ function home(){
  return content||'<p class="profile-empty-hint" role="status">'+svg('info')+'<span>POR AHORA NO TENÉS PIQUES ABIERTOS NI EN MARCHA.</span></p>';
 }
 function quoteTimeLabel(minutes){
- if(minutes<60)return `${minutes} MIN`;
- if(minutes%60===0)return `${minutes/60} H`;
- return `${Math.floor(minutes/60)} H ${minutes%60} MIN`;
+ if(minutes<60)return `${minutes}M`;
+ if(minutes%60===0)return `${minutes/60}H`;
+ return `${Math.floor(minutes/60)}H ${minutes%60}M`;
 }
 let professionalPiquesFilter='all';
 let professionalActiveFilter='all';
