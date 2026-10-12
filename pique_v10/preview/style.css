@@ -4522,3 +4522,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .matching-request:has(>.postulation-inside-title)>.quote-request-controls{grid-row:2!important}
 #app#app#app .matching-request:has(>.postulation-inside-title)>.professional-card-footer{grid-row:3!important}
 #app#app#app .professional-active-section>.quote-requests-heading:empty{display:none!important}
+
+.mobile-app .dashboard-stats .dashboard-execution-count::before{top:0!important}
