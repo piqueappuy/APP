@@ -4390,3 +4390,6 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .pique-meta-tag .meta-icon::after{left:calc(100% + 4px)!important;height:16px!important}
  #app#app#app .metadata-date-time .meta-text{gap:3px!important;letter-spacing:-.35px!important;white-space:nowrap!important}
 }
+
+#app#app#app .order-completed .order-request>.order-description{text-align:left!important;text-wrap:pretty!important;word-break:normal!important;overflow-wrap:anywhere!important;hyphens:auto!important;line-height:1.4!important}
+@media(max-width:600px){#app#app#app .order-completed .order-request>.order-description{font-size:clamp(10px,2.65cqw,12px)!important;line-height:1.4!important;margin-top:0!important}}
