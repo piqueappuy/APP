@@ -4338,3 +4338,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  align-self:center!important;margin:0!important;padding:0!important;transform:none!important;
 }
 #app#app#app .metadata-date-time .meta-text{display:flex!important;flex-wrap:wrap!important;gap:4px!important;align-items:center!important}
+
+#app#app#app .order-completed:not(.requester-report-finished) .order-request>.pique-state-row{display:none!important}
