@@ -4371,3 +4371,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .pique-meta-tag .meta-icon::after{content:'';position:absolute;left:calc(100% + 3px);top:50%;width:5px;height:1px;background:#97b8ec}
 @media(max-width:600px){#app#app#app .pique-meta-tag{--tag-text-size:10px}}
 @media(max-width:360px){#app#app#app .pique-meta-tag{--tag-text-size:9px}}
+
+#app#app#app .pique-meta-tag{--tag-text-size:12px;align-items:center!important;gap:9px!important}
+#app#app#app .pique-meta-tag .meta-icon{display:flex!important;align-items:center!important;justify-content:center!important;width:18px!important;height:18px!important;flex:0 0 18px!important;margin-right:7px!important}
+#app#app#app .pique-meta-tag .meta-icon svg{width:18px!important;height:18px!important;transform:none!important}
+#app#app#app .pique-meta-tag .meta-icon::after{left:calc(100% + 7px)!important;top:0!important;width:1px!important;height:18px!important;background:#97b8ec}
+#app#app#app .pique-meta-tag .meta-text{display:flex!important;align-items:center!important;min-height:18px!important;line-height:18px!important}
+#app#app#app .pique-meta-tag .meta-text>span{line-height:18px!important}
+@media(max-width:600px){#app#app#app .pique-meta-tag{--tag-text-size:11px}}
+@media(max-width:360px){#app#app#app .pique-meta-tag{--tag-text-size:10px}}
