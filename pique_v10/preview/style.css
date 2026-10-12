@@ -4397,3 +4397,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .order-completed .order-request>.order-description{hyphens:none!important;text-wrap:balance!important;overflow-wrap:anywhere!important}
 
 @media(max-width:600px){#app#app#app .order-completed:not(.requester-report-finished) .completed-order-link{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important}#app#app#app .order-completed .order-request>.order-description{font-size:clamp(9px,2.35cqw,11px)!important;letter-spacing:-.1px!important}}
+
+#app#app#app .coordination-inside-title{
+ width:100%!important;box-sizing:border-box!important;
+ border-bottom:1px solid #c2d5f3!important;
+ padding-bottom:12px!important;margin-bottom:14px!important;
+}
