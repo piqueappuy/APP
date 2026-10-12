@@ -4273,3 +4273,19 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .metadata-date-time{align-items:center!important}
 #app#app#app .coordination-card-hint{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:8px!important}
 #app#app#app .coordination-card-hint svg{width:17px!important;height:17px!important;flex:0 0 17px!important;margin:0!important}
+
+#app#app#app .chosen-person{display:grid!important;grid-template-columns:40px minmax(0,max-content)!important;justify-content:center!important;align-items:center!important;column-gap:20px!important}
+#app#app#app .chosen-person>.avatar{grid-column:1!important;grid-row:1!important;margin:0!important;align-self:center!important}
+#app#app#app .chosen-person>.avatar::after{right:-10px!important;top:0!important;bottom:0!important}
+#app#app#app .chosen-person>.chosen-professional-name{grid-column:2!important;grid-row:1!important;padding:0 0 0 2px!important;margin:0!important;align-self:center!important}
+#app#app#app .chosen-person>.chosen-rating{grid-column:1/-1!important;width:100%!important;margin-top:10px!important}
+#app#app#app .professional-profile-button,
+#app#app#app .coordination-card-hint{min-height:46px!important;height:46px!important;padding:10px 12px!important;box-sizing:border-box!important;line-height:16px!important}
+@media(max-width:600px){
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link{grid-template-rows:auto auto!important;align-items:stretch!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.pique-state-row{display:none!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.request-title{grid-row:1!important;align-self:start!important;font-size:15px!important;line-height:20px!important;white-space:normal!important;padding:0!important;margin:0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>.order-description{grid-row:2!important;align-self:start!important;font-size:12px!important;line-height:18px!important;padding:0!important;margin:0!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){grid-row:1/3!important;align-self:stretch!important}
+ #app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.order-professional{grid-row:3!important}
+}
