@@ -4255,3 +4255,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .order-completed:not(.requester-report-finished) .chosen-person{width:100%!important}
  #app#app#app .order-completed:not(.requester-report-finished) .requester-agreed-summary{width:100%!important;display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:8px!important}
 }
+
+#app#app#app .chosen-person>.avatar{position:relative!important;margin-right:10px!important}
+#app#app#app .chosen-person>.avatar::after{content:'';position:absolute;right:-9px;top:0;bottom:0;width:1px;background:#c2d5f3}
+@media(max-width:600px){
+ #app#app#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){border-left:1px solid #c2d5f3!important;padding-left:12px!important;align-self:stretch!important}
+}
