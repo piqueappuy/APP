@@ -4188,3 +4188,6 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .person .avatar{display:flex!important;align-items:center!important;justify-content:center!important;width:18px!important;height:18px!important}
 #app#app#app .coordination-three-card .person .avatar svg{width:15px!important;height:15px!important}
 #app#app#app .coordination-three-card .coordination-zone-place svg{display:block!important;width:15px!important;height:15px!important}
+
+.mobile-app:has(#auth-form) .bottom-nav{display:none!important}
+.mobile-app:has(#auth-form){padding-bottom:24px!important}
