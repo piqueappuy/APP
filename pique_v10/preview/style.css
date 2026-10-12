@@ -4437,3 +4437,9 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .coordination-customer-zone{border-left:1px solid #c2d5f3!important}
 #app#app#app .coordination-three-card .coordination-zone-place{gap:7px!important;white-space:nowrap!important}
 #app#app#app .coordination-three-card .coordination-zone-place svg{display:block!important;box-sizing:content-box!important;width:16px!important;height:20px!important;border-right:1px solid #aac6ef!important;padding-right:7px!important}
+
+#app#app#app .coordination-three-card .coordination-customer-zone{padding-left:8px!important;padding-right:8px!important;justify-items:center!important}
+#app#app#app .coordination-three-card .coordination-zone-place{width:max-content!important;max-width:100%!important;justify-self:center!important;margin:0!important;padding:0!important;transform:none!important;gap:7px!important}
+#app#app#app .coordination-three-card .coordination-customer-zone>small{width:100%!important;text-align:center!important;justify-self:center!important}
+#app#app#app .coordination-three-card .coordination-zone-place>span{margin:0!important;padding:0!important;transform:none!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person h4{width:100%!important;text-align:center!important;justify-self:center!important}
