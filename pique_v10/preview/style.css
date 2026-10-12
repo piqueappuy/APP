@@ -4465,3 +4465,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .professional-coordinating-section .quote-requests-list:has(>.coordination-three-card:only-child){display:flex!important;justify-content:center!important;width:100%!important}
  #app#app#app .coordination-three-card{width:100%!important;max-width:800px!important;margin-left:auto!important;margin-right:auto!important;align-self:center!important}
 }
+
+#app#app#app .coordination-three-card .professional-requester-summary .person .avatar{border-right:0!important;padding-right:0!important}
+#app#app#app .coordination-three-card .coordination-zone-place svg{border-right:0!important;padding-right:0!important;box-sizing:border-box!important;width:16px!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person h4,
+#app#app#app .coordination-three-card .coordination-customer-zone>small{border-right:1px solid #aac6ef!important;padding-right:7px!important;margin-right:1px!important}
+#app#app#app .coordination-three-card .coordination-price-details{border-right:0!important}
+#app#app#app .coordination-three-card .professional-quote-summary{border-right:0!important}
+#app#app#app .coordination-three-card .coordination-three-columns{border-right:0!important}
+#app#app#app .coordination-three-card .professional-requester-summary::before{display:block!important}
