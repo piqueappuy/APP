@@ -4349,3 +4349,8 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .pique-meta-tag .meta-text{line-height:1!important}
 #app#app#app .pique-meta-tag .meta-icon svg{width:14px!important;height:14px!important;transform:translateY(-1px)!important}
 #app#app#app .metadata-date-time .meta-text>span{line-height:1!important}
+
+#app#app#app .order-completed .order-request>.request-title{text-align:left!important;align-self:start!important}
+#app#app#app .metadata-date-time{container-type:inline-size!important;min-width:0!important}
+#app#app#app .metadata-date-time .meta-text{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-width:0!important;font-size:clamp(7px,6cqw,11px)!important}
+#app#app#app .metadata-date-time .meta-text>span{white-space:nowrap!important;font-size:inherit!important;line-height:1.2!important}
