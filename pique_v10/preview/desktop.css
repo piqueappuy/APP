@@ -42,3 +42,13 @@
  width:100%!important;max-width:680px!important;min-width:0!important;margin-left:auto!important;margin-right:auto!important;
  }
 }
+
+@media(min-width:900px){
+ #app#app#app>.professional-dashboard-band{
+ width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important;
+ }
+ #app#app#app>#account-panel,
+ #app#app#app>#account-panel>.professional-profile-card{
+ width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;
+ }
+}
