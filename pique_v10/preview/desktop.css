@@ -1,0 +1,17 @@
+
+@media(min-width:900px){
+ body{padding:0!important;background:#f2f6fc!important}
+ .mobile-app{max-width:1440px!important;width:100%!important;border-radius:0!important;padding-bottom:100px!important}
+ .brand-header{padding-left:48px!important;padding-right:48px!important}
+ #app{padding-left:48px!important;padding-right:48px!important}
+ .bottom-nav{max-width:1440px!important;width:100%!important;left:50%!important;transform:translateX(-50%)!important}
+ .history-card-list,.quote-requests-list,.dashboard-order-list,.unfulfilled-order-list{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important}
+ .history-card-list>*,.quote-requests-list>*,.dashboard-order-list>*,.unfulfilled-order-list>*{min-width:0!important;width:100%!important;margin:0!important}
+ .requester-slider,.quote-requests-slider{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;overflow:visible!important}
+ .requester-slider>*,.quote-requests-slider>*{width:100%!important;min-width:0!important}
+ .publish-banner{max-width:680px!important;margin-left:auto!important;margin-right:auto!important}
+ .home-search>h1{text-align:center!important}
+ #app:is(.auth-view,.login-view){max-width:650px;margin:auto}
+ .coordination-three-card{max-width:800px!important;margin-left:auto!important;margin-right:auto!important}
+ .professional-profile-process,.professional-coordinating-section{max-width:900px;margin-left:auto;margin-right:auto}
+}
