@@ -15,3 +15,5 @@
  .coordination-three-card{max-width:800px!important;margin-left:auto!important;margin-right:auto!important}
  .professional-profile-process,.professional-coordinating-section{max-width:900px;margin-left:auto;margin-right:auto}
 }
+
+@media(min-width:900px){#app:has(#auth-form){max-width:650px!important;width:100%!important;margin:0 auto!important;padding-top:40px!important}.mobile-app .bottom-nav{max-width:1440px!important;width:100%!important}}
