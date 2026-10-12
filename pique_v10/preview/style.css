@@ -4420,3 +4420,7 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .coordination-three-card .professional-quote-summary>div strong,
  #app#app#app .coordination-three-card .professional-quote-summary>div:nth-child(2) strong{font-size:18px!important;line-height:26px!important;height:30px!important;min-height:30px!important}
 }
+
+#app#app#app .coordination-three-card .professional-requester-summary .person{position:relative!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person .avatar{display:flex!important;position:absolute!important;left:10px!important;bottom:7px!important;width:20px!important;height:24px!important;align-items:center!important;justify-content:center!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person strong{padding-left:22px!important}
