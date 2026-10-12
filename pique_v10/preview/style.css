@@ -4393,3 +4393,5 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 
 #app#app#app .order-completed .order-request>.order-description{text-align:left!important;text-wrap:pretty!important;word-break:normal!important;overflow-wrap:anywhere!important;hyphens:auto!important;line-height:1.4!important}
 @media(max-width:600px){#app#app#app .order-completed .order-request>.order-description{font-size:clamp(10px,2.65cqw,12px)!important;line-height:1.4!important;margin-top:0!important}}
+
+#app#app#app .order-completed .order-request>.order-description{hyphens:none!important;text-wrap:balance!important;overflow-wrap:anywhere!important}
