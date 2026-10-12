@@ -111,9 +111,7 @@ function authView(mode){
  </form>
  ${!signup&&!reset&&!update?'<a class="btn full gap" href="#registro">CREAR CUENTA</a>':''}
  ${signup?'<a class="link gap" href="#ingresar">YA TENGO CUENTA</a>':''}
- ${authUnavailable?'<p class="error gap">SERVICIO NO DISPONIBLE. RECARGÁ PARA REINTENTAR.</p>':''}
- <p class="demo-notice">El acceso usa tu cuenta real de PIQUE. Los pedidos y el perfil profesional siguen siendo una prueba local, todavía sin sincronización con tu cuenta.</p>
- </section>`;
+ ${authUnavailable?'<p class="error gap">SERVICIO NO DISPONIBLE. RECARGÁ PARA REINTENTAR.</p>':''} </section>`;
 }
 async function initializeAuth(){
  try{
