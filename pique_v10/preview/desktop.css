@@ -64,3 +64,9 @@
  width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;box-sizing:border-box!important;
  }
 }
+
+@media(min-width:900px){
+ .mobile-app #app#app#app.piques-soft-background>.professional-dashboard-band{
+ width:calc(100% + 96px)!important;max-width:none!important;margin-left:-48px!important;margin-right:-48px!important;
+ }
+}
