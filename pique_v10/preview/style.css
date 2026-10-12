@@ -4452,3 +4452,16 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .coordination-customer-zone>small{width:auto!important;font-size:9px!important;white-space:nowrap!important}
 #app#app#app .coordination-three-card .coordination-zone-place{font-size:10px!important;gap:5px!important}
 #app#app#app .coordination-three-card .coordination-zone-place>span{font-size:10px!important}
+
+#app#app#app .coordination-three-card .professional-requester-summary .person .avatar{order:0!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person h4{order:1!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person strong{order:2!important}
+#app#app#app .coordination-three-card .coordination-zone-place{display:contents!important}
+#app#app#app .coordination-three-card .coordination-zone-place svg{order:0!important}
+#app#app#app .coordination-three-card .coordination-customer-zone>small{order:1!important}
+#app#app#app .coordination-three-card .coordination-zone-place>span{order:2!important}
+#app#app#app .coordination-three-card .professional-requester-summary::before{display:none!important}
+@media(min-width:900px){
+ #app#app#app .professional-coordinating-section .quote-requests-list:has(>.coordination-three-card:only-child){display:flex!important;justify-content:center!important;width:100%!important}
+ #app#app#app .coordination-three-card{width:100%!important;max-width:800px!important;margin-left:auto!important;margin-right:auto!important;align-self:center!important}
+}
