@@ -9,6 +9,7 @@ paw:'<ellipse cx="5" cy="9" rx="2.1" ry="3"/><ellipse cx="10" cy="5" rx="2.1" ry
 clean:'<path d="m16 2-4 10 3 1 4-10q0-2-3-1M7 11l10 4-2 8-5-2 1-5-3 4-5-2z"/>',
 truck:'<path d="M2 5h12v12H2zM14 9h5l3 5v3h-8z"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path class="cutout" d="M6 18h.01M18 18h.01M16 11h2l2 3h-4z"/>',
 leaf:'<path d="M21 2C8 1 2 6 5 15c9 6 16-1 16-13Z"/><path class="cutout" d="M6 15 16 7"/><path d="M12 12 3 23"/>',
+calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"/>',
 tool:'<path d="M15 3a6 6 0 0 0-7 8l-6 7a3 3 0 0 0 4 4l7-7a6 6 0 0 0 8-7l-4 4-4-4z"/><circle cx="5" cy="19" r=".7" fill="white" stroke="white"/>',
 paint:'<rect x="2" y="3" width="16" height="8" rx="2"/><path d="M18 6h3v9h-9v7h-3v-9h10V8"/>',
 grid:'<rect x="3" y="3" width="6" height="6" rx="2"/><rect x="15" y="3" width="6" height="6" rx="2"/><rect x="3" y="15" width="6" height="6" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/>',
