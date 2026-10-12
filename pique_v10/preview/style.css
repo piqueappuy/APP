@@ -4507,3 +4507,18 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
  #app#app#app .professional-card-pending .quote-slider-head b{height:30px!important;min-height:30px!important;font-size:11px!important;line-height:15px!important}
  #app#app#app .professional-card-pending .quote-slider-head strong{height:30px!important;min-height:30px!important;font-size:18px!important;line-height:26px!important}
 }
+
+#app#app#app .professional-card-pending .quote-slider:nth-child(2),
+#app#app#app .professional-card-pending .quote-slider:nth-child(2) :is(b,strong){color:#0751ca!important}
+#app#app#app .professional-card-pending .quote-slider:nth-child(2){background:#e8f2ff!important}
+#app#app#app .postulation-inside-title{
+ grid-column:1/-1!important;grid-row:1!important;display:flex!important;align-items:center!important;justify-content:center!important;
+ width:100%!important;margin:0 0 12px!important;padding:0 0 12px!important;border-bottom:1px solid #c2d5f3!important;color:#0751ca!important;font-size:clamp(16px,3vw,20px)!important;gap:6px!important;
+}
+#app#app#app .postulation-logo-word{display:inline-flex!important;align-items:center!important;gap:2px!important}
+#app#app#app .postulation-logo-word svg{width:19px!important;height:25px!important;flex-shrink:0!important;color:#0751ca!important}
+#app#app#app .matching-request:has(>.postulation-inside-title)>.quote-request-left,
+#app#app#app .matching-request:has(>.postulation-inside-title)>.matching-request-divider,
+#app#app#app .matching-request:has(>.postulation-inside-title)>.quote-request-controls{grid-row:2!important}
+#app#app#app .matching-request:has(>.postulation-inside-title)>.professional-card-footer{grid-row:3!important}
+#app#app#app .professional-active-section>.quote-requests-heading:empty{display:none!important}
