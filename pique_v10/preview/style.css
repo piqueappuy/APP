@@ -4443,3 +4443,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .coordination-customer-zone>small{width:100%!important;text-align:center!important;justify-self:center!important}
 #app#app#app .coordination-three-card .coordination-zone-place>span{margin:0!important;padding:0!important;transform:none!important}
 #app#app#app .coordination-three-card .professional-requester-summary .person h4{width:100%!important;text-align:center!important;justify-self:center!important}
+
+#app#app#app .coordination-three-card .professional-requester-summary .person{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:32px!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person h4{width:auto!important;margin:0!important;font-size:9px!important;white-space:nowrap!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person .avatar{width:20px!important;flex:0 0 20px!important}
+#app#app#app .coordination-three-card .professional-requester-summary .person strong{font-size:10px!important;min-width:0!important}
+#app#app#app .coordination-three-card .coordination-customer-zone{display:flex!important;flex-direction:row!important;align-items:center!important;justify-content:center!important;gap:6px!important;min-height:32px!important}
+#app#app#app .coordination-three-card .coordination-customer-zone>small{width:auto!important;font-size:9px!important;white-space:nowrap!important}
+#app#app#app .coordination-three-card .coordination-zone-place{font-size:10px!important;gap:5px!important}
+#app#app#app .coordination-three-card .coordination-zone-place>span{font-size:10px!important}
