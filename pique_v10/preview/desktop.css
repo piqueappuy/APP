@@ -17,3 +17,15 @@
 }
 
 @media(min-width:900px){#app:has(#auth-form){max-width:650px!important;width:100%!important;margin:0 auto!important;padding-top:40px!important}.mobile-app .bottom-nav{max-width:1440px!important;width:100%!important}}
+
+@media(min-width:900px){
+ .history-card-list:has(>:only-child),
+ .quote-requests-list:has(>:only-child),
+ .dashboard-order-list:has(>:only-child),
+ .unfulfilled-order-list:has(>:only-child),
+ .requester-slider:has(>:only-child),
+ .quote-requests-slider:has(>:only-child){
+ grid-template-columns:minmax(0,680px)!important;
+ justify-content:center!important;
+ }
+}
