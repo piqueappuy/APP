@@ -4354,3 +4354,12 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .metadata-date-time{container-type:inline-size!important;min-width:0!important}
 #app#app#app .metadata-date-time .meta-text{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;gap:4px!important;white-space:nowrap!important;min-width:0!important;font-size:clamp(7px,6cqw,11px)!important}
 #app#app#app .metadata-date-time .meta-text>span{white-space:nowrap!important;font-size:inherit!important;line-height:1.2!important}
+
+#app#app#app .metadata-date-time{padding-left:6px!important;padding-right:5px!important;gap:5px!important;container-type:normal!important}
+#app#app#app .metadata-date-time .meta-text{font-size:10px!important;letter-spacing:-.2px!important;gap:3px!important;flex-shrink:1!important}
+#app#app#app .metadata-date-time .meta-icon{flex-basis:13px!important}
+#app#app#app .metadata-date-time .meta-icon svg{width:13px!important;height:13px!important}
+#app#app#app :is(.pique-meta-tag,.chosen-person,.coordination-quote-hint,.professional-quote-summary>div){
+ border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;box-sizing:border-box!important;
+}
+@media(max-width:360px){#app#app#app .metadata-date-time .meta-text{font-size:9px!important}}
