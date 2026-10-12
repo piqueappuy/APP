@@ -4474,3 +4474,14 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app#app#app .coordination-three-card .professional-quote-summary{border-right:0!important}
 #app#app#app .coordination-three-card .coordination-three-columns{border-right:0!important}
 #app#app#app .coordination-three-card .professional-requester-summary::before{display:block!important}
+
+#app#app#app .coordination-three-card .coordination-price-details{min-width:0!important;width:100%!important;box-sizing:border-box!important}
+#app#app#app .coordination-three-card .professional-quote-summary{width:100%!important;max-width:none!important;justify-items:stretch!important;align-items:stretch!important}
+#app#app#app .coordination-three-card .professional-quote-summary>div{width:100%!important;max-width:none!important;justify-self:stretch!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important}
+@media(min-width:900px){
+ #app#app#app .professional-coordinating-section,
+ #app#app#app .professional-profile-process{width:100%!important;max-width:none!important;margin-left:auto!important;margin-right:auto!important}
+ #app#app#app .professional-coordinating-section .quote-requests-list:has(>:only-child){display:grid!important;grid-template-columns:minmax(0,680px)!important;justify-content:center!important;width:100%!important;margin-left:auto!important;margin-right:auto!important}
+ #app#app#app .professional-coordinating-section .quote-requests-list>.coordination-three-card:only-child,
+ #app#app#app .professional-profile-process>.coordination-three-card:only-child{width:100%!important;max-width:680px!important;margin-left:auto!important;margin-right:auto!important}
+}
