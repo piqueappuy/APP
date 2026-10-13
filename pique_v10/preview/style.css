@@ -4582,3 +4582,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .professional-discover-section:has(.professional-discover-empty){
  width:100%!important;max-width:680px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;
 }
+
+#app#app#app :is(#professional-unfulfilled,#professional-resolved,#piques-archived,#piques-resolved) :is(h2,h2 span){
+ font-weight:900!important;
+}
+#app#app#app .requester-application-title{
+ width:100%!important;text-align:center!important;font-size:clamp(16px,3vw,20px)!important;line-height:1.3!important;font-weight:900!important;color:#0751ca!important;
+ border-bottom:1px solid #c2d5f3!important;padding-bottom:12px!important;margin:0 0 12px!important;
+}
+#app#app#app #piques-pendientes>.dashboard-section-heading{display:none!important}
