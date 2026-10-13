@@ -4577,3 +4577,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app :is(.coordination-inside-title,.postulation-inside-title) span{
  font-weight:900!important;
 }
+
+#app#app#app .professional-discover-empty strong{font-weight:900!important}
+#app#app#app .professional-discover-section:has(.professional-discover-empty){
+ width:100%!important;max-width:680px!important;margin-left:auto!important;margin-right:auto!important;box-sizing:border-box!important;
+}
