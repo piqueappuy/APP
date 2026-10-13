@@ -4791,3 +4791,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  width:25px!important;height:18px!important;box-sizing:content-box!important;
  padding-right:8px!important;border-right:1px solid #97b8ec!important;
 }
+
+#app#app#app .proposal-provider-meta :is(.trade-tag,.provider-zones){
+ display:flex!important;align-items:center!important;gap:8px!important;border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;padding:8px!important;box-sizing:border-box!important;
+}
+#app#app#app .proposal-provider-meta :is(.trade-tag,.provider-zones) svg{
+ width:16px!important;height:18px!important;box-sizing:content-box!important;padding-right:8px!important;border-right:1px solid #97b8ec!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;
+}
+#app#app#app :is(.proposal,.selected-professional-section,.selected-request-card) :is(.price-tag,.quote-estimate),
+#app#app#app .agreed-visit-summary,
+#app#app#app .completion-comment{
+ border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;box-sizing:border-box!important;
+}
+#app#app#app .completion-comment{padding:10px 12px!important;background:#eef4ff!important}
