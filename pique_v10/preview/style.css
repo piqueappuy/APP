@@ -4572,3 +4572,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .professional-card-pending .quote-slider{
  width:100%!important;max-width:none!important;align-self:stretch!important;
 }
+
+#app#app#app :is(.coordination-inside-title,.postulation-inside-title),
+#app#app#app :is(.coordination-inside-title,.postulation-inside-title) span{
+ font-weight:900!important;
+}
