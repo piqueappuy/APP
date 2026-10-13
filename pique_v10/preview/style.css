@@ -4755,3 +4755,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  height:1px!important;min-height:1px!important;margin:0!important;padding:0!important;
 }
 #app#app#app .professional-resolved-card>a.btn.requester-open{margin-top:0!important}
+
+#app#app#app #professional-resolved .professional-resolved-card>.resolved-card-price{margin-top:0!important;padding-top:8px!important;margin-bottom:0!important;padding-bottom:0!important}
