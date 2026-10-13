@@ -4708,3 +4708,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app #account-panel>a.btn.requester-open{
  display:flex!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;
 }
+
+@media(max-width:899px){
+ #app#app#app #account-panel:has(>.professional-profile-card)>a.btn.requester-open{
+ width:calc(100% + 52px)!important;margin-left:-26px!important;margin-right:-26px!important;
+ }
+}
+@media(max-width:370px){
+ #app#app#app #account-panel:has(>.professional-profile-card)>a.btn.requester-open{
+ width:calc(100% + 40px)!important;margin-left:-20px!important;margin-right:-20px!important;
+ }
+}
