@@ -4903,3 +4903,17 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app .proposal-requestable .proposal-two-line-name span{font-size:11px!important;line-height:1.25!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
  #app#app#app .proposal-requestable .person-copy>.small{display:block!important;font-size:9px!important;line-height:1.5!important;white-space:normal!important;overflow-wrap:normal!important;word-break:normal!important}
 }
+
+/* Mobile provider identity: avatar beside name, rating below both. */
+@media(max-width:560px){
+ #app#app#app .proposal-requestable .proposal-person-data>.person{
+  display:grid!important;grid-template-columns:26px minmax(0,1fr)!important;column-gap:6px!important;row-gap:5px!important;align-items:center!important;
+ }
+ #app#app#app .proposal-requestable .proposal-person-data>.person>.avatar{
+  grid-column:1!important;grid-row:1!important;width:26px!important;min-width:26px!important;height:30px!important;font-size:10px!important;
+ }
+ #app#app#app .proposal-requestable .person-copy{display:contents!important}
+ #app#app#app .proposal-requestable .proposal-two-line-name{grid-column:2!important;grid-row:1!important}
+ #app#app#app .proposal-requestable .proposal-two-line-name span{font-size:clamp(8px,2.3vw,11px)!important;white-space:nowrap!important}
+ #app#app#app .proposal-requestable .person-copy>.small{grid-column:1/-1!important;grid-row:2!important;width:100%!important}
+}
