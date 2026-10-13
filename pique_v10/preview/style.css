@@ -4633,3 +4633,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .professional-card-coordinating:not(.coordination-three-card) .pique-meta-tags>.pique-meta-tag{
  height:100%!important;min-height:0!important;margin:0!important;box-sizing:border-box!important;
 }
+
+#app#app#app .professional-card-coordinating>.quote-request-left>.quote-status-row:empty{display:none!important}
