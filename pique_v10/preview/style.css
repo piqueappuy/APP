@@ -4635,3 +4635,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 }
 
 #app#app#app .professional-card-coordinating>.quote-request-left>.quote-status-row:empty{display:none!important}
+
+#app#app#app #professional-unfulfilled .unfulfilled-pique-layout>.archive-policy-note{
+ position:relative!important;margin-top:12px!important;overflow:visible!important;
+}
+#app#app#app #professional-unfulfilled .unfulfilled-pique-layout>.archive-policy-note::before{
+ content:''!important;display:block!important;position:absolute!important;left:-3px!important;right:0!important;top:-13px!important;height:1px!important;background:#c2d5f3!important;
+}
+#app#app#app #piques-archived .archive-republish-row{
+ border-top:1px solid #c2d5f3!important;padding-top:12px!important;margin-top:12px!important;width:100%!important;
+}
+#app#app#app :is(#professional-unfulfilled,#piques-archived) .pique-meta-tag :is(.meta-text,.meta-text>span){
+ font-weight:800!important;
+}
