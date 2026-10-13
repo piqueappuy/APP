@@ -111,7 +111,7 @@ function requesterSelfCard(){
  const meta=authUser.user_metadata||{};
  const name=[meta.first_name,meta.last_name].filter(Boolean).join(' ')||meta.full_name||meta.name||'TU CUENTA';
  const logo=document.querySelector('.nav-pique-logo')?.outerHTML||'';
- const zone=meta.zone||meta.neighborhood||(professionalAccount?.user_id===authUser.id?professionalAccount.neighborhoods?.join(' · '):'')||'ZONA SIN INDICAR';
+ const zone=meta.zone||meta.neighborhood||(professionalAccount?.user_id===authUser.id?professionalAccount.neighborhoods?.join(' · '):'')||'SIN INDICAR';
  return `<section class="panel requester-self-card"><div class="requester-card-heading"><span class="requester-card-icon" aria-hidden="true">${svg('person')}</span><h2>${esc(name)}</h2></div><div class="requester-card-details"><div class="requester-card-detail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 11-8 11S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg><div><small>ZONA</small><span>${esc(zone)}</span></div></div><div class="requester-card-detail"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg><div><small>CORREO</small><span>${esc(authUser.email||'')}</span></div></div></div>${!hasActiveProfessional()?`<button type="button" class="btn requester-open full profile-activate-button" data-professional-start><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="3"/><path d="M8 7V4h8v3M12 11v6M9 14h6"/></svg><span>ACTIVAR PERFIL PROFESIONAL</span></button>`:''}</section><a class="btn requester-open full profile-my-piques-button" href="#pedidos">${logo}<span>VER MIS PIQUES</span></a>`;
 }
 
