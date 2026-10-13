@@ -4695,3 +4695,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .professional-profile-actions>button{
  grid-column:auto!important;grid-row:auto!important;order:0!important;position:static!important;align-self:stretch!important;
 }
+
+#app#app#app .professional-profile-heading h2{
+ display:flex!important;align-items:center!important;justify-content:center!important;gap:9px!important;
+}
+#app#app#app .professional-name-icon{width:24px!important;height:24px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;flex-shrink:0!important}
+#app#app#app .professional-profile-services h3{font-size:12px!important;line-height:17px!important}
+#app#app#app :is(.professional-service-pill,.professional-zone-pill){
+ font-size:11px!important;line-height:16px!important;padding:6px 8px!important;
+}
+#app#app#app :is(.professional-service-pill,.professional-zone-pill) svg{width:15px!important;height:15px!important}
+#app#app#app #account-panel>a.btn.requester-open{
+ display:flex!important;width:100%!important;max-width:none!important;box-sizing:border-box!important;margin-left:0!important;margin-right:0!important;
+}
