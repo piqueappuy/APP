@@ -4762,3 +4762,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app :is(.professional-progress-title,.requester-progress-title,.validation-card-title) span{
  font-weight:900!important;
 }
+
+#app#app#app :is(.requester-progress-heading,.coordination-panel>h2),#app#app#app :is(.requester-progress-heading,.coordination-panel>h2) span{font-weight:900!important}
