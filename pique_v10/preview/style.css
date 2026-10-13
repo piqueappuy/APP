@@ -4745,3 +4745,13 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .resolved-card-price>:is(.price-tag,.resolved-finalization-hint){
  border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;box-sizing:border-box!important;
 }
+
+#app#app#app .professional-resolved-card{gap:8px!important}
+#app#app#app .professional-resolved-card>.resolved-card-columns{margin-bottom:0!important;padding-bottom:0!important}
+#app#app#app .professional-resolved-card>.resolved-card-price{
+ margin-top:0!important;padding-top:8px!important;margin-bottom:0!important;padding-bottom:0!important;
+}
+#app#app#app .professional-resolved-card>.resolved-details-separator{
+ height:1px!important;min-height:1px!important;margin:0!important;padding:0!important;
+}
+#app#app#app .professional-resolved-card>a.btn.requester-open{margin-top:0!important}
