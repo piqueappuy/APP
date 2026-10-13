@@ -4855,3 +4855,13 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app #piques-archived .archive-republish-row>button::before{
  content:''!important;position:absolute!important;left:0!important;right:0!important;top:-9px!important;height:1px!important;background:#4d8de0!important;pointer-events:none!important;
 }
+
+/* Mobile profile action divider below agreed price and time. */
+@media(max-width:899px){
+ #app#app#app .completed-order-link>.order-professional>.professional-profile-button{
+  position:relative!important;margin-top:8px!important;
+ }
+ #app#app#app .completed-order-link>.order-professional>.professional-profile-button::before{
+  content:''!important;position:absolute!important;left:0!important;right:0!important;top:-9px!important;height:1px!important;background:#4d8de0!important;pointer-events:none!important;
+ }
+}
