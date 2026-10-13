@@ -4831,3 +4831,19 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .details-search-icon{
  width:18px!important;height:18px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;stroke-linecap:round!important;stroke-linejoin:round!important;flex-shrink:0!important;
 }
+
+/* Full-width request facts and compact requester history spacing. */
+#app#app#app .order-strip.request-detail .request-facts,
+#app#app#app .order-strip.request-detail .request-facts .pique-meta-tags{
+ width:100%!important;max-width:none!important;min-width:0!important;align-items:stretch!important;box-sizing:border-box!important;
+}
+#app#app#app .order-strip.request-detail .request-facts .pique-meta-tag{width:100%!important;max-width:none!important;box-sizing:border-box!important}
+#app#app#app #piques-archived .archive-policy-note{
+ border:1px solid #e7c467!important;border-left:3px solid #d5a12e!important;border-radius:8px!important;box-sizing:border-box!important;
+}
+#app#app#app #piques-archived .archive-policy-note.urgent{border-color:#f0b0b8!important;border-left-color:#e44b61!important}
+#app#app#app :is(#piques-archived,#piques-resolved) article.order{gap:8px!important;row-gap:8px!important}
+#app#app#app :is(#piques-archived,#piques-resolved) .pending-order-layout{margin:0!important;padding-bottom:0!important;min-height:0!important}
+#app#app#app #piques-archived .archive-republish-row{margin-top:0!important;padding-top:8px!important}
+#app#app#app #piques-resolved .requester-details-divider{margin:0!important;height:1px!important;min-height:1px!important;padding:0!important}
+#app#app#app #piques-resolved .completion-details-button{margin-top:0!important}
