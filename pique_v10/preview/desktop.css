@@ -70,3 +70,19 @@
  width:calc(100% + 96px)!important;max-width:none!important;margin-left:-48px!important;margin-right:-48px!important;
  }
 }
+
+/* Resolved and archived histories share the same desktop grid. */
+@media(min-width:900px){
+ #app#app#app :is(#professional-resolved,#professional-unfulfilled)>:is(.dashboard-order-list,.unfulfilled-order-list),
+ #app#app#app :is(#piques-resolved,#piques-archived)>.history-card-list{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px!important;width:100%!important;
+ }
+ #app#app#app :is(#professional-resolved,#professional-unfulfilled)>:is(.dashboard-order-list,.unfulfilled-order-list):has(>:only-child),
+ #app#app#app :is(#piques-resolved,#piques-archived)>.history-card-list:has(>:only-child){
+ grid-template-columns:minmax(0,680px)!important;justify-content:center!important;
+ }
+ #app#app#app :is(#professional-resolved,#professional-unfulfilled)>:is(.dashboard-order-list,.unfulfilled-order-list)>article,
+ #app#app#app :is(#piques-resolved,#piques-archived)>.history-card-list>article{
+ width:100%!important;min-width:0!important;max-width:none!important;margin:0!important;grid-column:auto!important;
+ }
+}
