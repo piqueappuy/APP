@@ -4556,3 +4556,19 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 }
 #app#app#app .professional-active-section:has(>.quote-requests-heading:empty){border-top:0!important}
 #app#app#app .professional-coordinating-section+.professional-active-section{border-top:1px solid #d6e3f5!important}
+
+#app#app#app.home-soft-background>.professional-coordinating-section{
+ border-bottom:1px solid #c2d5f3!important;padding-bottom:22px!important;margin-bottom:22px!important;
+}
+#app#app#app.home-soft-background>.professional-coordinating-section+.professional-active-section{
+ border-top:0!important;margin-top:0!important;padding-top:0!important;
+}
+#app#app#app .coordination-three-card .coordination-price-details{
+ padding-right:0!important;
+}
+#app#app#app .professional-card-pending>.quote-request-controls{
+ padding-right:0!important;width:100%!important;max-width:none!important;align-items:stretch!important;
+}
+#app#app#app .professional-card-pending .quote-slider{
+ width:100%!important;max-width:none!important;align-self:stretch!important;
+}
