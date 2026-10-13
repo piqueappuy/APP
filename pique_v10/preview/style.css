@@ -4603,3 +4603,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  display:block!important;white-space:normal!important;text-align:center!important;font-size:11px!important;line-height:15px!important;min-height:30px!important;
 }
 #app#app#app .professional-card-coordinating .professional-quote-summary>div>span br{display:block!important}
+
+#app#app#app .professional-card-coordinating>.quote-request-left>h3{font-weight:900!important}
+#app#app#app .professional-card-coordinating:not(.coordination-three-card) .professional-quote-summary>div>span{
+ font-size:9px!important;line-height:12px!important;height:24px!important;min-height:24px!important;
+}
+#app#app#app .professional-card-coordinating:not(.coordination-three-card) .professional-quote-summary>div>strong{
+ font-size:16px!important;line-height:20px!important;height:20px!important;min-height:20px!important;
+}
+#app#app#app .professional-card-coordinating:not(.coordination-three-card) .professional-quote-summary>div{
+ padding:6px 5px!important;gap:2px!important;
+}
+#app#app#app .professional-card-coordinating .professional-coordination-hint small{font-size:9px!important;line-height:12px!important}
+#app#app#app .professional-card-coordinating .professional-coordination-hint strong{font-size:12px!important;line-height:16px!important}
