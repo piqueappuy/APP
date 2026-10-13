@@ -4767,3 +4767,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 
 #app#app#app .requester-application-title{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important}
 #app#app#app .requester-application-title span{font-weight:900!important}
+
+#app#app#app #account-panel :is(button,.btn){font-weight:900!important}
+#app#app#app #account-panel .profile-my-piques-button svg{
+ fill:none!important;stroke:none!important;
+}
+#app#app#app #account-panel .profile-my-piques-button svg path:first-child{
+ fill:white!important;stroke:none!important;
+}
+#app#app#app #account-panel .profile-my-piques-button svg path:nth-child(2){
+ fill:none!important;stroke:#0751ca!important;stroke-width:5!important;stroke-linecap:round!important;stroke-linejoin:round!important;
+}
