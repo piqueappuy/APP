@@ -4691,3 +4691,7 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .professional-profile-about h3{font-size:14px!important;line-height:20px!important;font-weight:800!important}
 #app#app#app .professional-progress-heading>strong{font-size:16px!important;line-height:22px!important}
 #app#app#app .professional-profile-about p{font-size:14px!important;line-height:1.5!important}
+
+#app#app#app .professional-profile-actions>button{
+ grid-column:auto!important;grid-row:auto!important;order:0!important;position:static!important;align-self:stretch!important;
+}
