@@ -4782,3 +4782,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .public-professional-profile .tabs button{font-weight:900!important}
 #app#app#app .public-professional-profile .trade-tag{display:flex!important;align-items:center!important;gap:6px!important}
 #app#app#app .public-professional-profile .trade-tag svg{width:16px!important;height:16px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important;flex-shrink:0!important}
+
+#app#app#app .public-professional-profile .trade-tag{
+ border:1px solid #bdd3f6!important;border-left:3px solid #80b4ff!important;border-radius:8px!important;
+ padding:8px!important;box-sizing:border-box!important;gap:8px!important;
+}
+#app#app#app .public-professional-profile .trade-tag svg{
+ width:25px!important;height:18px!important;box-sizing:content-box!important;
+ padding-right:8px!important;border-right:1px solid #97b8ec!important;
+}
