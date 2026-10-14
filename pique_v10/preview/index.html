@@ -95,6 +95,28 @@ html,body,body *,body *::before,body *::after{font-family:'Nunito',Arial,sans-se
 .landing-logo-check svg{display:block;width:18px;height:24px;color:#0754e8}
 .demo h3{text-transform:uppercase;white-space:nowrap;font-size:clamp(10px,1.25vw,18px);letter-spacing:-.3px}
 @media(max-width:760px){.demo h3{font-size:clamp(8px,2.85vw,18px);letter-spacing:-.35px}}
+
+/* The how-it-works anchor fills a screen, with all mobile steps visible. */
+.how.section{min-height:100vh;min-height:100svh;display:flex;align-items:center;scroll-margin-top:0}
+.how.section>.wrap{width:100%}
+@media(max-width:760px){
+ .how.section{padding:22px 0;align-items:center}
+ .how .eyebrow{font-size:10px;letter-spacing:1.5px}
+ .how h2{font-size:clamp(26px,7.8vw,39px);line-height:1.04;margin:12px 0 14px;letter-spacing:-1.4px}
+ .how .section-intro{font-size:12px;line-height:1.45;margin:0}
+ .how .cards{margin-top:18px;gap:10px}
+ .how .cards article{padding:12px 14px;grid-template-columns:32px minmax(0,1fr);column-gap:10px;row-gap:8px}
+ .how .cards .step-num{width:32px;height:32px;font-size:17px;border-radius:9px}
+ .how .cards h3{font-size:clamp(10px,3vw,14px);letter-spacing:-.35px}
+ .how .cards p{font-size:12px;line-height:1.4}
+}
+@media(max-width:760px) and (max-height:600px){
+ .how.section{padding:16px 0}
+ .how h2{font-size:26px;margin:9px 0 10px}
+ .how .cards{margin-top:12px;gap:8px}
+ .how .cards article{padding:10px 12px;row-gap:6px}
+ .how .cards p{font-size:11px}
+}
 </style></head><body>
 <header><nav class="wrap nav" aria-label="Navegación de Pique"><a class="logo" href="./" aria-label="Pique inicio"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" fill="none" stroke="white" stroke-width="5"/></svg><span>IQUE</span></a><div class="links"><a href="#como-funciona">Cómo funciona</a><a href="#profesionales">Para profesionales</a><a class="btn" href="app.html#ingresar">Iniciar sesión ↗</a></div></nav></header>
 <main><div class="wrap hero"><div><span class="eyebrow">Menos vueltas. Más soluciones.</span><h1>Lo que precisás,<br><em>un pique más cerca.</em></h1><p class="lead">Conectá con profesionales para resolver lo que necesitás. Publicá tu pedido, recibí propuestas y coordiná el trabajo en un solo lugar.</p><div class="actions"><a class="btn" href="app.html#ingresar">Buscar un pique <span aria-hidden="true">→</span></a><a class="btn light" href="#como-funciona">Conocé cómo funciona</a></div></div><div class="scene" aria-label="Ejemplo ilustrativo de un pedido en Pique"><p class="scene-label">ASÍ SE MUEVE TU PIQUE</p><div class="demo"><span class="status">EN MARCHA</span><h3>Necesito reparar una canilla</h3><p>Plomería · En tu zona</p><div class="steps" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tu profesional está en camino.</div></div><div class="floating"><span class="avatar landing-logo-check" aria-hidden="true"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Todo en el mismo lugar</strong><small>Propuestas, horarios y seguimiento.</small></div></div></div></div>
