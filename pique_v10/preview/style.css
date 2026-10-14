@@ -5046,3 +5046,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app :is(.pique-meta-tag,.trade-tag,.provider-zones){
  border:1px solid #0754e8!important;border-left:3px solid #0754e8!important;background-clip:padding-box!important;
 }
+
+/* State and urgency pills have crisp outlines in their own text color. */
+#app#app#app#app :is(.deadline-tag,.status-pill,.pique-quoting-tag,.pique-on-way-tag,.completion-finalized-tag,.badge){
+ border:1px solid currentColor!important;background-clip:padding-box!important;
+}
