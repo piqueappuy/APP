@@ -5038,3 +5038,10 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app :is(.panel,.proposal,.matching-request,.professional-profile-card,.requester-profile-card,.public-professional-profile,.public-resolved-work-card,.profile-order-card,.category,.recent-orders,.verified-banner,.publish-banner){
  border-width:1px!important;background-clip:padding-box!important;
 }
+
+/* Strong thin hint contours, matching the application card treatment. */
+#app#app#app :is(.pique-meta-tag,.trade-tag,.provider-zones,.quote-estimate,.resolved-finalization-hint,.coordination-quote-hint,.received-responses-hint,.coordination-card-hint,.agreed-visit-summary,.completion-comment,.professional-coordination-hint,.chosen-person){
+ border:1px solid #0754e8!important;border-left-width:3px!important;background-clip:padding-box!important;
+}
+#app#app#app :is(.price-tag,.coordination-price){border:1px solid #43a982!important;border-left-width:3px!important;background-clip:padding-box!important}
+#app#app#app :is(.archive-policy-note,.quote-rejected){border-width:1px!important;border-left-width:3px!important;background-clip:padding-box!important}
