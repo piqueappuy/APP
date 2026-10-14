@@ -4961,3 +4961,10 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 
 #order-heading.request-two-column-heading{display:block!important}
 #order-heading.request-two-column-heading h1{justify-content:center!important;text-align:center!important}
+
+/* Center request guidance in the full space beneath the logo bar. */
+.brand-header:has(#order-heading.request-two-column-heading:not([hidden])){padding-bottom:0!important}
+#order-heading.request-two-column-heading:not([hidden]){
+ display:flex!important;align-items:center!important;justify-content:center!important;min-height:110px!important;padding:20px 0 29px!important;margin:0!important;box-sizing:border-box!important;
+}
+#order-heading.request-two-column-heading h1{width:100%!important;margin:0!important}
