@@ -4958,3 +4958,6 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #order-heading .request-header-back{width:100%;background:#edf4ff;color:#0754e8;font-weight:900;font-size:clamp(10px,2vw,13px);padding:12px 8px;min-height:48px}
 #order-heading .request-header-back svg{width:19px;height:25px}
 @media(max-width:560px){#order-heading.request-two-column-heading{gap:10px}#order-heading .request-header-back{gap:6px}}
+
+#order-heading.request-two-column-heading{display:block!important}
+#order-heading.request-two-column-heading h1{justify-content:center!important;text-align:center!important}
