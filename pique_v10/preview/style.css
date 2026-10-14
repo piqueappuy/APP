@@ -5051,3 +5051,20 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app :is(.deadline-tag,.status-pill,.pique-quoting-tag,.pique-on-way-tag,.completion-finalized-tag,.badge){
  border:1px solid currentColor!important;background-clip:padding-box!important;
 }
+
+/* Home request titles take priority over surplus tag height. */
+#app#app#app#app.home-soft-background .order-request>h3,
+#app#app#app#app.home-soft-background .pending-order-main>h3.request-title{
+ font-size:20px!important;line-height:1.2!important;font-weight:900!important;white-space:normal!important;overflow:visible!important;text-overflow:clip!important;overflow-wrap:break-word!important;margin:0 0 10px!important;max-height:none!important;
+}
+#app#app#app#app.home-soft-background .order-request>.pique-meta-tags{
+ flex:0 0 auto!important;grid-template-rows:repeat(3,34px)!important;gap:6px!important;margin-top:10px!important;padding-top:0!important;
+}
+#app#app#app#app.home-soft-background .order-request .pique-meta-tag,
+#app#app#app#app.home-soft-background .pending-order-meta .pique-meta-tag{
+ height:34px!important;min-height:34px!important;padding-top:5px!important;padding-bottom:5px!important;
+}
+@media(max-width:560px){
+ #app#app#app#app.home-soft-background .order-request>h3,
+ #app#app#app#app.home-soft-background .pending-order-main>h3.request-title{font-size:18px!important}
+}
