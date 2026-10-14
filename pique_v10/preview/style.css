@@ -5247,3 +5247,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  font-size:clamp(11px,3.55vw,25px)!important;letter-spacing:-.35px!important;gap:5px!important;
  }
 }
+
+/* Compact the request header and restore title-over-description hierarchy. */
+#order-heading.request-two-column-heading:not([hidden]){min-height:76px!important;padding:14px 0 23px!important}
+@media(max-width:899px){
+ #app#app#app#app>.order-strip.request-detail .request-title-single{font-size:clamp(11px,3.35vw,18px)!important;font-weight:900!important;letter-spacing:-.5px!important}
+ #app#app#app#app>.order-strip.request-detail .description-info-tag{font-size:10px!important;font-weight:500!important;line-height:1.35!important;gap:5px!important}
+ #app#app#app#app>.order-strip.request-detail .description-info-tag span{font-size:10px!important;font-weight:500!important}
+ #app#app#app#app>.order-strip.request-detail .description-info-tag svg{width:14px!important;height:14px!important;flex-basis:14px!important}
+}
