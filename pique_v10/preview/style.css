@@ -5068,3 +5068,11 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app.home-soft-background .order-request>h3,
  #app#app#app#app.home-soft-background .pending-order-main>h3.request-title{font-size:18px!important}
 }
+
+/* Center shorter home request content beside the professional column. */
+#app#app#app#app.home-soft-background .completed-order-link>.order-request{
+ align-self:stretch!important;display:flex!important;flex-direction:column!important;justify-content:center!important;
+}
+#app#app#app#app.home-soft-background .pending-order-layout>.pending-order-main{
+ align-self:stretch!important;display:flex!important;flex-direction:column!important;justify-content:center!important;
+}
