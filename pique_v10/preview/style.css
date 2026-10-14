@@ -4968,3 +4968,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  display:flex!important;align-items:center!important;justify-content:center!important;min-height:110px!important;padding:20px 0 29px!important;margin:0!important;box-sizing:border-box!important;
 }
 #order-heading.request-two-column-heading h1{width:100%!important;margin:0!important}
+
+#app#app#app .proposal-provider-meta .provider-review-copy{display:flex!important;flex-direction:column!important;gap:2px!important;align-items:flex-start!important;line-height:1.25!important}
+#app#app#app .proposal-provider-meta .provider-review-copy>span{font-size:10px!important;line-height:1.25!important;min-height:0!important}
+#app#app#app .proposal-provider-meta .provider-review-tag{min-height:44px!important}
+@media(max-width:560px){#app#app#app .proposal-provider-meta .provider-review-copy>span{font-size:9px!important}}
