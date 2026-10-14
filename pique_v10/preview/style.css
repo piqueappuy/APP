@@ -5290,3 +5290,6 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #order-heading.request-two-column-heading h1{font-size:clamp(12px,3.9vw,25px)!important;letter-spacing:-.45px!important;gap:4px!important}
  #order-heading.request-two-column-heading h1>svg{width:16px!important;height:16px!important;flex-basis:16px!important;padding:2px!important}
 }
+
+#app#app#app#app>.options-divider{display:none!important}
+#app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected){background:linear-gradient(135deg,#ef4b65 0%,#d92d45 52%,#ae1835 100%)!important}
