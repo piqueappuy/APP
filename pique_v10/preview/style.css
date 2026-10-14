@@ -5120,3 +5120,11 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app>.order-strip.request-detail{
  border-width:.5px!important;
 }
+
+/* Compact desktop proposal layout instead of full-width sparse rows. */
+@media(min-width:900px){
+ #app#app#app#app .proposal-board>.proposals{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:18px!important}
+ #app#app#app#app .proposal-board .professional-photo-proposal{width:100%!important;min-width:0!important;padding:16px!important;column-gap:18px!important}
+ #app#app#app#app>.order-strip.request-detail .request-title-single{font-size:24px!important;line-height:1.2!important;font-weight:900!important;white-space:normal!important}
+ #app#app#app#app .proposal-board .sorter{margin-bottom:18px!important}
+}
