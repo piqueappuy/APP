@@ -5256,3 +5256,19 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail .description-info-tag span{font-size:10px!important;font-weight:500!important}
  #app#app#app#app>.order-strip.request-detail .description-info-tag svg{width:14px!important;height:14px!important;flex-basis:14px!important}
 }
+
+/* Professional proposals share the blue photographic request styling. */
+#app#app#app#app .proposal-board .professional-photo-proposal{
+ background-image:linear-gradient(110deg,rgba(3,64,184,.98),rgba(4,83,211,.9) 48%,rgba(0,38,102,.7)),var(--discover-photo)!important;background-size:cover!important;background-position:center!important;color:#fff!important;border-color:#3999ff!important;
+}
+#app#app#app#app .proposal-board .professional-photo-proposal .proposal-two-line-name,
+#app#app#app#app .proposal-board .professional-photo-proposal .proposal-two-line-name span,
+#app#app#app#app .proposal-board .professional-photo-proposal .provider-inline-rating{color:#fff!important}
+#app#app#app#app .proposal-board .professional-photo-proposal .provider-inline-rating svg{stroke:#fff!important}
+#app#app#app#app .proposal-board .professional-photo-proposal .proposal-provider-meta :is(.trade-tag,.provider-zones){
+ background:rgba(255,255,255,.16)!important;color:#fff!important;border-color:#8fc5ff!important;
+}
+#app#app#app#app .proposal-board .professional-photo-proposal .proposal-provider-meta svg{color:#fff!important;stroke:#fff!important;border-right-color:#9bcaff!important}
+#app#app#app#app .proposal-board .professional-photo-proposal>.proposal-top.no-price{border-right-color:#8fc5ff!important}
+#app#app#app#app .proposal-board .professional-photo-proposal .avatar{background:#e8f2ff!important;color:#0754e8!important}
+#app#app#app#app .proposal-board .professional-photo-proposal .quote-awaiting{background:#cce7ff!important;color:#0754b8!important}
