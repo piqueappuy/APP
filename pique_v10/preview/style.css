@@ -5128,3 +5128,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail .request-title-single{font-size:24px!important;line-height:1.2!important;font-weight:900!important;white-space:normal!important}
  #app#app#app#app .proposal-board .sorter{margin-bottom:18px!important}
 }
+
+/* Desktop request summary: title and status, description, then facts. */
+@media(min-width:900px){
+ #app#app#app#app>.order-strip.request-detail{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:12px!important;padding:20px!important}
+ #app#app#app#app>.order-strip.request-detail>.request-description{display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;gap:10px 18px!important;width:100%!important}
+ #app#app#app#app>.order-strip.request-detail .request-title-single{grid-column:1!important;grid-row:1!important;margin:0!important;align-self:center!important}
+ #app#app#app#app>.order-strip.request-detail .pique-state-row{grid-column:2!important;grid-row:1!important;align-self:center!important;margin:0!important;justify-content:flex-end!important}
+ #app#app#app#app>.order-strip.request-detail .description-info-tag{grid-column:1/-1!important;grid-row:2!important;margin:0!important;width:100%!important}
+ #app#app#app#app>.order-strip.request-detail>.pique-card-divider{display:none!important}
+ #app#app#app#app>.order-strip.request-detail>.request-facts{grid-column:1!important;grid-row:2!important;width:100%!important}
+ #app#app#app#app>.order-strip.request-detail .request-facts .pique-meta-tags{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:10px!important;width:100%!important}
+ #app#app#app#app>.order-strip.request-detail .request-facts .pique-meta-tag{width:100%!important;min-height:36px!important}
+}
