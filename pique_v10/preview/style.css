@@ -5003,3 +5003,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app .proposal-board .proposal-person-data>.person>.avatar{width:32px!important;min-width:32px!important;height:36px!important;font-size:12px!important}
  #app#app#app .proposal-board .person-copy{padding-left:6px!important}
 }
+
+/* Identity divider follows the name, before the rating. */
+#app#app#app .proposal-board .person-copy{border-left:0!important;padding-left:0!important}
+#app#app#app .provider-inline-rating{border-left:1px solid #4d8de0!important;padding-left:9px!important;align-self:stretch!important}
+@media(max-width:560px){#app#app#app .provider-inline-rating{padding-left:6px!important}}
