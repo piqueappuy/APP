@@ -5417,3 +5417,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app#app#app .order-completed .chosen-provider-location .meta-icon{width:15px!important;height:16px!important;flex-basis:15px!important;margin-right:5px!important}
  #app#app#app#app#app#app .order-completed .chosen-provider-location .meta-icon svg{width:15px!important;height:16px!important}
 }
+
+/* Exact mobile metadata metrics shared with the request location tag. */
+#app#app#app#app#app#app#app .order-completed .chosen-provider-location.pique-meta-tag{
+ height:32px!important;min-height:32px!important;padding:6px 5px 6px 6px!important;gap:6px!important;border:1px solid #8fc5ff!important;border-left:3px solid #8fc5ff!important;border-radius:10px!important;font-size:10.5px!important;line-height:1.3!important;
+}
+#app#app#app#app#app#app#app .order-completed .chosen-provider-location .meta-text{font-size:10.5px!important;line-height:1.3!important}
+#app#app#app#app#app#app#app .order-completed .chosen-person::before{height:32px!important;background:rgba(255,255,255,.7)!important}
+#app#app#app#app#app#app#app .order-completed :is(.chosen-rating>span,.chosen-provider-location .meta-icon svg){border-color:rgba(255,255,255,.7)!important}
+#app#app#app#app#app#app#app .order-completed :is(.requester-home-progress,.completed-order-link,.order-professional,.requester-agreed-summary){border-color:rgba(255,255,255,.7)!important}
+#app#app#app#app#app#app#app .order-completed :is(.meta-icon,.avatar)::after,
+#app#app#app#app#app#app#app .order-completed .professional-profile-button::before{background:rgba(255,255,255,.7)!important}
