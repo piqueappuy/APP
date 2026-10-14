@@ -5176,3 +5176,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail .request-facts{padding-top:16px!important}
  #app#app#app#app>.order-strip.request-detail .request-facts .pique-meta-tag{min-height:46px!important}
 }
+
+/* Prominent priority and status pills in the blue request summary. */
+#app#app#app#app>.order-strip.request-detail .deadline-tag{
+ padding:7px 12px!important;border-radius:999px!important;font-size:11px!important;font-weight:900!important;line-height:1.2!important;border:1px solid #9fd5ff!important;box-shadow:0 3px 12px #001c6133!important;
+}
+#app#app#app#app>.order-strip.request-detail .deadline-tag.deadline-quote{background:#cceaff!important;color:#0754b8!important;border-color:#87ceff!important}
+#app#app#app#app>.order-strip.request-detail .deadline-tag:not(.deadline-quote):not(.urgent):not(.completion-finalized-tag){background:#ffe38a!important;color:#6d4700!important;border-color:#ffc94d!important}
+@media(min-width:900px){
+ #app#app#app#app>.order-strip.request-detail .pique-state-row{align-self:end!important;justify-self:end!important;gap:10px!important;margin-bottom:0!important}
+ #app#app#app#app>.order-strip.request-detail .pique-state-divider{display:none!important}
+ #app#app#app#app>.order-strip.request-detail{gap:10px!important}
+ #app#app#app#app>.order-strip.request-detail .request-facts{padding-top:12px!important}
+}
