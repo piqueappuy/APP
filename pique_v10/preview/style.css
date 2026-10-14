@@ -5312,3 +5312,16 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app.piques-soft-background .order-completed .professional-profile-button svg{stroke:currentColor!important}
 #app#app#app#app.piques-soft-background .order-completed .progress-pique-word svg path:first-child{fill:#fff!important}
 #app#app#app#app.piques-soft-background .order-completed .progress-pique-word svg path:nth-child(2){stroke:#0754e8!important}
+
+#app#app#app#app.piques-soft-background .order-completed .description-info-tag{display:flex!important;align-items:center!important;gap:7px!important;background:transparent!important;border:0!important;padding:0!important;margin:8px 0!important}
+#app#app#app#app.piques-soft-background .order-completed .description-info-tag svg{width:16px!important;height:16px!important;flex:0 0 16px!important;stroke:currentColor!important;fill:none!important;border:0!important;padding:0!important}
+#app#app#app#app .order-completed .chosen-professional-name{color:#0754e8!important}
+#app#app#app#app .order-completed .coordination-professional-heading{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important}
+#app#app#app#app .coordination-professional-heading svg{width:18px!important;height:18px!important}
+#app#app#app#app .chosen-rating>span{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+#app#app#app#app .chosen-rating>span svg,.chosen-provider-location svg{width:14px!important;height:14px!important;fill:none!important;stroke:currentColor!important;flex-shrink:0!important}
+#app#app#app#app .chosen-provider-location{grid-column:1/-1!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important;color:#0754e8!important;font-size:11px!important;padding-top:6px!important;width:100%!important}
+#app#app#app#app.piques-soft-background .order-completed :is(.requester-home-progress,.completed-order-link,.order-professional){border-top-color:#ffffffb3!important;border-bottom-color:#ffffffb3!important}
+#app#app#app#app.piques-soft-background .order-completed .pique-card-divider{background:#ffffffb3!important}
+#app#app#app#app.piques-soft-background .order-completed .professional-profile-button::before{background:#ffffffb3!important}
+#app#app#app#app.piques-soft-background .order-completed .pique-meta-tag .meta-icon::after{background:#ffffffb3!important}
