@@ -5325,3 +5325,19 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app.piques-soft-background .order-completed .pique-card-divider{background:#ffffffb3!important}
 #app#app#app#app.piques-soft-background .order-completed .professional-profile-button::before{background:#ffffffb3!important}
 #app#app#app#app.piques-soft-background .order-completed .pique-meta-tag .meta-icon::after{background:#ffffffb3!important}
+
+#app#app#app#app .order-completed .chosen-person{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#app#app#app#app .order-completed .chosen-identity{grid-column:1/-1!important;grid-row:1!important}
+#app#app#app#app .order-completed .chosen-person>.chosen-rating{
+ grid-column:1!important;grid-row:2!important;display:flex!important;flex-direction:column!important;gap:5px!important;width:100%!important;border:0!important;margin:0!important;padding:4px!important;
+}
+#app#app#app#app .order-completed .chosen-person>.chosen-provider-location{
+ grid-column:2!important;grid-row:2!important;align-self:stretch!important;border-left:1px solid #4d8de0!important;padding:4px 4px 4px 10px!important;
+}
+#app#app#app#app .order-completed .chosen-provider-location>span{
+ background:#d6e9ff!important;border:1px solid #0754e8!important;border-radius:7px!important;padding:6px!important;font-size:10px!important;line-height:1.25!important;
+}
+#app#app#app#app .order-completed .chosen-person>.professional-profile-button{
+ grid-column:1/-1!important;grid-row:3!important;min-height:38px!important;height:auto!important;margin:4px 0 0!important;padding:9px!important;font-size:10px!important;
+}
+#app#app#app#app .order-completed .chosen-person>.professional-profile-button::before{display:none!important}
