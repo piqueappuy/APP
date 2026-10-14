@@ -5428,3 +5428,11 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app .order-completed :is(.requester-home-progress,.completed-order-link,.order-professional,.requester-agreed-summary){border-color:rgba(255,255,255,.7)!important}
 #app#app#app#app#app#app#app .order-completed :is(.meta-icon,.avatar)::after,
 #app#app#app#app#app#app#app .order-completed .professional-profile-button::before{background:rgba(255,255,255,.7)!important}
+
+/* Match the professional row to the request row's column gutter. */
+#app#app#app#app#app#app#app#app .order-completed .chosen-person{column-gap:8px!important}
+#app#app#app#app#app#app#app#app .order-completed .chosen-provider-location.pique-meta-tag{
+ margin-left:13px!important;width:calc(100% - 13px)!important;box-sizing:border-box!important;
+}
+#app#app#app#app#app#app#app#app .order-completed .chosen-person::before{left:calc(50% + 4px)!important;transform:none!important;background:#4d8de0!important}
+#app#app#app#app#app#app#app#app .order-completed :is(.chosen-rating>span,.requester-home-progress,.completed-order-link,.order-professional){border-color:#4d8de0!important}
