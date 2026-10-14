@@ -5224,3 +5224,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app .proposal-board .sorter button{padding:10px 7px!important;min-width:0!important;gap:4px!important;font-size:clamp(8px,2.15vw,11px)!important}
  #app#app#app#app .proposal-board .sorter button svg{width:13px!important;height:13px!important}
 }
+
+/* Provider identity and tags fill the same height as the right-hand actions. */
+#app#app#app#app .proposal-requestable>.proposal-top.no-price>.proposal-person-data{
+ display:flex!important;flex-direction:column!important;justify-content:space-between!important;height:100%!important;min-height:0!important;
+}
+#app#app#app#app .proposal-requestable .proposal-provider-meta{display:flex!important;flex-direction:column!important;gap:8px!important}
+#app#app#app#app .proposal-provider-meta :is(.trade-tag,.provider-zones){align-items:center!important}
+#app#app#app#app .proposal-provider-meta :is(.trade-tag,.provider-zones)>span{
+ display:flex!important;align-items:center!important;line-height:1.25!important;min-height:18px!important;
+}
+#app#app#app#app .proposal-provider-meta :is(.trade-tag,.provider-zones)>svg{align-self:center!important;margin:0!important;display:block!important}
