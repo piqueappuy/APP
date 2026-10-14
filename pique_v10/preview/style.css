@@ -5194,3 +5194,13 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail .pique-state-row{grid-row:1!important;align-self:start!important;margin-top:0!important}
  #app#app#app#app>.order-strip.request-detail .request-title-single{align-self:start!important}
 }
+
+/* Compact status pills within the mobile request column. */
+@media(max-width:899px){
+ #app#app#app#app>.order-strip.request-detail .pique-state-row{display:flex!important;flex-wrap:wrap!important;gap:4px!important;max-width:100%!important;min-width:0!important}
+ #app#app#app#app>.order-strip.request-detail .pique-state-divider{display:none!important}
+ #app#app#app#app>.order-strip.request-detail .deadline-tag{font-size:9px!important;padding:4px 6px!important;line-height:1.2!important;max-width:100%!important;white-space:nowrap!important;box-shadow:none!important}
+}
+@media(max-width:420px){
+ #app#app#app#app>.order-strip.request-detail .deadline-tag{font-size:7.5px!important;padding:4px!important}
+}
