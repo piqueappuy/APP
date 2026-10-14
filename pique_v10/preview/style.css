@@ -5098,3 +5098,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 
 #app#app#app#app.home-soft-background .description-info-tag{border:0!important}
 #app#app#app#app.home-soft-background .description-info-tag svg{border-right:0!important;padding-right:0!important;box-sizing:border-box!important}
+
+#app#app#app#app .request-description>.description-info-tag,
+#app#app#app#app:has(#order-heading) .description-info-tag{
+ display:flex!important;align-items:center!important;gap:8px!important;border:0!important;background:#e8f2ff!important;border-radius:8px!important;padding:8px!important;color:#0751ca!important;text-align:left!important;line-height:1.4!important;
+}
+#app#app#app#app .request-description>.description-info-tag svg{
+ width:18px!important;height:18px!important;flex:0 0 18px!important;border:0!important;padding:0!important;fill:none!important;stroke:currentColor!important;
+}
+#app#app#app#app .request-description>.description-info-tag span{min-width:0!important;overflow-wrap:anywhere!important}
