@@ -309,6 +309,25 @@ header{overflow-anchor:none}
  .hero .floating strong{font-size:14px}
  .hero .floating small{font-size:12px}
 }
+
+/* Portrait tablets use the screen width instead of small desktop columns. */
+@media(min-width:761px) and (max-width:900px){
+ .hero{grid-template-columns:1fr;grid-template-rows:auto auto;gap:24px;padding:28px 32px;align-content:center}
+ .hero h1{font-size:42px;letter-spacing:-2px;margin:14px 0 18px;max-width:none}
+ .hero .lead{font-size:18px;line-height:1.5;max-width:none;margin:0}
+ .hero .actions{margin:20px 0 0}
+ .hero .actions .btn{flex:1}
+ .hero .scene{min-height:0;padding:24px 28px;border-radius:26px}
+ .hero .scene-label{margin-bottom:16px;font-size:12px}
+ .hero .demo{padding:22px}
+ .hero .demo h3{font-size:20px;margin:14px 0 8px}
+ .hero .demo p{font-size:15px}
+ .hero .demo .steps{margin:18px 0 12px}
+ .hero .demo-note{font-size:14px;padding:12px}
+ .hero .floating{margin-top:16px;padding:16px 18px}
+ .hero .floating strong{font-size:16px}
+ .hero .floating small{font-size:14px}
+}
 </style></head><body>
 <header><nav class="wrap nav" aria-label="Navegación de Pique"><a class="logo" href="./" aria-label="Pique inicio"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" fill="none" stroke="white" stroke-width="5"/></svg><span>IQUE</span></a><div class="links"><a href="#como-funciona">Cómo funciona</a><a href="#profesionales">Para profesionales</a><a class="btn" href="app.html#ingresar">Iniciar sesión ↗</a></div></nav></header>
 <main><div class="wrap hero"><div><span class="eyebrow">Menos vueltas. Más soluciones.</span><h1>Lo que precisás,<br><em>un pique más cerca.</em></h1><p class="lead">Conectá con profesionales para resolver lo que necesitás. Publicá tu pedido, recibí propuestas y coordiná el trabajo en un solo lugar.</p><div class="actions"><a class="btn" href="app.html#ingresar">Buscar un pique <span aria-hidden="true">→</span></a><a class="btn light" href="#como-funciona">Conocé cómo funciona</a></div></div><div class="scene" aria-label="Ejemplo ilustrativo de un pedido en Pique"><p class="scene-label">ASÍ SE MUEVE TU PIQUE</p><div class="demo"><span class="status">EN MARCHA</span><h3>Necesito reparar una canilla</h3><p>Plomería · En tu zona</p><div class="steps" aria-hidden="true"><i></i><i></i><i></i><i></i></div><div class="demo-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Tu profesional está en camino.</div></div><div class="floating"><span class="avatar landing-logo-check" aria-hidden="true"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><div><strong>Todo en el mismo lugar</strong><small>Propuestas, horarios y seguimiento.</small></div></div></div></div>
