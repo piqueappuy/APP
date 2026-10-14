@@ -5107,3 +5107,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  width:18px!important;height:18px!important;flex:0 0 18px!important;border:0!important;padding:0!important;fill:none!important;stroke:currentColor!important;
 }
 #app#app#app#app .request-description>.description-info-tag span{min-width:0!important;overflow-wrap:anywhere!important}
+
+#app#app#app#app .request-description>.description-info-tag{margin-top:10px!important}
