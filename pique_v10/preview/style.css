@@ -5189,3 +5189,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail{gap:10px!important}
  #app#app#app#app>.order-strip.request-detail .request-facts{padding-top:12px!important}
 }
+
+@media(min-width:900px){
+ #app#app#app#app>.order-strip.request-detail .pique-state-row{grid-row:1!important;align-self:start!important;margin-top:0!important}
+ #app#app#app#app>.order-strip.request-detail .request-title-single{align-self:start!important}
+}
