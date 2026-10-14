@@ -5095,3 +5095,6 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 /* Description and metadata tags share the same spacing. */
 #app#app#app#app.home-soft-background .description-info-tag{margin-bottom:6px!important}
 #app#app#app#app.home-soft-background .order-request>.description-info-tag+.pique-meta-tags{margin-top:0!important;padding-top:0!important}
+
+#app#app#app#app.home-soft-background .description-info-tag{border:0!important}
+#app#app#app#app.home-soft-background .description-info-tag svg{border-right:0!important;padding-right:0!important;box-sizing:border-box!important}
