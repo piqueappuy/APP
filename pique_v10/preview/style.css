@@ -5209,3 +5209,10 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  #app#app#app#app>.order-strip.request-detail .pique-state-row{flex-wrap:nowrap!important;gap:3px!important}
  #app#app#app#app>.order-strip.request-detail .deadline-tag{font-size:clamp(6px,1.65vw,9px)!important;padding:3px!important;letter-spacing:-.2px!important;flex:0 1 auto!important}
 }
+
+#order-heading.request-two-column-heading h1{font-size:clamp(16px,3.7vw,25px)!important;line-height:1.25!important}
+#app#app#app#app .proposal-board .sorter button{display:flex!important;align-items:center!important;justify-content:center!important;gap:6px!important}
+#app#app#app#app .proposal-board .sorter button svg{width:16px!important;height:16px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important}
+#app#app#app#app .proposal-board .person-copy{border-right:0!important;padding-right:0!important}
+#app#app#app#app .provider-inline-rating{border:0!important;padding-left:3px!important}
+@media(max-width:560px){#app#app#app#app .proposal-board .sorter button{gap:4px!important}#app#app#app#app .proposal-board .sorter button svg{width:14px!important;height:14px!important}}
