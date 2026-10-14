@@ -5076,3 +5076,10 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app.home-soft-background .pending-order-layout>.pending-order-main{
  align-self:stretch!important;display:flex!important;flex-direction:column!important;justify-content:center!important;
 }
+
+/* Rejected application status uses a solid red surface and white content. */
+#app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected){
+ background:#d92d45!important;color:#fff!important;border:1px solid #fff!important;background-clip:padding-box!important;
+}
+#app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected) span{color:#fff!important}
+#app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected) svg{color:#fff!important;stroke:#fff!important;fill:none!important}
