@@ -5373,3 +5373,28 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 }
 #app#app#app#app .order-completed .chosen-person>.chosen-rating,
 #app#app#app#app .order-completed .chosen-person>.chosen-rating>span{border-color:#ffffffb3!important}
+
+/* Consistent professional identity rows and metadata in progress cards. */
+#app#app#app#app#app .order-completed .chosen-person{padding:0!important;margin:0!important;width:100%!important;box-sizing:border-box!important}
+#app#app#app#app#app .order-completed .chosen-identity{border:0!important}
+#app#app#app#app#app .order-completed .chosen-identity .avatar::after{display:none!important}
+#app#app#app#app#app .order-completed .chosen-professional-name{border:0!important;padding-left:0!important}
+#app#app#app#app#app .order-completed .chosen-person>.chosen-provider-location{
+ height:34px!important;min-height:34px!important;padding:5px 8px!important;border:1px solid #8fc5ff!important;border-left:3px solid #8fc5ff!important;border-radius:8px!important;background:rgba(255,255,255,.16)!important;gap:8px!important;font-size:12px!important;font-weight:800!important;
+}
+#app#app#app#app#app .order-completed .chosen-provider-location svg{width:18px!important;height:18px!important;box-sizing:content-box!important;padding-right:7px!important;border-right:1px solid #ffffffb3!important}
+#app#app#app#app#app .order-completed .chosen-provider-location>span{font-size:12px!important;line-height:1.3!important;font-weight:800!important}
+#app#app#app#app#app .order-completed .chosen-person>.chosen-rating{
+ display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;align-items:center!important;justify-content:center!important;gap:12px!important;border-top:1px solid #ffffffb3!important;
+}
+#app#app#app#app#app .order-completed .chosen-rating>strong,
+#app#app#app#app#app .order-completed .chosen-rating>span{
+ display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:auto!important;flex:0 1 auto!important;grid-column:auto!important;white-space:nowrap!important;margin:0!important;
+}
+#app#app#app#app#app .order-completed .chosen-rating svg{width:14px!important;height:14px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.8!important}
+#app#app#app#app#app .order-completed .professional-arrival-note{font-size:8px!important;line-height:1.4!important}
+#app#app#app#app#app .order-completed .requester-agreed-summary{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;box-sizing:border-box!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#app#app#app#app#app .order-completed .requester-agreed-summary>span{width:100%!important;min-width:0!important}
+#app#app#app#app#app .order-completed :is(.chosen-rating,.chosen-rating>span,.completed-order-link,.order-professional){border-color:#ffffffb3!important}
+#app#app#app#app#app .order-completed .chosen-identity::after{background:#ffffffb3!important}
+.brand-header.profile-integrated .dashboard-stats .dashboard-execution-count{background:transparent!important;box-shadow:none!important;animation:none!important;border-radius:0!important}
