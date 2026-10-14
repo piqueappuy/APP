@@ -5016,3 +5016,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app .proposal-board .person-copy{align-self:center!important;border-right:1px solid #4d8de0!important;padding-right:8px!important}
 #app#app#app .provider-inline-rating{border-left:0!important;padding-left:0!important;align-self:center!important}
 #app#app#app .proposal-board .person-copy:not(:has(+.provider-inline-rating)){border-right:0!important;padding-right:0!important}
+
+#app#app#app .proposal-board .professional-photo-proposal{border-color:#0754e8!important}
