@@ -5216,3 +5216,11 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app .proposal-board .person-copy{border-right:0!important;padding-right:0!important}
 #app#app#app#app .provider-inline-rating{border:0!important;padding-left:3px!important}
 @media(max-width:560px){#app#app#app#app .proposal-board .sorter button{gap:4px!important}#app#app#app#app .proposal-board .sorter button svg{width:14px!important;height:14px!important}}
+
+#order-heading.request-two-column-heading h1{white-space:nowrap!important;font-size:clamp(10px,3.05vw,25px)!important;gap:7px!important}
+#order-heading.request-two-column-heading h1>span{white-space:nowrap!important}
+#order-heading.request-two-column-heading h1 svg{width:1em!important;height:1.2em!important;flex-shrink:0!important}
+@media(max-width:899px){
+ #app#app#app#app .proposal-board .sorter button{padding:10px 7px!important;min-width:0!important;gap:4px!important;font-size:clamp(8px,2.15vw,11px)!important}
+ #app#app#app#app .proposal-board .sorter button svg{width:13px!important;height:13px!important}
+}
