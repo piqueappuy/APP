@@ -5041,3 +5041,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app :is(.pique-meta-tag,.trade-tag,.provider-zones){
  border:1px solid #0754e8!important;border-left-width:3px!important;background-clip:padding-box!important;
 }
+
+/* Override the metadata layouts that still imposed pale tag borders. */
+#app#app#app#app :is(.pique-meta-tag,.trade-tag,.provider-zones){
+ border:1px solid #0754e8!important;border-left:3px solid #0754e8!important;background-clip:padding-box!important;
+}
