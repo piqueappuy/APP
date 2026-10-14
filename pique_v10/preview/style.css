@@ -5353,3 +5353,23 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  grid-column:1/-1!important;grid-row:2!important;display:flex!important;flex-direction:row!important;justify-content:center!important;align-items:center!important;gap:12px!important;border-top:1px solid #4d8de0!important;padding:7px 0 0!important;
 }
 #app#app#app#app .order-completed .chosen-person>.chosen-rating>span{border-left:1px solid #4d8de0!important;padding-left:12px!important}
+
+/* Professional summary continues the blue parent surface. */
+#app#app#app#app.piques-soft-background .order-completed .chosen-person{
+ background:transparent!important;border:0!important;box-shadow:none!important;color:#fff!important;
+}
+#app#app#app#app.piques-soft-background .order-completed .chosen-professional-name,
+#app#app#app#app.piques-soft-background .order-completed .chosen-rating,
+#app#app#app#app.piques-soft-background .order-completed .chosen-rating :is(strong,span,svg){color:#fff!important;stroke:currentColor!important}
+#app#app#app#app .order-completed .chosen-person>.chosen-identity{position:relative!important;align-self:center!important;padding-right:9px!important}
+#app#app#app#app .order-completed .chosen-person>.chosen-identity::after{
+ content:'';position:absolute;right:-4px;top:50%;transform:translateY(-50%);width:1px;height:32px;background:#ffffffb3;
+}
+#app#app#app#app .order-completed .chosen-person>.chosen-provider-location{
+ border:1px solid #8fc5ff!important;border-radius:8px!important;padding:6px!important;min-height:32px!important;align-self:center!important;background:rgba(255,255,255,.16)!important;color:#fff!important;gap:5px!important;
+}
+#app#app#app#app .order-completed .chosen-provider-location>span{
+ background:transparent!important;border:0!important;padding:0!important;color:inherit!important;
+}
+#app#app#app#app .order-completed .chosen-person>.chosen-rating,
+#app#app#app#app .order-completed .chosen-person>.chosen-rating>span{border-color:#ffffffb3!important}
