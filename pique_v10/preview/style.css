@@ -5293,3 +5293,22 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 
 #app#app#app#app>.options-divider{display:none!important}
 #app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected){background:linear-gradient(135deg,#ef4b65 0%,#d92d45 52%,#ae1835 100%)!important}
+
+/* Blue photographic styling for the active requester card in Piques. */
+#app#app#app#app.piques-soft-background article.order-completed{
+ background-image:linear-gradient(110deg,rgba(3,64,184,.98),rgba(4,83,211,.9) 48%,rgba(0,38,102,.72)),var(--discover-photo)!important;background-size:cover!important;background-position:center!important;color:#fff!important;border-color:#3999ff!important;
+}
+#app#app#app#app.piques-soft-background .order-completed :is(.requester-progress-heading,.order-request>h3,.order-description,.coordination-professional-heading){color:#fff!important}
+#app#app#app#app.piques-soft-background .order-completed .order-request>h3{font-size:18px!important;line-height:1.25!important;font-weight:900!important;white-space:normal!important}
+#app#app#app#app.piques-soft-background .order-completed .pique-meta-tag{
+ background:rgba(255,255,255,.16)!important;color:#fff!important;border-color:#8fc5ff!important;
+}
+#app#app#app#app.piques-soft-background .order-completed .visit-steps li{color:#d2e7ff!important}
+#app#app#app#app.piques-soft-background .order-completed .visit-steps li.active,
+#app#app#app#app.piques-soft-background .order-completed .visit-steps li.done{color:#fff!important;border-top-color:#7cc6ff!important}
+#app#app#app#app.piques-soft-background .order-completed .professional-profile-button{
+ background:linear-gradient(135deg,#f4faff,#cce6ff 55%,#a9d2ff)!important;color:#0754b8!important;border:1px solid #a2ceff!important;
+}
+#app#app#app#app.piques-soft-background .order-completed .professional-profile-button svg{stroke:currentColor!important}
+#app#app#app#app.piques-soft-background .order-completed .progress-pique-word svg path:first-child{fill:#fff!important}
+#app#app#app#app.piques-soft-background .order-completed .progress-pique-word svg path:nth-child(2){stroke:#0754e8!important}
