@@ -5089,3 +5089,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 }
 #app#app#app#app.home-soft-background .description-info-tag svg{width:18px!important;height:18px!important;flex:0 0 18px!important;box-sizing:content-box!important;padding-right:7px!important;border-right:1px solid #4d8de0!important;fill:none!important;stroke:currentColor!important}
 #app#app#app#app.home-soft-background .description-info-tag span{min-width:0!important;overflow-wrap:anywhere!important}
+
+#app#app#app#app :is(.quote-rejected,.archive-policy-note.rejected){border:0!important;border-radius:14px!important}
