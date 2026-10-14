@@ -5204,3 +5204,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 @media(max-width:420px){
  #app#app#app#app>.order-strip.request-detail .deadline-tag{font-size:7.5px!important;padding:4px!important}
 }
+
+@media(max-width:899px){
+ #app#app#app#app>.order-strip.request-detail .pique-state-row{flex-wrap:nowrap!important;gap:3px!important}
+ #app#app#app#app>.order-strip.request-detail .deadline-tag{font-size:clamp(6px,1.65vw,9px)!important;padding:3px!important;letter-spacing:-.2px!important;flex:0 1 auto!important}
+}
