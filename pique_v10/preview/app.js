@@ -512,3 +512,15 @@ app.addEventListener('click',async event=>{
   go('propuestas/'+encodeURIComponent(data));toast('PIQUE REPUBLICADO. CONSERVAMOS LAS COTIZACIONES.');
  }catch(error){button.disabled=false;button.innerHTML=buttonContent;toast('NO SE PUDO REPUBLICAR. VOLVÉ A INTENTAR.');}
 });
+
+// Safari can report intermediate viewport heights while rotating a phone.
+function syncPhoneOrientation(){
+ const shortSide=Math.min(screen.width,screen.height);
+ const isPhone=navigator.maxTouchPoints>0&&shortSide<=480;
+ document.documentElement.classList.toggle('phone-landscape',isPhone&&matchMedia('(orientation: landscape)').matches);
+ requestAnimationFrame(()=>{scheduleSessionFit();fitProfileGreeting();});
+}
+window.addEventListener('orientationchange',syncPhoneOrientation);
+window.addEventListener('resize',syncPhoneOrientation);
+window.visualViewport?.addEventListener('resize',syncPhoneOrientation);
+syncPhoneOrientation();
