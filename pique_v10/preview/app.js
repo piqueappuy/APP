@@ -474,8 +474,8 @@ function publicWorkPhotos(p){return (p.resolvedPiques||[]).map(work=>'<article c
 
 function resolvedRequestMetaTags(o){
  const parts=publicationLabel(o).split(' · '),date=parts[0]||'SIN ESPECIFICAR',time=parts[1]||'SIN ESPECIFICAR';
- const tags=[[svg('tool'),o.category],[svg('pin'),String(o.zone||'SIN ESPECIFICAR').replace(/,?\s*MONTEVIDEO\s*$/i,'')]].map(([icon,text])=>'<span class="pique-meta-tag"><span class="meta-icon" aria-hidden="true">'+icon+'</span><span class="meta-text">'+esc(text)+'</span></span>').join('');
- return '<div class="pique-meta-tags">'+tags+'<span class="pique-meta-tag metadata-date-time"><span class="meta-icon" aria-hidden="true">'+svg('calendar')+'</span><span class="meta-text"><span>'+esc(date)+'</span><span>'+esc(time)+'</span></span></span></div>';
+ const items=[['tool','RUBRO',esc(o.category)],['pin','ZONA',esc(String(o.zone||'SIN ESPECIFICAR').replace(/,?\\s*MONTEVIDEO\\s*$/i,''))],['calendar','CREADO','<span class="meta-date">'+esc(date)+'</span><span class="meta-time">'+esc(time)+'</span>']];
+ return '<div class="pique-meta-tags labeled-meta-tags">'+items.map(([icon,label,value])=>'<span class="pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">'+svg(icon)+'</span><span class="meta-copy"><small class="meta-label">'+label+'</small><span class="meta-value">'+value+'</span></span></span>').join('')+'</div>';
 }
 
 function homePiqueCounter(count){return `<svg class="home-pique-counter" viewBox="0 0 50 65" aria-label="${count} ${count===1?'pique':'piques'}"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><text x="26" y="33" text-anchor="middle" fill="white" stroke="none" font-family="Nunito Sans,Arial,sans-serif" font-size="25" font-weight="700">${count}</text></svg>`;}
