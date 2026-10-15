@@ -5652,3 +5652,11 @@ html.phone-landscape .dashboard-identity h2{font-size:19px!important;line-height
 html.phone-landscape .dashboard-stats{padding-top:24px!important;padding-bottom:6px!important}
 html.phone-landscape .dashboard-stats .home-pique-counter{width:24px!important;height:30px!important}
 html.phone-landscape .brand-header .dashboard-avatar{width:36px!important;height:36px!important;font-size:14px!important;bottom:-18px!important;left:calc(50% - 18px)!important}
+
+/* Let the blue shell extend into the iPhone landscape safe areas. */
+html.phone-landscape,html.phone-landscape body{width:100%!important;margin:0!important;padding:0!important;overflow-x:clip!important}
+html.phone-landscape .mobile-app{width:100%!important;max-width:none!important;margin:0!important}
+html.phone-landscape .brand-header{padding-left:max(20px,env(safe-area-inset-left))!important;padding-right:max(20px,env(safe-area-inset-right))!important}
+html.phone-landscape .bottom-nav{padding-left:max(12px,env(safe-area-inset-left))!important;padding-right:max(12px,env(safe-area-inset-right))!important;padding-bottom:max(5px,env(safe-area-inset-bottom))!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong{background:rgba(255,255,255,.16)!important;border:1px solid #8fc5ff!important;border-left:3px solid #8fc5ff!important;border-radius:10px!important;min-height:32px!important;box-sizing:border-box!important;padding:6px!important;display:flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;font-weight:800!important}
+@media(min-width:601px) and (max-width:1366px){#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person{grid-template-columns:minmax(0,1fr) 60px minmax(0,1fr) minmax(0,calc(50% - 4px))!important}}
