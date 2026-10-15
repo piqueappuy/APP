@@ -5461,3 +5461,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating svg{
  width:13px!important;height:14px!important;padding-right:5px!important;border-right:1px solid #4d8de0!important;box-sizing:content-box!important;flex-shrink:0!important;
 }
+
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .order-professional{margin-top:8px!important;padding-top:10px!important;row-gap:4px!important}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .coordination-professional-heading{margin-bottom:4px!important}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person{margin-top:0!important;row-gap:6px!important}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button{
+ display:flex!important;flex-direction:row!important;justify-content:flex-start!important;align-items:center!important;padding:6px 5px 6px 6px!important;gap:6px!important;min-height:38px!important;
+}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button svg{width:15px!important;height:16px!important;flex:0 0 15px!important}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button span{white-space:nowrap!important;font-size:8px!important;max-width:none!important;line-height:1.2!important}
+#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary>span{position:relative!important;padding-left:24px!important}
+#app#app#app#app#app#app#app#app#app#app#app .summary-hint-icon{position:absolute!important;left:7px!important;top:50%!important;transform:translateY(-50%)!important;width:15px!important;height:15px!important;fill:none!important;stroke:currentColor!important}
