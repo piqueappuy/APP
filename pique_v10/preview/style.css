@@ -6024,3 +6024,7 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 .mobile-app .brand-header.profile-integrated .dashboard-welcome:not(.professional-dashboard) .execution-play{width:34px!important;height:34px!important;flex-basis:34px!important}
 .mobile-app .brand-header.profile-integrated .dashboard-welcome:not(.professional-dashboard) .execution-copy{font-size:12px!important}.mobile-app .brand-header.profile-integrated .dashboard-welcome:not(.professional-dashboard) .execution-copy small{font-size:10px!important}
 }
+
+.mobile-app .brand-header.profile-integrated:has(.dashboard-execution-count){padding-bottom:24px!important}
+.mobile-app .brand-header.profile-integrated::after{border:0!important;background:transparent!important}
+.mobile-app .brand-header.profile-integrated .dashboard-welcome:not(.professional-dashboard) .dashboard-stat-number{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;margin:0!important;min-width:0!important}
