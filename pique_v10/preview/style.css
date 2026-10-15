@@ -5515,3 +5515,6 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed:not(.requester-report-finished) .order-request .pique-meta-tag{flex:1!important;display:flex!important;align-items:center!important;min-height:32px!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.pique-card-divider{display:none!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed:not(.requester-report-finished) .completed-order-link>.order-professional{grid-column:1/-1!important;grid-row:3!important;width:100%!important;min-width:0!important;border:0!important;border-top:1px solid #4d8de0!important;padding:10px 0 0!important;margin:8px 0 0!important}
+
+/* Tablet layout uses the available screen instead of a phone-width shell. */
+@media(min-width:601px) and (max-width:1366px){body{padding-top:0!important}.mobile-app{width:100%!important;max-width:none!important;border-radius:0!important}.mobile-app .bottom-nav{width:100%!important;max-width:none!important} .mobile-app #app{padding-left:24px!important;padding-right:24px!important}}
