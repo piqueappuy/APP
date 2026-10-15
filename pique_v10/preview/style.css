@@ -5572,3 +5572,5 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-provider-location .meta-text{font-size:12px!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span svg{width:16px!important;height:16px!important;flex:0 0 16px!important}
 }
+
+@media(min-width:601px) and (max-width:1366px){#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .chosen-professional-name{grid-column:2/6!important;grid-row:1!important;font-size:13px!important;width:100%!important;max-width:100%!important;text-align:center!important}}
