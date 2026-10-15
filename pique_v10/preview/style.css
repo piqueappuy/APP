@@ -5494,3 +5494,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 
 #app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .chosen-professional-name{width:auto!important;max-width:calc(100% - 30px)!important;flex:0 1 auto!important;padding:0!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity{gap:6px!important}
+
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary{border-top:1px solid #4d8de0!important;padding-top:8px!important;margin-top:4px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon{display:block!important;width:100%!important;text-align:center!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-caption-first{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:auto!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-hint-icon{display:inline-block!important;width:12px!important;height:12px!important;flex:0 0 12px!important;vertical-align:middle!important}
