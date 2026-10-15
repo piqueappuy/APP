@@ -5574,3 +5574,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 }
 
 @media(min-width:601px) and (max-width:1366px){#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .chosen-professional-name{grid-column:2/6!important;grid-row:1!important;font-size:13px!important;width:100%!important;max-width:100%!important;text-align:center!important}}
+
+.chosen-inline-score{display:none!important}
+@media(min-width:601px) and (max-width:1366px){
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity{display:flex!important;grid-column:1/7!important;grid-row:1!important;justify-content:center!important;align-items:center!important;gap:8px!important;width:100%!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .chosen-professional-name{width:auto!important;max-width:none!important;flex:0 1 auto!important;font-size:13px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .avatar{margin:0!important;flex:0 0 auto!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-inline-score{display:inline-flex!important;align-items:center!important;gap:4px!important;font-size:12px!important;font-weight:800!important;color:white!important;border:0!important;padding:0!important;white-space:nowrap!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-inline-score svg{width:14px!important;height:14px!important;border:0!important;padding:0!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong{display:none!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span,#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-provider-location .meta-text{font-size:12px!important;font-weight:800!important;line-height:18px!important;letter-spacing:normal!important;text-transform:uppercase!important;color:white!important;font-family:inherit!important}
+}
