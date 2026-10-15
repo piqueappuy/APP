@@ -5443,3 +5443,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
  grid-column:2!important;grid-row:2!important;align-self:stretch!important;margin:0 0 0 13px!important;width:calc(100% - 13px)!important;min-height:52px!important;justify-content:center!important;gap:6px!important;padding:10px!important;
 }
 #app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button span{white-space:normal!important;text-align:center!important;font-size:10px!important;line-height:1.3!important;max-width:90px!important}
+
+#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.chosen-rating{
+ flex-direction:row!important;flex-wrap:nowrap!important;gap:7px!important;
+}
+#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong,
+#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span{font-size:10px!important;gap:4px!important}
+#app#app#app#app#app#app#app#app#app .order-completed .chosen-person::before{
+ top:0!important;bottom:0!important;height:auto!important;background:#4d8de0!important;
+}
