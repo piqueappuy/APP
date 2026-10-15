@@ -5550,3 +5550,9 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .summary-caption-group{position:relative!important;gap:0!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .summary-caption-group>.summary-hint-icon{position:absolute!important;left:-17px!important;top:50%!important;transform:translateY(-50%)!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary strong{align-self:center!important;justify-content:center!important;text-align:center!important;margin:0!important}
+
+@media(min-width:601px) and (max-width:1366px){
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,calc(50% - 4px))!important;gap:8px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity{justify-content:center!important;width:100%!important;padding:0!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong{justify-content:center!important;justify-self:stretch!important;text-align:center!important}
+}
