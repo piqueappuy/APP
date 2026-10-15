@@ -5499,3 +5499,8 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon{display:block!important;width:100%!important;text-align:center!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-caption-first{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:4px!important;width:auto!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-hint-icon{display:inline-block!important;width:12px!important;height:12px!important;flex:0 0 12px!important;vertical-align:middle!important}
+
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon{display:flex!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-caption-group{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important;width:auto!important;flex:0 0 auto!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-caption-group>span{display:block!important;width:auto!important;line-height:12px!important;font-size:inherit!important;text-align:center!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-caption-group>.summary-hint-icon{align-self:center!important;position:static!important;transform:none!important;margin:0!important;width:12px!important;height:12px!important;flex:0 0 12px!important}
