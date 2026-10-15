@@ -5534,3 +5534,19 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button svg{width:20px!important;height:20px!important;flex-basis:20px!important}
 #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person::before{left:calc(50% + 2px)!important;top:0!important;bottom:0!important}
 }
+
+/* Refined tablet professional hierarchy and compact rating column. */
+@media(min-width:601px) and (max-width:1366px){
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person{grid-template-columns:minmax(0,1fr) 108px minmax(0,calc(50% - 4px))!important;gap:8px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity .chosen-professional-name{width:auto!important;max-width:none!important;white-space:nowrap!important;font-size:11px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong{background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;justify-content:center!important;font-size:12px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span{font-size:10px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .coordination-professional-heading{font-size:15px!important;line-height:1.4!important;gap:8px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .coordination-professional-heading svg{width:21px!important;height:21px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button span{font-size:14px!important;font-weight:800!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-person>.professional-profile-button svg{width:25px!important;height:25px!important;flex-basis:25px!important}
+}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary>.coordination-quote-hint{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:10px 6px!important;border-left-width:1px!important;border-right-width:1px!important;gap:4px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .summary-caption-group{position:relative!important;gap:0!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .summary-caption-group>.summary-hint-icon{position:absolute!important;left:-17px!important;top:50%!important;transform:translateY(-50%)!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary strong{align-self:center!important;justify-content:center!important;text-align:center!important;margin:0!important}
