@@ -5480,3 +5480,14 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary{
  display:grid!important;grid-template-columns:50% minmax(0,1fr)!important;gap:8px!important;
 }
+
+/* Shared professional column widths for identity, actions and financial hints. */
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary>.quote-estimate{width:calc(100% - 13px)!important;margin-left:13px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity{justify-content:center!important;padding-right:0!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating{width:100%!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span{flex:1!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .order-completed .requester-agreed-summary>span{padding-left:6px!important;padding-right:6px!important;box-sizing:border-box!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon{display:flex!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon .summary-hint-icon{position:static!important;transform:none!important;width:14px!important;height:14px!important;flex:0 0 14px!important}
+#app#app#app#app#app#app#app#app#app#app#app#app#app .summary-label-with-icon>span{font-size:inherit!important;line-height:inherit!important}
