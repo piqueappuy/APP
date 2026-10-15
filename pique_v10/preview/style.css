@@ -5452,3 +5452,12 @@ html,body,.mobile-app,.mobile-app *,.mobile-app *::before,.mobile-app *::after,#
 #app#app#app#app#app#app#app#app#app .order-completed .chosen-person::before{
  top:0!important;bottom:0!important;height:auto!important;background:#4d8de0!important;
 }
+
+#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-identity{border-bottom:1px solid #4d8de0!important;padding-bottom:8px!important}
+#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>strong,
+#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating>span{
+ display:inline-flex!important;align-items:center!important;gap:5px!important;background:rgba(255,255,255,.16)!important;border:1px solid #8fc5ff!important;border-radius:7px!important;padding:6px!important;min-height:30px!important;white-space:nowrap!important;
+}
+#app#app#app#app#app#app#app#app#app#app .order-completed .chosen-rating svg{
+ width:13px!important;height:14px!important;padding-right:5px!important;border-right:1px solid #4d8de0!important;box-sizing:content-box!important;flex-shrink:0!important;
+}
