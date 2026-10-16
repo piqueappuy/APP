@@ -6217,3 +6217,5 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 
 .resolved-history-heading p,#app .resolved-toolbar,#app .resolved-toolbar input,#app .resolved-toolbar select,#app .resolved-sort select,#app .resolved-description,#app .resolved-card-meta{text-transform:none!important}
 #app .resolved-card-meta{font-size:12px!important}#app .resolved-description{font-size:14px!important}
+
+#app .resolved-history-card .resolved-card-meta,#app .resolved-history-card .resolved-card-meta>span,#app .resolved-history-card .resolved-status{text-transform:uppercase!important}
