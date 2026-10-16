@@ -6219,3 +6219,10 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 #app .resolved-card-meta{font-size:12px!important}#app .resolved-description{font-size:14px!important}
 
 #app .resolved-history-card .resolved-card-meta,#app .resolved-history-card .resolved-card-meta>span,#app .resolved-history-card .resolved-status{text-transform:uppercase!important}
+
+#app .resolved-toolbar input,#app .resolved-toolbar input::placeholder,#app .resolved-toolbar select,#app .resolved-toolbar option,#app .resolved-sort select,#app .resolved-sort option{text-transform:uppercase!important}
+#app .resolved-status.archived-status{background:#e4ebf8;color:#4a6190}
+#app .archived-card-reason{font-size:10px!important;line-height:1.4!important;background:#fff5d7;color:#8b6520;border-left:3px solid #edbd46;border-radius:8px;padding:8px 10px;margin:0;max-width:74%}
+#app .resolved-history-card button.resolved-details-action{font-family:inherit;cursor:pointer}
+#app .resolved-history-card .archive-republish-button:disabled{opacity:.65;cursor:wait}
+@media(max-width:600px){#app .archived-card-reason{max-width:78%;font-size:9px!important}}
