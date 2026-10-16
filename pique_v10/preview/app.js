@@ -360,7 +360,7 @@ function syncResolvedHistoryHeader(){
  document.querySelector('.resolved-history-heading')?.remove();
  if(!document.querySelector('.resolved-history-view'))return;
  const archived=resolvedHistoryFilters.kind==='archived';
- document.querySelector('.brand-header').insertAdjacentHTML('beforeend','<div class="resolved-history-heading"><h1>PIQUES '+(archived?'ARCHIVADOS':'RESUELTOS')+'</h1><p>'+(archived?'Volvé a publicarlos cuando lo necesites.':'Todos los piques que ya finalizaste. Podés ver los detalles y volver a solicitar.')+'</p></div>');
+ document.querySelector('.brand-header').insertAdjacentHTML('beforeend','<div class="resolved-history-heading"><h1>'+(archived?'PIQUES ARCHIVADOS':'Lo que necesitabas, ya está resuelto.')+'</h1><p>'+(archived?'Volvé a publicarlos cuando lo necesites.':'Todos los piques que ya finalizaste. Mirá los detalles.')+'</p></div>');
 }
 function updateResolvedHistoryResults(){
  const result=resolvedHistoryResults(userOrders().filter(o=>resolvedHistoryFilters.kind==='archived'?orderIsArchived(o):!orderIsArchived(o)&&orderStatus(o)==='FINALIZADO'));
