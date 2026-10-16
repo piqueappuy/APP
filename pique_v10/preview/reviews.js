@@ -42,7 +42,7 @@ render=function(){
   return;
  }
  const review=piqueDetailReviews.get(id);
- if(review?.rating){card.insertAdjacentHTML('beforeend','<section class="pique-detail-review"><div class="pique-review-score"><h3>PUNTUACIÓN</h3><strong>★ '+Number(review.rating).toFixed(1).replace('.',',')+'</strong></div><div class="pique-review-comment"><h3>OPINIÓN</h3><p>'+esc(review.comment||'SIN COMENTARIO')+'</p></div></section>');return;}
+ if(review?.rating){card.insertAdjacentHTML('beforeend','<section class="pique-detail-review"><div class="pique-review-score"><h3>PUNTUACIÓN</h3><strong><svg class="pique-review-star" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg> '+Number(review.rating).toFixed(1).replace('.',',')+'</strong></div><div class="pique-review-comment"><h3>OPINIÓN</h3><p>'+esc(review.comment||'SIN COMENTARIO')+'</p></div></section>');return;}
  const order=userOrders().find(o=>o.id===id);
  if(current.name==='propuestas'&&order?.status==='completed'&&!review?.loading&&!review?.error)card.insertAdjacentHTML('beforeend','<div class="pique-review-invite"><button type="button" class="btn requester-open full" data-review-pique="'+esc(id)+'">'+svg('message')+' DEJAR UNA OPINIÓN</button></div>');
 };
