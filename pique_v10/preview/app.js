@@ -338,8 +338,9 @@ function resolvedHistorySearchIcon(){return '<svg viewBox="0 0 24 24" aria-hidde
 let resolvedHistoryFilters={query:'',category:'',period:'',sort:'newest',owner:null};
 function resolvedHistoryDate(o){return new Date(o.created_at||o.createdAt||0).getTime()||0;}
 function resolvedHistoryCard(o){
- const description=o.title&&o.description&&o.title.trim()!==o.description.trim()?o.description:'';
- return `<article class="resolved-history-card ${categoryThemeClass(o.category)}"><span class="resolved-status">${svg('check')}FINALIZADO</span><h3>${esc(o.title||o.description)}</h3><div class="resolved-card-meta"><span>${svg('tool')}${esc(o.category)}</span><span>${svg('pin')}${esc(o.zone)}</span><span>${svg('calendar')}${esc(publicationLabel(o))}</span></div>${description?`<p class="resolved-description">${esc(description)}</p>`:'<div class="resolved-description-spacer"></div>'}<a class="resolved-details-action" href="#propuestas/${encodeURIComponent(o.id)}">${resolvedHistorySearchIcon()}<span>VER DETALLES DEL PIQUE</span></a></article>`;
+ const archived=resolvedHistoryFilters.kind==='archived',description=o.title&&o.description&&o.title.trim()!==o.description.trim()?o.description:'';
+ const reason=o.archive_reason==='visit_not_made'?'VISITA NO REALIZADA EN EL PLAZO ACORDADO.':o.archive_reason==='work_not_completed'?'TRABAJO NO CULMINADO EN EL PLAZO ACORDADO.':(['Hoy','Ahora'].includes(o.urgency)?'LOS PIQUES CON URGENCIA SE ARCHIVAN A LAS 24 HS DE PUBLICADOS.':'LOS PIQUES SIN URGENCIA SE ARCHIVAN A LOS 7 DÍAS DE PUBLICADOS.');
+ return `<article class="resolved-history-card ${archived?'archived-history-card ':''}${categoryThemeClass(o.category)}"><span class="resolved-status ${archived?'archived-status':''}">${archived?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v4H3zM5 8v13h14V8M9 12h6"/></svg>':svg('check')}${archived?'ARCHIVADO':'FINALIZADO'}</span><h3>${esc(o.title||o.description)}</h3><div class="resolved-card-meta"><span>${svg('tool')}${esc(o.category)}</span><span>${svg('pin')}${esc(o.zone)}</span><span>${svg('calendar')}${esc(publicationLabel(o))}</span></div>${description?`<p class="resolved-description">${esc(description)}</p>`:'<div class="resolved-description-spacer"></div>'}${archived?`<p class="archived-card-reason">${esc(reason)}</p><button type="button" class="resolved-details-action archive-republish-button" data-republish-pique="${esc(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-2l2 2M4 17l2 2a7 7 0 0 0 12-2"/></svg><span>REPUBLICAR PIQUE</span></button>`:`<a class="resolved-details-action" href="#propuestas/${encodeURIComponent(o.id)}">${resolvedHistorySearchIcon()}<span>VER DETALLES DEL PIQUE</span></a>`}</article>`;
 }
 function resolvedHistoryMatches(rows){
  const f=resolvedHistoryFilters,normalize=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),q=normalize(f.query);
@@ -348,29 +349,30 @@ function resolvedHistoryMatches(rows){
 }
 function resolvedHistoryResults(rows){
  const visible=resolvedHistoryMatches(rows);
- return {count:visible.length,html:visible.length?visible.map(resolvedHistoryCard).join(''):'<p class="resolved-search-empty">No hay piques resueltos que coincidan con estos filtros.</p>'};
+ return {count:visible.length,html:visible.length?visible.map(resolvedHistoryCard).join(''):'<p class="resolved-search-empty">No hay piques '+(resolvedHistoryFilters.kind==='archived'?'archivados':'resueltos')+' que coincidan con estos filtros.</p>'};
 }
-function resolvedHistoryView(rows){
- if(resolvedHistoryFilters.owner!==authUser?.id)resolvedHistoryFilters={query:'',category:'',period:'',sort:'newest',owner:authUser?.id};
+function resolvedHistoryView(rows,kind='resolved'){
+ if(resolvedHistoryFilters.owner!==authUser?.id||resolvedHistoryFilters.kind!==kind)resolvedHistoryFilters={query:'',category:'',period:'',sort:'newest',owner:authUser?.id,kind};
  const f=resolvedHistoryFilters,result=resolvedHistoryResults(rows),categories=[...new Set(rows.map(o=>o.category))].sort();
- return `<section class="resolved-history-view" id="piques-resolved"><button type="button" class="resolved-back" data-resolved-back>← VER MI ACTIVIDAD</button><div class="resolved-toolbar"><label class="resolved-search">${resolvedHistorySearchIcon()}<input data-resolved-filter="query" type="search" aria-label="Buscar piques resueltos" placeholder="Buscar por título, rubro o zona..." value="${esc(f.query)}"></label><label class="resolved-filter">${svg('calendar')}<select data-resolved-filter="period" aria-label="Filtrar por fecha">${[['','Todas las fechas'],['30','Últimos 30 días'],['90','Últimos 90 días'],['365','Último año']].map(([v,l])=>`<option value="${v}" ${v===f.period?'selected':''}>${l}</option>`).join('')}</select></label><label class="resolved-filter">${svg('tool')}<select data-resolved-filter="category" aria-label="Filtrar por rubro"><option value="">Todos los rubros</option>${categories.map(c=>`<option value="${esc(c)}" ${c===f.category?'selected':''}>${esc(c)}</option>`).join('')}</select></label></div><div class="resolved-results-heading"><h2 data-resolved-count>${result.count} ${result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS'}</h2><label class="resolved-sort"><select data-resolved-filter="sort" aria-label="Ordenar piques resueltos">${[['newest','Más recientes'],['oldest','Más antiguos'],['title','Título A–Z']].map(([v,l])=>`<option value="${v}" ${v===f.sort?'selected':''}>${l}</option>`).join('')}</select></label></div><div class="resolved-card-grid" data-resolved-results>${result.html}</div></section>`;
+ return `<section class="resolved-history-view" id="piques-${kind}"><button type="button" class="resolved-back" data-resolved-back>← VER MI ACTIVIDAD</button><div class="resolved-toolbar"><label class="resolved-search">${resolvedHistorySearchIcon()}<input data-resolved-filter="query" type="search" aria-label="Buscar piques ${kind==='archived'?'archivados':'resueltos'}" placeholder="BUSCAR POR TÍTULO, RUBRO O ZONA..." value="${esc(f.query)}"></label><label class="resolved-filter">${svg('calendar')}<select data-resolved-filter="period" aria-label="Filtrar por fecha">${[['','TODAS LAS FECHAS'],['30','ÚLTIMOS 30 DÍAS'],['90','ÚLTIMOS 90 DÍAS'],['365','ÚLTIMO AÑO']].map(([v,l])=>`<option value="${v}" ${v===f.period?'selected':''}>${l}</option>`).join('')}</select></label><label class="resolved-filter">${svg('tool')}<select data-resolved-filter="category" aria-label="Filtrar por rubro"><option value="">TODOS LOS RUBROS</option>${categories.map(c=>`<option value="${esc(c)}" ${c===f.category?'selected':''}>${esc(c.toUpperCase())}</option>`).join('')}</select></label></div><div class="resolved-results-heading"><h2 data-resolved-count>${result.count} ${kind==='archived'?(result.count===1?'PIQUE ARCHIVADO':'PIQUES ARCHIVADOS'):(result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS')}</h2><label class="resolved-sort"><select data-resolved-filter="sort" aria-label="Ordenar piques resueltos">${[['newest','MÁS RECIENTES'],['oldest','MÁS ANTIGUOS'],['title','TÍTULO A–Z']].map(([v,l])=>`<option value="${v}" ${v===f.sort?'selected':''}>${l}</option>`).join('')}</select></label></div><div class="resolved-card-grid" data-resolved-results>${result.html}</div></section>`;
 }
 function syncResolvedHistoryHeader(){
  document.querySelector('.resolved-history-heading')?.remove();
- if(!document.querySelector('#piques-resolved.resolved-history-view'))return;
- document.querySelector('.brand-header').insertAdjacentHTML('beforeend','<div class="resolved-history-heading"><h1>PIQUES RESUELTOS</h1><p>Todos los piques que ya finalizaste. Podés ver los detalles y volver a solicitar.</p></div>');
+ if(!document.querySelector('.resolved-history-view'))return;
+ const archived=resolvedHistoryFilters.kind==='archived';
+ document.querySelector('.brand-header').insertAdjacentHTML('beforeend','<div class="resolved-history-heading"><h1>PIQUES '+(archived?'ARCHIVADOS':'RESUELTOS')+'</h1><p>'+(archived?'Los piques que quedaron archivados. Revisá el motivo y volvé a publicarlos cuando lo necesites.':'Todos los piques que ya finalizaste. Podés ver los detalles y volver a solicitar.')+'</p></div>');
 }
 function updateResolvedHistoryResults(){
- const result=resolvedHistoryResults(userOrders().filter(o=>!orderIsArchived(o)&&orderStatus(o)==='FINALIZADO'));
+ const result=resolvedHistoryResults(userOrders().filter(o=>resolvedHistoryFilters.kind==='archived'?orderIsArchived(o):!orderIsArchived(o)&&orderStatus(o)==='FINALIZADO'));
  const grid=app.querySelector('[data-resolved-results]'),count=app.querySelector('[data-resolved-count]');
- if(grid)grid.innerHTML=result.html;if(count)count.textContent=result.count+' '+(result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS');
+ if(grid)grid.innerHTML=result.html;if(count)count.textContent=result.count+' '+(resolvedHistoryFilters.kind==='archived'?(result.count===1?'PIQUE ARCHIVADO':'PIQUES ARCHIVADOS'):(result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS'));
 }
 app.addEventListener('input',e=>{if(e.target.matches('[data-resolved-filter="query"]')){resolvedHistoryFilters.query=e.target.value;updateResolvedHistoryResults();}});
 app.addEventListener('change',e=>{if(e.target.matches('select[data-resolved-filter]')){resolvedHistoryFilters[e.target.dataset.resolvedFilter]=e.target.value;updateResolvedHistoryResults();}});
 app.addEventListener('click',e=>{if(e.target.closest('[data-resolved-back]')){dashboardFilter='all';dashboardOwner=authUser?.id;go('pedidos');}});
 
 function orderHistorySection(kind,title,rows,empty){
- if(kind==='resolved')return resolvedHistoryView(rows);
+ if(['resolved','archived'].includes(kind))return resolvedHistoryView(rows,kind);
  if(!rows.length)return '';
  const cards=rows.map(o=>orderCard(o,true)).join('');
  return `<section class="dashboard-orders orders-history" id="piques-${kind}"><div class="dashboard-section-heading"><span class="section-logo-count">${homePiqueCounter(rows.length)}</span><h2>${title.replace(/^P/,'')}</h2></div>${cards?`<div class="${rows.length<=5?'history-card-list':'requester-slider'}" role="region" aria-label="${title}"${rows.length>5?' tabindex="0"':''}>${cards}</div>${rows.length>5?carouselDots(rows.length):''}`:`<p class="dashboard-empty" role="status">ⓘ ${empty}</p>`}</section>`;
