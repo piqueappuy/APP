@@ -6668,3 +6668,12 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
   align-self:center!important;
 }
 }
+
+
+/* Final alignment correction: detail icon centered between its two text lines. */
+@media(max-width:600px) and (pointer:coarse){
+#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app>.request-detail .labeled-meta-tag .meta-icon{
+  align-self:center!important;
+  transform:translateY(3px)!important;
+}
+}
