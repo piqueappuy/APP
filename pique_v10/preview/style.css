@@ -6985,3 +6985,27 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 
 /* The completed-card column divider does not belong before the metadata row. */
 #app .order-completed .completed-order-link>.pique-card-divider{display:none!important}
+
+
+/* No border belongs around the metadata wrapper itself. */
+#app .order-completed .completed-order-link>.order-request,
+#app .order-completed .order-request>.pique-meta-tags{
+  border:0!important;
+  outline:0!important;
+}
+
+/* Fit the complete profile action in the provider column. */
+#app .order-completed .chosen-person>.professional-profile-button{
+  padding:8px 4px!important;
+  gap:6px!important;
+  font-size:11px!important;
+}
+#app .order-completed .chosen-person>.professional-profile-button span{
+  font-size:11px!important;
+  white-space:nowrap!important;
+}
+#app .order-completed .chosen-person>.professional-profile-button svg{
+  width:17px!important;
+  height:17px!important;
+  flex-basis:17px!important;
+}
