@@ -7009,3 +7009,7 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
   height:17px!important;
   flex-basis:17px!important;
 }
+
+
+/* The provider section starts cleanly below the request metadata. */
+#app .order-completed .completed-order-link>.order-professional{border-left:0!important}
