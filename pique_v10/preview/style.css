@@ -6981,3 +6981,7 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
   width:100%!important;
   margin:7px 0 0!important;
 }
+
+
+/* The completed-card column divider does not belong before the metadata row. */
+#app .order-completed .completed-order-link>.pique-card-divider{display:none!important}
