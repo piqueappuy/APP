@@ -6982,9 +6982,17 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
   margin:7px 0 0!important;
 }
 
+<<<<<<< HEAD
 /* The completed-card column divider does not belong before the metadata row. */
 #app .order-completed .completed-order-link>.pique-card-divider{display:none!important}
 
+=======
+
+/* The completed-card column divider does not belong before the metadata row. */
+#app .order-completed .completed-order-link>.pique-card-divider{display:none!important}
+
+
+>>>>>>> dc9e338a7dc431c409a4277bc0fb9feb23f1a8b5
 /* No border belongs around the metadata wrapper itself. */
 #app .order-completed .completed-order-link>.order-request,
 #app .order-completed .order-request>.pique-meta-tags{
@@ -7007,3 +7015,6 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
   height:17px!important;
   flex-basis:17px!important;
 }
+
+/* The provider section starts cleanly below the request metadata. */
+#app .order-completed .completed-order-link>.order-professional{border-left:0!important}
