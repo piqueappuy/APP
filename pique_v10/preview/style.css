@@ -6910,19 +6910,11 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 #app .request-detail .labeled-meta-tag:nth-child(2){left:106px!important;bottom:42px!important}
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 200eea8bdafcd8cfa30bca657efaffd51a961b59
 /* Final mobile coordination cleanup: no divider before Rubro/Zona. */
 @media(max-width:600px){
 #app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){border-left:0!important;padding-left:0!important}
 }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 200eea8bdafcd8cfa30bca657efaffd51a961b59
 /* Keep the metadata captions readable on the light coordination tags. */
 #app .order-completed .order-request>.pique-meta-tags .meta-label{color:#0751ca!important}
 
