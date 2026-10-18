@@ -3070,6 +3070,11 @@ button[data-request-quote]:disabled{background:#e3edf7;color:#53677d;border-colo
 #app .order-professional>.coordination-quote-hint strong{font-size:12px!important;color:inherit!important}
 #app .order-pending .pending-order-action,#app .requester-resolved-card>.completion-details-button{border-top:1px solid #4d8de0!important;padding-top:12px!important;margin-top:12px!important}
 
+/* Keep the mobile coordination metadata free of the legacy left rule. */
+@media(max-width:600px){
+#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){border-left:0!important;padding-left:0!important}
+}
+
 .profile-integrated .dashboard-welcome:not(.professional-dashboard) .dashboard-stats>button[data-dashboard-filter]>span,.profile-integrated .dashboard-welcome:not(.professional-dashboard) .dashboard-stats>.dashboard-stat-static>span{color:#fff!important;white-space:normal!important;text-align:center!important;line-height:1.35!important;background:transparent!important;border:0!important;padding:0!important}
 #app .requester-resolved-card>.requester-details-divider{width:100%;height:1px;background:#4d8de0;margin-top:12px}
 #app .requester-resolved-card>.completion-details-button{border:0!important;padding-top:0!important;margin-top:12px!important;outline:0!important;box-shadow:none!important}
