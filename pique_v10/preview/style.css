@@ -6909,3 +6909,9 @@ body>.mobile-app{max-width:none!important;width:100%!important}.mobile-app .bott
 #app .request-detail .labeled-meta-tag:nth-child(1){left:8px!important;bottom:42px!important}
 #app .request-detail .labeled-meta-tag:nth-child(2){left:106px!important;bottom:42px!important}
 }
+
+
+/* Final mobile coordination cleanup: no divider before Rubro/Zona. */
+@media(max-width:600px){
+#app .order-completed:not(.requester-report-finished) .order-request>:is(.pique-meta-tags,.request-meta){border-left:0!important;padding-left:0!important}
+}
