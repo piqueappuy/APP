@@ -1,0 +1,662 @@
+'use strict';
+const app = document.getElementById('app');
+const categories = ['Hogar', 'Mascotas', 'Limpieza', 'Mudanzas', 'Jardín', 'Reparaciones', 'Pintura', 'Sanitaria', 'Electricidad', 'Carpintería', 'Jardinería', 'Otros servicios'];
+const icons = {
+progress:'<circle cx="5" cy="6" r="2"/><circle cx="19" cy="18" r="2"/><path d="M7 6h8a4 4 0 0 1 0 8H9a2 2 0 0 0 0 4h8"/>',
+person:'<circle cx="12" cy="7" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/>',
+home:'<path d="m2 10 10-8 10 8-2 2-2-2v12h-5v-7h-2v7H6V10l-2 2z"/>',
+paw:'<ellipse cx="5" cy="9" rx="2.1" ry="3"/><ellipse cx="10" cy="5" rx="2.1" ry="3"/><ellipse cx="16" cy="5" rx="2.1" ry="3"/><ellipse cx="21" cy="10" rx="2.1" ry="3"/><path d="M6 17c2-2 3-6 6-6s4 3 6 5c4 5-1 7-4 5-2-1-3-1-5 0-4 2-7-1-3-4Z"/>',
+clean:'<path d="m16 2-4 10 3 1 4-10q0-2-3-1M7 11l10 4-2 8-5-2 1-5-3 4-5-2z"/>',
+truck:'<path d="M2 5h12v12H2zM14 9h5l3 5v3h-8z"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="18" r="3"/><path class="cutout" d="M6 18h.01M18 18h.01M16 11h2l2 3h-4z"/>',
+leaf:'<path d="M21 2C8 1 2 6 5 15c9 6 16-1 16-13Z"/><path class="cutout" d="M6 15 16 7"/><path d="M12 12 3 23"/>',
+calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h3M14 14h3M7 18h3"/>',
+tool:'<path d="M15 3a6 6 0 0 0-7 8l-6 7a3 3 0 0 0 4 4l7-7a6 6 0 0 0 8-7l-4 4-4-4z"/><circle cx="5" cy="19" r=".7" fill="white" stroke="white"/>',
+paint:'<rect x="2" y="3" width="16" height="8" rx="2"/><path d="M18 6h3v9h-9v7h-3v-9h10V8"/>',
+grid:'<rect x="3" y="3" width="6" height="6" rx="2"/><rect x="15" y="3" width="6" height="6" rx="2"/><rect x="3" y="15" width="6" height="6" rx="2"/><rect x="15" y="15" width="6" height="6" rx="2"/>',
+bolt:'<path d="m13 2-9 12h7l-1 8 10-13h-7z"/>',
+water:'<path d="M12 2c-3 5-8 9-8 13a8 8 0 0 0 16 0c0-4-5-8-8-13Z"/>',
+pin:'<path d="M19 9c0 6-7 13-7 13S5 15 5 9a7 7 0 0 1 14 0Z"/><circle cx="12" cy="9" r="2"/>',
+clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6h5"/>',
+plus:'<path d="M12 3v18M3 12h18"/>',
+chevron:'<path d="m9 4 8 8-8 8"/>',
+shield:'<path fill="currentColor" stroke="none" d="M12 1c4 3 7 4 10 5v8c0 5-5 8-10 10C7 22 2 19 2 14V6c3-1 6-2 10-5Z"/><path stroke="white" stroke-width="2.4" d="m7 12 3 3 7-7"/>',
+message:'<path d="M21 11a9 9 0 0 1-9 9H3l1-5a9 9 0 1 1 17-4Z"/><path d="M8 11h.01M12 11h.01M16 11h.01"/>',
+check:'<path d="m5 12 4 4 10-10"/>',
+close:'<path d="M6 6l12 12M18 6 6 18"/>'
+ ,info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>'
+};
+const svg=(name,cls='')=>`<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${icons[name]||icons.grid}</svg>`;
+const categoryDesign={Hogar:['home','blue'],Mascotas:['paw','green'],Limpieza:['clean','orange'],Mudanzas:['truck','purple'],'Jardín':['leaf','green'],Reparaciones:['tool','amber'],Pintura:['paint','pink'],Sanitaria:['water','blue'],Electricidad:['bolt','amber'],'Carpintería':['tool','amber'],'Jardinería':['leaf','green'],'Otros servicios':['grid','gray']};
+const icon=i=>svg((categoryDesign[categories[i]]||['grid'])[0]);
+let providers = [];
+const key = window.PIQUE_LOCAL_TEST?'pique-local-orders-v1':'pique-demo-v1';
+const {publicationLabel,orderStatus,normalizeOrder} = PiqueOrderData;
+const seed = {id:'ejemplo',category:'Sanitaria',description:'Reparar pérdida en la cocina',zone:'Cordón',urgency:'Hoy',status:'proposals',selected:null};
+const referenceOrders=[{id:'ref-air',category:'Hogar',description:'Instalación de aire acondicionado',zone:'Pocitos',urgency:'Esta semana',status:'proposals',selected:null,photo:'air',createdAt:null}, {...seed,description:'Arreglar pérdida de agua en cocina',zone:'Villa Biarritz',photo:'water',createdAt:null}, {id:'ref-pet',category:'Mascotas',description:'Cuidado de mascota por viaje',zone:'Punta Carretas',urgency:'Esta semana',status:'proposals',selected:null,photo:'pet',createdAt:null}];
+let orders=referenceOrders.map(o=>({...o})),storageAvailable=true;
+try{const saved=JSON.parse(localStorage.getItem(key)||'null');if(Array.isArray(saved)){orders=saved.filter(o=>o&&typeof o.id==='string'&&categories.includes(o.category)&&typeof o.description==='string'&&typeof o.zone==='string'&&['Ahora','Hoy','Esta semana','Solo cotizar'].includes(o.urgency)&&['proposals','selected'].includes(o.status)).map(o=>({...o,selected:providers.some(p=>p.id===o.selected)?o.selected:null}));}}catch{storageAvailable=false;}
+for(const sample of referenceOrders){const existing=orders.find(o=>o.id===sample.id);if(!existing)orders.push({...sample});else if(sample.id==='ejemplo'){existing.photo='water';}}
+orders = orders.map(normalizeOrder);
+try { localStorage.setItem(key,JSON.stringify(orders)); } catch { storageAvailable=false; }
+let draft={category:'Sanitaria',description:'',zone:'',urgency:'Hoy'},step=0,sort='time',profileTab='about';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$ '+n.toLocaleString('es-UY');
+const categoryEmoji=name=>({
+ 'Sanitaria':'🔧',
+ 'Electricidad':'⚡',
+ 'Hogar':'🏠',
+ 'Mascotas':'🐾',
+ 'Jardinería':'🌿',
+ 'Limpieza':'🧼',
+ 'Belleza':'💄',
+ 'Otros servicios':'🧰'
+}[name]||'🧰');
+const providerZones=p=>p.zones||(Array.isArray(p.neighborhoods)&&p.neighborhoods.length?p.neighborhoods.join(' · '):'Montevideo');
+function save(){try{localStorage.setItem(key,JSON.stringify(orders));}catch{storageAvailable=false;toast('El navegador no permite guardar. Los pedidos durarán esta sesión.');}}
+function toast(message){const el=document.getElementById('toast');el.textContent=message;clearTimeout(toast.timer);toast.timer=setTimeout(()=>el.textContent='',4500);}
+function route(){const [name,...args]=location.hash.slice(1).split('/');return {name:name||'inicio',args};}
+function go(hash){if(location.hash==='#'+hash)render();else location.hash=hash;}
+function back(hash='inicio',text='Volver al inicio'){return `<a class="back" href="#${hash}">← ${text}</a>`;}
+function pageHead(label,title,subtitle){return `<div class="page-head"><span class="eyebrow">${label}</span><h1>${title}</h1>${subtitle?`<p class="muted">${subtitle}</p>`:''}</div>`;}
+function scope(o,p){return o.category==='Sanitaria'&&p.id==='laura'?'Visita, mano de obra y sellos estándar':'Visita y mano de obra';}
+function arrival(o,p){return o.urgency==='Ahora'||o.urgency==='Hoy'?`En ${p.arrival}`:o.urgency==='Esta semana'?'A coordinar esta semana':'A coordinar';}
+function orderMetadata(o){const symbol=(categoryDesign[o.category]||['grid'])[0];return `<div class="order-metadata"><span>${svg(symbol)}${esc(o.category)}</span><span><span aria-hidden="true">📍</span>${esc(o.zone)}, MONTEVIDEO</span><span><span aria-hidden="true">📅</span>${esc(publicationLabel(o))}</span></div>`;}
+function deadlineTag(o){const urgent=['Hoy','Ahora'].includes(o.urgency);const quote=o.urgency==='Solo cotizar';return `<span class="deadline-tag ${urgent?'deadline-urgent':quote?'deadline-quote':'deadline-week'}">${svg(urgent?'clock':quote?'message':'calendar')}<span>${urgent?'URGENTE':quote?'COTIZACIÓN':'PRÓXIMOS DÍAS'}</span></span>`;}
+function requestMetaTags(o){return resolvedRequestMetaTags(o);}
+
+function selectedRequestStateLabel(o){return typeof hasAgreedSchedule==='function'&&hasAgreedSchedule(o)?'EN MARCHA':'COORDINANDO';}
+function quotingStateBadge(){return '<span class="deadline-tag deadline-quote unified-quoting-badge">COTIZANDO</span>';}function requestStateTags(o){if(o.status==='completed')return '<span class="deadline-tag completion-finalized-tag">FINALIZADO</span>';if(o.selected||o.assigned)return typeof hasAgreedSchedule==='function'&&hasAgreedSchedule(o)?'':'<span class="deadline-tag deadline-quote pique-coordinating-tag pique-on-way-tag">'+svg('clock')+'<span>COORDINANDO</span></span>';return `<div class="pique-state-row">${quotingStateBadge()}</div>`;}
+function receivedResponsesHint(o){if(orderIsArchived(o)||o.selected||o.assigned||o.status==='completed')return '';const labels=[['quoted','COTIZACIÓN RECIBIDA','COTIZACIONES RECIBIDAS'],['applied','POSTULACIÓN RECIBIDA','POSTULACIONES RECIBIDAS']].map(([status,singular,plural])=>{const count=(o.quotes||[]).filter(q=>q.status===status).length;return count?count+' '+(count===1?singular:plural):'';}).filter(Boolean);return labels.length?`<a class="home-quote-count received-responses-hint" href="#propuestas/${encodeURIComponent(o.id)}">${svg('message')}<span>${labels.join(' · ')}</span></a>`:'';}
+function orderCard(o,inProfile=false){
+  const completed=orderStatus(o)==='FINALIZADO'||Boolean(o.selected||o.assigned);
+  const selected=providers.find(p=>p.id===(o.selected||o.assigned));
+  const selectedQuote=o.quotes?.find(q=>q.professional_id===(o.selected||o.assigned));
+  const visit=typeof coordinationRows!=='undefined'&&coordinationOwner===authUser?.id?coordinationRows.get(o.id):null;
+  const finishedReport=visit?.state==='finished';
+  const sentSchedule=visit?.state==='proposed'&&visit.proposed_by===authUser?.id;
+  const homeProgress=(route().name==='inicio'||(['cuenta','pedidos'].includes(route().name)&&inProfile))&&visit?.appointment_at&&o.status!=='completed';
+  const progressStates=['confirmed','on_way','arrived','finished'];
+  const progressLabels=['COORDINADO','EN CAMINO','EN EL LUGAR','TERMINADO'];
+  const progressMessage=visit?.state==='on_way'?'EL PROFESIONAL TE AVISARÁ CUANDO LLEGUE A TU DIRECCIÓN.':visit?.state==='arrived'?'EL PROFESIONAL YA ESTÁ EN EL LUGAR.':visit?.state==='finished'?'EL PROFESIONAL TERMINÓ EL TRABAJO. CONFIRMÁ SI QUEDÓ RESUELTO.':'EL PROFESIONAL TE AVISARÁ CUANDO ESTÉ EN CAMINO.';
+  const progressHeader=(o.selected||o.assigned)&&o.status!=='completed'&&!hasAgreedSchedule(o)?`<h4 class="requester-progress-heading coordination-inside-title">¡COORDINÁ DÍA Y HORA DE TU <span class="progress-pique-word">${document.querySelector('.nav-pique-logo')?.outerHTML||''}IQUE!</span></h4>`:finishedReport&&typeof coordinationPanel==='function'?`<h2 class="requester-validation-title">VALIDÁ EL TRABAJO DE ${esc((selected?.name||'TU PROFESIONAL').trim().split(/\s+/)[0])}</h2>${coordinationPanel({...o,hideCompletionEvidence:true})}`:homeProgress?`<div class="requester-home-progress"><h4 class="requester-progress-heading">¡MIRÁ CÓMO AVANZA TU <span class="progress-pique-word">${document.querySelector('.nav-pique-logo')?.outerHTML||''}IQUE!</span></h4><ol class="visit-steps">${progressStates.map((state,i)=>`<li class="${(progressStates.indexOf(visit.state)>=i?'done':'')+(progressStates.indexOf(visit.state)===i?' pique-current-state':'')}"><span class="visit-step-icon" aria-hidden="true">${["<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"m7 12 3 3 7-7\"/></svg>","<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M3 6h11v11H3zM14 10h4l3 4v3h-7\"/><circle cx=\"7\" cy=\"18\" r=\"2\"/><circle cx=\"18\" cy=\"18\" r=\"2\"/></svg>","<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M18 10c0 5-6 10-6 10S6 15 6 10a6 6 0 1 1 12 0Z\"/><circle cx=\"12\" cy=\"10\" r=\"2\"/></svg>","<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path d=\"M5 22V3m0 0c5-4 9 4 14 0v10c-5 4-9-4-14 0\"/></svg>"][i]}</span><span class="visit-step-label">${progressLabels[i]}</span></li>`).join('')}</ol><a class="coordination-note professional-arrival-note" href="#propuestas/${encodeURIComponent(o.id)}">${svg('info')}<span>${progressMessage}</span></a></div>`:'';
+  const scheduleHint=sentSchedule&&o.status!=='completed'?`<a class="btn requester-open coordination-card-hint schedule-sent" href="#propuestas/${encodeURIComponent(o.id)}">PROPUESTA DE HORARIOS ENVIADA</a>`:o.status!=='completed'&&!homeProgress?`<a class="btn requester-open coordination-card-hint ${sentSchedule?'schedule-sent':''}" href="#propuestas/${encodeURIComponent(o.id)}">${svg('clock')}<span>${visit?.appointment_at?'HORARIO ACEPTADO':sentSchedule?'PROPUESTA DE HORARIOS ENVIADA':'PROPONELE HORARIOS AL PROFESIONAL'}</span></a>`:'';
+  const content=finishedReport?`<div class="validation-request-block"><h3 class="validation-job-title">${esc(o.title||o.description)}</h3>${requestMetaTags(o).replace('pique-meta-tags labeled-meta-tags','validation-meta-list').replaceAll('pique-meta-tag labeled-meta-tag','validation-meta-item')}</div>`:`<div class="order-request"><div class="pique-state-row">${finishedReport?'<span class="deadline-tag completion-finalized-tag">FINALIZADO</span>':(o.selected||o.assigned)?(hasAgreedSchedule(o)?'':`<span class="deadline-tag deadline-quote pique-on-way-tag">${selectedRequestStateLabel(o)}</span>`):deadlineTag(o)}${o.selected||o.assigned?'':`<span class="pique-state-divider" aria-hidden="true"></span>${requestStateTags(o)}`}</div><h3 class="request-title" data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description${['inicio','propuestas','pedidos'].includes(route().name)?' description-info-tag':''}">${['inicio','propuestas','pedidos'].includes(route().name)?svg('info'):'' }<span>${esc(o.description)}</span></p>${finishedReport?requestMetaTags(o).replace('pique-meta-tags labeled-meta-tags','validation-meta-list').replaceAll('pique-meta-tag labeled-meta-tag','validation-meta-item'):requestMetaTags(o)}</div>`;
+  const archivedPriority=['Hoy','Ahora'].includes(o.urgency)?'<span class="deadline-tag deadline-urgent">URGENTE</span>':o.urgency==='Esta semana'?'<span class="deadline-tag deadline-week">PRÓXIMOS DÍAS</span>':'<span class="deadline-tag deadline-quote">COTIZACIÓN</span>';
+  const pendingContent=`<div class="pending-order-layout unified-pique-card v32-request-card"><div class="pending-order-main">${orderIsArchived(o)?`<div class="pique-state-row">${archivedPriority}</div>`:requestStateTags(o)}<h3 class="request-title" data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description description-info-tag search-details-tag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6Z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg><span class="details-tag-copy"><small class="details-tag-label">DETALLES</small><span class="details-tag-value">${esc(o.description)}</span></span></p></div><div class="pique-card-divider" aria-hidden="true"></div><div class="pending-order-meta">${requestMetaTags(o)}</div></div>`;
+  if(inProfile&&orderStatus(o)==='FINALIZADO')return `<article class="panel order requester-photo-card requester-resolved-card ${categoryThemeClass(o.category)}"><div class="pending-order-layout unified-pique-card v32-request-card"><div class="pending-order-main"><div class="pique-state-row"><span class="deadline-tag completion-finalized-tag">FINALIZADO</span></div><h3 class="request-title" data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description${['inicio','propuestas','pedidos'].includes(route().name)?' description-info-tag':''}">${['inicio','propuestas','pedidos'].includes(route().name)?svg('info'):'' }<span>${esc(o.description)}</span></p></div><div class="pique-card-divider" aria-hidden="true"></div><div class="pending-order-meta">${requestMetaTags(o)}</div></div><div class="requester-details-divider" aria-hidden="true"></div><a class="btn requester-open full completion-details-button" href="#propuestas/${encodeURIComponent(o.id)}"><svg class="details-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>VER MÁS DETALLES</span></a></article>`;
+  if(orderIsArchived(o))return `<article class="panel order order-archived requester-photo-card ${categoryThemeClass(o.category)}">${pendingContent}<div class="archive-republish-row"><p class="archive-policy-note ${['Hoy','Ahora'].includes(o.urgency)?'urgent':'agenda'}">${o.archive_reason==='visit_not_made'?'VISITA NO REALIZADA EN EL PLAZO ACORDADO.':o.archive_reason==='work_not_completed'?'TRABAJO NO CULMINADO EN EL PLAZO ACORDADO.':(['Hoy','Ahora'].includes(o.urgency)?'LOS PIQUES CON URGENCIA SE ARCHIVAN A LAS 24HS DE PUBLICADOS.':'LOS PIQUES SIN URGENCIA SE ARCHIVAN A LOS 7 DÍAS DE PUBLICADOS.')}</p><button type="button" class="btn primary archive-republish-button" data-republish-pique="${esc(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5"/><path d="M6 7a7 7 0 0 1 12-2l2 2M4 17l2 2a7 7 0 0 0 12-2"/></svg><span>REPUBLICAR</span></button></div></article>`;
+  if(completed)return `<article class="panel order order-completed requester-photo-card ${finishedReport?'requester-report-finished':''} ${categoryThemeClass(o.category)}">`+
+    ` ${progressHeader}<div class="completed-order-link">${content}<div class="pique-card-divider" aria-hidden="true"></div><div class="order-professional">${o.status==='completed'?'<span class="professional-caption">✓ RESUELTO</span>':'<h4 class="coordination-professional-heading">'+svg('person')+'<span>PROFESIONAL ELEGIDO</span></h4>'}${selected?`<div class="chosen-person"><div class="chosen-identity"><div class="avatar">${selected.initials}</div><strong class="chosen-professional-name">${esc(selected.name)}<span class="name-adjacent-rating">${selected.realReviews?.length?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>'+(selected.realReviews.reduce((sum,r)=>sum+r.rating,0)/selected.realReviews.length).toFixed(1).replace('.',','):''}</span></strong><strong class="chosen-inline-score">${selected.realReviews?.length?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>'+(selected.realReviews.reduce((sum,r)=>sum+r.rating,0)/selected.realReviews.length).toFixed(1).replace('.',',') :''}</strong></div><div class="chosen-rating"><span class="combined-opinions-tag"><span class="combined-rating-score">${selected.realReviews?.length?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>'+(selected.realReviews.reduce((sum,r)=>sum+r.rating,0)/selected.realReviews.length).toFixed(1).replace('.',',') :''}</span><span class="combined-opinions-count">${svg('message')}${selected.realReviews?.length||0} ${selected.realReviews?.length===1?'OPINIÓN':'OPINIONES'}</span></span></div><div class="chosen-provider-location pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">${svg('pin')}</span><span class="meta-copy"><small class="meta-label">ZONA</small><span class="meta-value" style="white-space:nowrap!important">${esc(providerZones(selected))}</span></span></div><a class="btn requester-open full professional-profile-button" href="#profesional/${encodeURIComponent(o.id)}/${selected.id}">${svg('person')}<span>VER PERFIL COMPLETO</span></a></div><div class="requester-agreed-summary">${selectedQuote?.quoted_price!=null?`<span class="price-tag coordination-quote-hint coordination-price"><small class="summary-label-with-icon"><span class="summary-caption-group"><svg class="summary-hint-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5 9h1m12 6h1"/></svg><span>PRECIO <br>ACORDADO</span></span></small><strong>${money(selectedQuote.quoted_price)}</strong></span>`:''}${selectedQuote?.estimated_minutes!=null?`<span class="quote-estimate coordination-quote-hint"><small class="summary-label-with-icon"><span class="summary-caption-group"><svg class="summary-hint-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>TIEMPO <br>ESTIMADO</span></span></small><strong>${quoteTimeLabel(selectedQuote.estimated_minutes)}</strong></span>`:''}</div>`:'<strong>PROFESIONAL ASIGNADO</strong>'}</div></div>${scheduleHint}${finishedReport?`<a class="btn requester-open full completion-details-button" href="#propuestas/${encodeURIComponent(o.id)}"><svg class="details-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>VER MÁS DETALLES</span></a>`:''}</article>`;
+  return `<article class="panel order order-pending requester-photo-card ${categoryThemeClass(o.category)}"><h2 class="requester-application-title">¡EN BUSQUEDA DE UN <span class="postulation-logo-word">${document.querySelector('.nav-pique-logo')?.outerHTML||''}IQUE!</span></h2>${pendingContent}${receivedResponsesHint(o)}<div class="pending-order-action"><a class="btn requester-open" href="#propuestas/${encodeURIComponent(o.id)}">${(o.quotes||[]).some(q=>q.status==='quoted')?`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg>`:`<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>`}<span>${(o.quotes||[]).some(q=>q.status==='quoted')?'VER COTIZACIONES':'VER PROFESIONALES'}</span></a></div></article>`;
+}
+function categoryButton(name,label=name){const [symbol,tone]=categoryDesign[name]||['grid','gray'];return `<button class="category" data-new="${esc(name)}"><span class="category-icon filled tone-${tone}">${svg(symbol)}</span><span>${esc(label.toUpperCase())}</span></button>`;}
+function visiblePiqueHistory(rows){const republished=new Set(rows.flatMap(o=>(o.coordination_history||[]).filter(event=>event.reason==='republished'&&event.original_request_id).map(event=>event.original_request_id)));return rows.filter(o=>!republished.has(o.id));}
+function userOrders(){return typeof authUser!=='undefined'&&authUser?visiblePiqueHistory(orders.filter(o=>o.user_id===authUser.id)):[];}
+function currentFirstName(){
+ const meta=typeof authUser!=='undefined'&&authUser?.user_metadata?authUser.user_metadata:{};
+ const raw=meta.first_name||meta.name||meta.full_name||'';
+ const first=String(raw).trim().split(/\s+/)[0]||String(authUser?.email||'').split('@')[0]||'USUARIO';
+ return first.toUpperCase();
+}
+
+function recentRow(o){
+ const baseStatus=orderStatus(o);
+ const status=baseStatus==='FINALIZADO'?'FINALIZADO':orderIsQuoting(o)?'COTIZANDO':'SIN COTIZAR';
+ const statusClass=status==='FINALIZADO'?'done':status==='COTIZANDO'?'quoting':'pending';
+ const priority=['Ahora','Hoy'].includes(o.urgency)?'URGENTE':o.urgency==='Solo cotizar'?'COTIZACIÓN':'NORMAL';
+ const priorityClass=['Ahora','Hoy'].includes(o.urgency)?'urgent':o.urgency==='Solo cotizar'?'quote':'normal';
+ const [categorySymbol,categoryTone]=categoryDesign[o.category]||['grid','gray'];
+ return `<a class="recent-order requester-active-card ${categoryThemeClass(o.category)}" href="#propuestas/${encodeURIComponent(o.id)}">`+
+   `<span class="requester-rubro-card"><span class="category-icon filled tone-${categoryTone}" aria-hidden="true">${svg(categorySymbol)}</span><span class="requester-rubro-name">${esc(o.category)}</span></span>`+
+   `<span class="recent-copy"><h3>${esc(o.title)}</h3><span class="requester-meta-tags"><span class="requester-meta-tag"><span aria-hidden="true">📍</span>${esc(o.zone)}, MONTEVIDEO</span><span class="requester-meta-tag"><span aria-hidden="true">📅</span>${esc(publicationLabel(o))}</span></span></span>`+
+   `<span class="requester-right-tags"><span class="requester-priority ${priorityClass}">${priority}</span><span class="requester-status-separator" aria-hidden="true"></span><span class="status-pill ${statusClass}">${status}</span></span>${svg('chevron','chevron')}</a>`;
+}
+const requesterStates={urgent:'all',active:'all',orders:'all',profile:'all'};
+function requesterMatches(o,section='orders'){const state=requesterStates[section],coordinating=Boolean(o.selected||o.assigned);return state==='all'||(state==='coordinating'?coordinating:state==='quoting'?!coordinating&&orderIsQuoting(o):!coordinating&&!orderIsQuoting(o));}
+function requesterFilters(section='orders'){const rows=userOrders().filter(o=>orderStatus(o)==='PENDIENTE'&&!o.selected&&!o.assigned&&(section==='urgent'?['Hoy','Ahora'].includes(o.urgency):section==='active'?!['Hoy','Ahora'].includes(o.urgency):true));const options=[['all','TODOS'],['unquoted','SIN COTIZAR'],['quoting','COTIZANDO']].filter(([value])=>rows.some(o=>value==='all'||(value==='quoting'?orderIsQuoting(o):!orderIsQuoting(o))));return `<div class="requester-filters" aria-label="Filtrar piques">${options.map(([value,label])=>`<button type="button" data-requester-state="${value}" data-requester-section="${section}" aria-pressed="${requesterStates[section]===value}">${label}</button>`).join('')}</div>`;}
+function requesterCarousel(rows,label='Piques del solicitante',showQuoteCount=false){return rows.length?`<div class="${rows.length<=5?'history-card-list':'requester-slider'}" role="region" aria-label="${label}"${rows.length>5?' tabindex="0"':''}>${rows.map(o=>orderCard(o)).join('')}</div>${rows.length>5?carouselDots(rows.length):''}`:'<p class="orders-empty" role="status">NO HAY PIQUES CON ESTOS FILTROS.</p>';}
+let dashboardFilter='pending',dashboardOwner=null,dashboardPriority=null,dashboardExpanded=true;
+function requesterProfileFilters(){const rows=userOrders().filter(o=>!orderIsArchived(o)&&orderStatus(o)!=='FINALIZADO'&&!(typeof hasAgreedSchedule==='function'&&hasAgreedSchedule(o)));const options=[['all','TODOS'],['unquoted','SIN COTIZAR'],['quoting','COTIZANDO']].filter(([value])=>rows.some(o=>value==='all'||(value==='coordinating'?Boolean(o.selected||o.assigned):!o.selected&&!o.assigned&&(value==='quoting'?orderIsQuoting(o):!orderIsQuoting(o)))));if(!options.some(([value])=>value===requesterStates.profile))requesterStates.profile='all';return `<div class="requester-profile-filters" aria-label="Filtrar piques por resolver">${options.map(([value,label])=>`<button type="button" data-requester-state="${value}" data-requester-section="profile" aria-pressed="${requesterStates.profile===value}">${label}</button>`).join('')}</div>`;}
+function dashboardSummaryMark(id,count){const paths={all:'M12 5v14M5 12h14',pending:'M3 7h7l2 2h9v11H3z',resolved:'m4 12 5 5L20 6',archived:'M4 5h16v4H4zM6 9v12h12V9M10 13h4'};return '<svg class="dashboard-stat-mark mark-'+id+'" viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><svg x="13" y="13" width="26" height="26" viewBox="0 0 24 24"><path d="'+paths[id]+'" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></svg><span class="dashboard-stat-number">'+count+'</span>';}
+function requesterDashboard(ownProfile){
+ if(dashboardOwner!==authUser.id){dashboardFilter=route().name==='pedidos'?'auto':'pending';dashboardPriority=null;dashboardExpanded=true;dashboardOwner=authUser.id;requesterStates.profile='all';}
+ const rows=userOrders(),done=o=>orderStatus(o)==='FINALIZADO';
+
+ const pending=rows.filter(o=>!orderIsArchived(o)&&!done(o)),resolved=rows.filter(o=>!orderIsArchived(o)&&done(o));
+ const inProgress=pending.filter(o=>Boolean(o.selected||o.assigned)).sort(ongoingPiquePriority);
+ const activePending=pending.filter(o=>!inProgress.includes(o));
+ if(route().name==='pedidos'&&dashboardFilter==='auto'&&rows.length)dashboardFilter=inProgress.length?'execution':'pending';
+ const meta=authUser.user_metadata||{};
+ const name=[meta.first_name,meta.last_name].filter(Boolean).join(' ')||meta.full_name||meta.name||'TU CUENTA';
+ const initials=name.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('');
+ return `<div class="requester-dashboard"><section class="dashboard-welcome dashboard-welcome-columns"><div class="dashboard-person"><span class="dashboard-avatar" aria-hidden="true">${esc(initials)}</span><div class="dashboard-identity"><h2>${esc(currentFirstName())}, ${route().name==='pedidos'?'MIRA TU ACTIVIDAD.':'ESTE ES TU PERFIL.'}</h2><p class="dashboard-summary-subtitle">Este es el resumen de tus piques.</p></div></div>
+ <div class="dashboard-stats" aria-label="Resumen de tus piques" ${rows.length?'':'hidden'}>${[['all',rows.length,'PIQUES CREADOS'],['pending',activePending.length,'PIQUES ABIERTOS'],['resolved',resolved.length,'PIQUES RESUELTOS'],['archived',rows.filter(orderIsArchived).length,'PIQUES ARCHIVADOS']].filter(([id,count])=>id==='all'||(id==='pending'?rows.length>0:count>0)).map(([id,count,label])=>id==='all'?`<div class="dashboard-stat-static"><strong>${dashboardSummaryMark(id,count)}</strong><span>${label.replace(/^PIQUES /,'').replace(count===1?/OS$/:/$^/,count===1?'O':'')}</span></div>`:`<button type="button" data-dashboard-filter="${id}" ${count===0?'disabled aria-disabled="true"':''} aria-pressed="${dashboardFilter===id}"><strong>${dashboardSummaryMark(id,count)}</strong><span>${label.replace(/^PIQUES /,'').replace(count===1?/OS$/:/$^/,count===1?'O':'')}</span></button>`).join('')}${inProgress.length?`<div class="dashboard-execution-count" role="button" tabindex="0" data-highlight-execution><span class="execution-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 11 7-11 7Z"/></svg></span><span class="execution-copy"><b>${inProgress.length} ${inProgress.length===1?'PIQUE':'PIQUES'} EN MARCHA</b><small>Seguí el avance de tu solicitud.</small></span>${svg('chevron')}</div>`:''}</div></section>
+ ${ownProfile?'':`<section class="dashboard-professional"><div class="dashboard-pro-copy"><h3>¿TENÉS UN OFICIO?</h3><p data-fit-card-title>OFRECÉ TUS SERVICIOS EN PIQUE.</p></div><button type="button" class="dashboard-pro-action" data-professional-start><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 12h18M10 12v2h4v-2"/></svg><span>ACTIVAR PERFIL PROFESIONAL</span></button></section>`}
+ ${[['PIQUES EN COORDINACIÓN',inProgress.filter(o=>coordinationRows.get(o.id)?.state!=='finished')],['PIQUES EN VALIDACIÓN',inProgress.filter(o=>coordinationRows.get(o.id)?.state==='finished')]].filter(([,list])=>list.length).map(([title,list])=>`<section class="requester-profile-progress">${title==='PIQUES EN VALIDACIÓN'?`<div class="dashboard-section-heading"><h2>${title}</h2><span class="pique-section-count">${list.length}</span></div>`:''}<div class="dashboard-order-list">${list.map(o=>`<div class="dashboard-slide">${orderCard(o,true)}</div>`).join('')}</div></section>`).join('')}
+ ${dashboardExpanded?(()=>{const chosen=dashboardFilter==='all'?rows.filter(o=>!inProgress.includes(o)):dashboardFilter==='pending'?activePending.filter(o=>requesterMatches(o,'profile')):dashboardFilter==='resolved'?resolved:rows.filter(orderIsArchived);const label=dashboardFilter==='all'?'PIQUES CREADOS':dashboardFilter==='pending'?'PIQUES POR RESOLVER':dashboardFilter==='resolved'?'PIQUES RESUELTOS':'PIQUES ARCHIVADOS';return `<section class="dashboard-orders dashboard-inline-orders dashboard-pending-list ${dashboardFilter==='pending'&&inProgress.length?'after-progress-piques':''}"><div class="dashboard-section-heading"><h2>${dashboardFilter==='pending'?'PIQUES ABIERTOS':label}</h2><span>${chosen.length}</span></div>${dashboardFilter==='pending'?requesterProfileFilters():''}${dashboardFilter==='archived'?'<div class="archive-policy-hints"><p class="archive-policy-note urgent">PIQUES URGENTES SIN CONCRETAR SE ARCHIVAN A LAS 24 HORAS DE SU PUBLICACIÓN.</p><p class="archive-policy-note agenda">PIQUES EN AGENDA SIN CONCRETAR SE ARCHIVAN A LOS 7 DÍAS DE SU PUBLICACIÓN.</p></div>':''}${chosen.length?`<div class="dashboard-order-list">${chosen.map(o=>{const received=!done(o)&&(o.quotes||[]).filter(q=>q.status==='quoted').length;const notice=received?`<a class="dashboard-news" href="#propuestas/${encodeURIComponent(o.id)}">${svg('message')}<span>TENÉS ${received===1?'UNA COTIZACIÓN':received+' COTIZACIONES'} PARA REVISAR</span>${svg('chevron')}</a>`:'';return `<div class="dashboard-slide">${orderCard(o,true)}</div>`;}).join('')}</div>`:`<div class="dashboard-empty profile-empty-hint" role="status">${svg('info')}<span>POR AHORA NO TENÉS PIQUES EN ESTA SELECCIÓN.</span></div>`}</section>`;})():`<p class="dashboard-navigation-hint">TOCÁ UN CONTADOR PARA VER TUS PIQUES.</p>`}
+
+
+ </div>`;
+}
+function ongoingPiquePriority(a,b){const rank=o=>{const state=typeof coordinationRows!=='undefined'?coordinationRows.get(o.id)?.state:null;return ['confirmed','on_way','arrived'].includes(state)?0:state==='finished'?2:1;};return rank(a)-rank(b);}
+function home(){
+ const all=userOrders().filter(o=>orderStatus(o)==='PENDIENTE');
+ const coordinating=all.filter(o=>o.selected||o.assigned).sort(ongoingPiquePriority);
+ const urgent=all.filter(o=>!o.selected&&!o.assigned&&['Hoy','Ahora'].includes(o.urgency));
+ const regular=all.filter(o=>!o.selected&&!o.assigned&&!['Hoy','Ahora'].includes(o.urgency));
+ const regularFiltered=regular.filter(o=>requesterMatches(o,'active'));
+ if(urgent.length===1)requesterStates.urgent='all';
+ const urgentSection=urgent.length?`<section class="requester-home-section requester-urgent-section"><div class="section-heading home-open-heading"><span class="home-open-owner">${urgent.length===1?'MI':'MIS'}</span><span class="section-logo-count">${homePiqueCounter(urgent.length)}</span><h2>${urgent.length===1?'IQUE ABIERTO':'IQUES ABIERTOS'}</h2></div>${urgent.length===1?'':requesterFilters('urgent')}${requesterCarousel(urgent.filter(o=>requesterMatches(o,'urgent')),'Mis piques abiertos',requesterStates.urgent==='quoting')}</section>`:'';
+
+ const activeSection=regular.length?`<section class="requester-home-section">${regular.length===1?'':requesterFilters('active')}${requesterCarousel(regularFiltered,'Piques en agenda',requesterStates.active==='quoting')}</section>`:'';
+ const coordinatingSection=[['PIQUES EN VALIDACIÓN',coordinating.filter(o=>coordinationRows.get(o.id)?.state==='finished')],['PIQUES EN COORDINACIÓN',coordinating.filter(o=>coordinationRows.get(o.id)?.state!=='finished')]].filter(([,list])=>list.length).map(([title,list])=>`<section class="requester-home-section requester-coordinating-section">${title==='PIQUES EN VALIDACIÓN'?`<div class="section-heading"><h2>${title}<span class="pique-section-count">${list.length}</span></h2></div>`:''}${requesterCarousel(list,title)}</section>`).join('');
+ const content=coordinatingSection+matchingRequestsView()+urgentSection+activeSection;
+ return content||'<p class="profile-empty-hint" role="status">'+svg('info')+'<span>POR AHORA NO TENÉS PIQUES ABIERTOS NI EN MARCHA.</span></p>';
+}
+function quoteTimeLabel(minutes){
+ if(minutes<60)return `${minutes}M`;
+ if(minutes%60===0)return `${minutes/60}H`;
+ return `${Math.floor(minutes/60)}H ${minutes%60}M`;
+}
+let professionalPiquesFilter='all';
+let professionalActiveFilter='all';
+let professionalActiveAutoKey='';
+let professionalDashboardFilter='auto',professionalDashboardFilterOwner=null;
+function professionalRequestInZone(o){
+ const zones=(professionalAccount?.neighborhoods?.length?professionalAccount.neighborhoods:String(professionalAccount?.zones||'').split('·')).map(z=>String(z).trim().toUpperCase()).filter(Boolean);
+ const zone=String(o.zone||'').trim().toUpperCase();
+ return !zones.length||zones.includes(zone);
+}
+function professionalDeadlineTag(o){const urgent=['Hoy','Ahora'].includes(o.urgency);const quote=o.urgency==='Solo cotizar';return `<span class="deadline-tag ${urgent?'deadline-urgent':quote?'deadline-quote':'deadline-week'}">${urgent?'URGENTE':quote?'COTIZACIÓN':'PRÓXIMOS DÍAS'}</span>`;}
+function categoryThemeClass(value){return 'theme-'+String(value||'general').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+function professionalRequestCard(o,mode){
+ const statusLabel=o.quoteStatus==='accepted'?'EN COORDINACIÓN':o.quoteStatus==='applied'?'POSTULADO':o.quoteStatus==='pending'?'COTIZAR':o.hasProfessionalQuote?'COTIZADO':'POSTULAR';
+ const detailTags=resolvedRequestMetaTags(o).replace('pique-meta-tags','pique-meta-tags quote-request-tags').replaceAll('pique-meta-tag"','pique-meta-tag quote-chip"');
+ const statusRow=`<div class="quote-status-row">${mode==='discover'?'<span class="deadline-tag deadline-quote unified-quoting-badge available-badge">DISPONIBLE</span>':o.quoteStatus==='accepted'?(typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished'?'':hasAgreedSchedule(o)?'':`<span class="deadline-tag deadline-quote pique-on-way-tag">${selectedRequestStateLabel(o)}</span>`):quotingStateBadge()}</div>`;
+ const leftBase=`${statusRow}<h3 data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description description-info-tag professional-details-tag search-details-tag"><svg class="details-tag-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6Z"/><path d="M14 3v5h5M9 12h7M9 16h7"/></svg><span class="details-tag-copy"><small class="details-tag-label">DETALLES</small><span class="details-tag-value">${esc(o.description)}</span></span></p>`;
+ let leftContent=leftBase;
+ let rightContent='';
+ let footerAction='';
+ let cardClass='';
+ const themeClass=' '+categoryThemeClass(o.category);
+ if(o.quoteStatus==='pending'){
+  cardClass=' professional-card-pending';
+  leftContent+=detailTags;
+  rightContent=`<label class="quote-slider"><span class="quote-slider-head"><b>EL COSTO POR RESOLVER TU SOLICITUD ES:</b><strong data-quote-price-value>${money(o.quotedPrice??2500)}</strong></span><input type="range" min="500" max="20000" step="500" value="${o.quotedPrice??2500}" data-quote-price aria-label="Precio de la cotización"></label><label class="quote-slider"><span class="quote-slider-head"><b>EL TIEMPO QUE ME DEMANDARÁ ES:</b><strong data-quote-time-value>${quoteTimeLabel(o.estimatedMinutes??120)}</strong></span><input type="range" min="30" max="480" step="30" value="${o.estimatedMinutes??120}" data-quote-time aria-label="Tiempo estimado"></label><button type="button" class="btn primary quote-send" data-send-quote="1" data-order-id="${esc(o.id)}" ${sendingQuotes.has(o.quoteRequestId||`new:${o.id}`)?'disabled':''}>${sendingQuotes.has(o.quoteRequestId||`new:${o.id}`)?'ENVIANDO…':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m22 2-7 20-4-9-9-4 20-7ZM22 2 11 13"/></svg><span>ENVIAR COTIZACIÓN</span>'}</button>`;
+  const sendIndex=rightContent.indexOf('<button type="button" class="btn primary quote-send"');
+  if(sendIndex>=0){footerAction='<div class="professional-card-footer pending-quote-footer">'+rightContent.slice(sendIndex)+'</div>';rightContent=rightContent.slice(0,sendIndex);}
+ }else if(o.hasProfessionalQuote){
+  cardClass=o.quoteStatus==='accepted'?' professional-card-quoted professional-card-coordinating':' professional-card-quoted';
+
+  leftContent+=detailTags;
+  rightContent=`<div class="professional-quote-summary"><div><span>PRECIO <br>ACORDADO</span><strong>${o.quotedPrice!=null?money(o.quotedPrice):'—'}</strong></div><div><span>TIEMPO <br>ESTIMADO</span><strong>${o.estimatedMinutes?quoteTimeLabel(o.estimatedMinutes):'—'}</strong></div></div>`;
+  if(o.quoteStatus==='accepted'){
+   const visit=typeof hasAgreedSchedule==='function'&&hasAgreedSchedule(o)?coordinationRows.get(o.id):null;
+   rightContent+=`<a class="professional-coordination-hint" href="#coordinar/${encodeURIComponent(o.id)}" aria-label="VER HORARIOS Y COORDINAR VISITA">${visit?`<span class="agreed-card-date"><small>FECHA Y HORARIO ACORDADO</small><strong>${esc(coordinationDate(visit.appointment_at))}</strong></span>`:`${svg('clock')}<span>HORARIOS DISPONIBLES</span>`}</a>`;
+   if(visit&&route().name==='inicio'&&mode!=='home-process'){
+    cardClass+=' home-process-card';
+    footerAction=`<div class="professional-card-footer home-process-actions">${visit.state==='confirmed'?`<button class="btn primary full" data-coordination-action="on_way" data-request="${esc(o.id)}">${svg('truck')}<span>ESTOY EN CAMINO</span></button>`:visit.state==='on_way'?`<button class="btn primary full" data-coordination-action="arrived" data-request="${esc(o.id)}">${svg('check')}<span>LLEGUÉ AL LUGAR</span></button>`:''}${['confirmed','issue'].includes(visit.state)?`<a class="btn full home-reprogram-button" href="#coordinar/${encodeURIComponent(o.id)}" data-open-reprogram="${esc(o.id)}">REPROGRAMAR VISITA</a>`:''}</div>`;
+   }
+  }
+
+ }else if(o.quoteStatus==='applied'){
+  cardClass=' professional-card-applied professional-application-layout';
+  rightContent=resolvedRequestMetaTags(o);
+  footerAction=`<div class="professional-card-footer application-waiting-footer"><div class="professional-application-summary">${svg('message')}<strong>ESPERANDO RESPUESTA</strong></div></div>`;
+ }else if(['rejected','cancelled'].includes(o.quoteStatus)){
+  cardClass=' professional-card-applied';
+  leftContent+=detailTags;
+  rightContent=`<div class="professional-application-summary"><span>${o.quoteStatus==='rejected'?'POSTULACIÓN RECHAZADA':'SOLICITUD CERRADA'}</span><strong>NO DISPONIBLE PARA POSTULAR</strong></div>`;
+ }else{
+  cardClass=' professional-card-discover professional-card-pending professional-quoted-layout professional-discover-emulated';
+  leftContent+=detailTags;
+  rightContent='';
+
+  footerAction=`<div class="professional-card-footer"><button type="button" class="btn primary professional-apply" data-apply-order="${esc(o.id)}"><svg class="apply-plane" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m21 3-7 18-4-7-7-4L21 3Z"/><path d="m10 14 6-6"/></svg><span>POSTULARME</span></button></div>`;
+ }
+ if(o.quoteStatus==='quoted'){
+  cardClass+=' professional-card-pending professional-quoted-layout';
+  leftContent=leftBase.replace('>COTIZANDO<','>COTIZADO<')+detailTags;
+  rightContent=`<div class="quote-slider quote-sent-hint"><span class="quote-slider-head"><b>PRECIO COTIZADO</b><strong>${o.quotedPrice!=null?money(o.quotedPrice):'SIN ESPECIFICAR'}</strong></span></div><div class="quote-slider quote-sent-hint"><span class="quote-slider-head"><b>TIEMPO ESTIMADO</b><strong>${o.estimatedMinutes!=null?quoteTimeLabel(o.estimatedMinutes):'SIN ESPECIFICAR'}</strong></span></div>`;
+  footerAction='';
+ }
+ if(['home-process','profile-process'].includes(mode)&&o.quoteStatus==='accepted'&&typeof hasAgreedSchedule==='function'&&!hasAgreedSchedule(o)){
+ leftContent=`<div class="coordination-request-heading">${leftBase}</div>${detailTags}`;
+ const pendingVisit=coordinationOwner===authUser?.id?coordinationRows.get(o.id):null;rightContent=`<div class="professional-requester-summary"><h4 class="coordination-professional-heading">SOLICITANTE</h4>${typeof customerPiqueDetails==='function'?customerPiqueDetails(o):''}</div><div class="professional-quote-summary"><div><span>PRECIO <br>ACORDADO</span><strong>${o.quotedPrice!=null?money(o.quotedPrice):'—'}</strong></div><div><span>TIEMPO <br>ESTIMADO</span><strong>${o.estimatedMinutes?quoteTimeLabel(o.estimatedMinutes):'—'}</strong></div></div>`;footerAction=pendingVisit?.state==='proposed'&&pendingVisit.proposed_by!==authUser?.id?`<div class="professional-waiting-dates professional-received-dates">${coordinationPanel(o)}</div>`:`<div class="professional-waiting-dates"><button class="btn primary full" disabled>${svg('clock')}<span>ESPERANDO PROPUESTA DE HORARIOS</span></button></div>`;}
+ if(['home-process','profile-process'].includes(mode)&&o.quoteStatus==='accepted'&&!hasAgreedSchedule(o)){
+ const logo=document.querySelector('.nav-pique-logo')?.outerHTML||'';
+ return `<article class="matching-request coordination-three-card ${themeClass}" id="pro-pique-${esc(o.id)}"><h2 class="coordination-inside-title">¡COORDINÁ DÍA Y HORA DE TU <span class="coordination-pique-word">${logo}IQUE!</span></h2><div class="coordination-three-columns"><div class="coordination-pique-details"><h3 data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description${['inicio','propuestas','pedidos'].includes(route().name)?' description-info-tag':''}">${['inicio','propuestas','pedidos'].includes(route().name)?svg('info'):'' }<span>${esc(o.description)}</span></p>${detailTags}</div><div class="coordination-price-details"><div class="professional-quote-summary"><div><span>PRECIO <br>ACORDADO</span><strong>${o.quotedPrice!=null?money(o.quotedPrice):'—'}</strong></div><div><span>TIEMPO <br>ESTIMADO</span><strong>${o.estimatedMinutes?quoteTimeLabel(o.estimatedMinutes):'—'}</strong></div></div></div><div class="professional-requester-summary">${typeof customerPiqueDetails==='function'?customerPiqueDetails(o).replace('<div class="person">','<div class="person"><h4>SOLICITANTE</h4>').replace(/<div class="avatar">[^<]*<\/div>/,`<div class="avatar">${svg('person')}</div>`).replace(/<span class="pique-meta-tag">📍 ([\s\S]*?)<\/span>/,`<div class="coordination-customer-zone"><small>ZONA</small><div class="coordination-zone-place">${svg('pin')}<span>$1</span></div></div>`):''}</div></div>${footerAction}</article>`;
+ }
+ const reportFinished=typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished';
+ return `<article class="matching-request${cardClass}${themeClass}${reportFinished?' professional-report-finished':''}${['home-process','profile-process'].includes(mode)&&!hasAgreedSchedule(o)?' professional-waiting-schedule':''}" id="pro-pique-${esc(o.id)}">${reportFinished?`<h2 class="professional-progress-title validation-card-title">¡ESTAMOS VALIDANDO EL <span class="progress-pique-word">${document.querySelector('.nav-pique-logo')?.outerHTML||''}IQUE!</span></h2>`:''}${['profile-process','home-process'].includes(mode)&&typeof coordinationPanel==='function'&&!(['home-process','profile-process'].includes(mode)&&!hasAgreedSchedule(o))?`<div class="professional-process-tracker">${coordinationPanel({...o,hideCompletionEvidence:reportFinished})}${reportFinished?`<div class="professional-report-details"><a class="btn requester-open full" href="#coordinar/${encodeURIComponent(o.id)}"><svg class="details-search-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>VER MÁS DETALLES</span></a></div>`:''}</div>`:''}<div class="quote-request-left">${leftContent}</div><div class="matching-request-divider" aria-hidden="true"></div><div class="quote-request-controls">${rightContent}</div>${footerAction}</article>`;
+}
+function matchingRequestsView(inProfile=false){
+ if(!hasActiveProfessional())return '';
+ const source=(matchingRequestsOwner===authUser.id?[...matchingRequests]:[]).sort((a,b)=>Number(['Hoy','Ahora'].includes(b.urgency))-Number(['Hoy','Ahora'].includes(a.urgency)));
+ const zoneDiscover=source.filter(o=>o.quoteStatus==='available'&&professionalRequestInZone(o));
+ if(professionalPiquesFilter==='zone'&&!zoneDiscover.length)professionalPiquesFilter='all';
+ const discover=source.filter(o=>o.quoteStatus==='available'&&(professionalPiquesFilter==='zone'?professionalRequestInZone(o):true));
+ const coordinating=source.filter(o=>o.quoteStatus==='accepted');
+ const activeAll=source.filter(o=>o.quoteStatus!=='accepted'&&(o.quoteStatus==='applied'||o.quoteStatus==='pending'||o.hasProfessionalQuote));
+ const pendingQuoteRequests=activeAll.filter(o=>o.quoteStatus==='pending'&&!o.hasProfessionalQuote);
+ const active=professionalActiveFilter==='coordinating'?activeAll.filter(o=>o.quoteStatus==='accepted'):professionalActiveFilter==='quoting'?activeAll.filter(o=>['pending','quoted'].includes(o.quoteStatus)):professionalActiveFilter==='applied'?activeAll.filter(o=>o.quoteStatus==='applied'&&!o.hasProfessionalQuote):professionalActiveFilter==='quoted'?activeAll.filter(o=>o.hasProfessionalQuote&&o.quoteStatus!=='accepted'):professionalActiveFilter==='pending'?activeAll.filter(o=>o.quoteStatus==='pending'&&!o.hasProfessionalQuote):activeAll;
+ const quoteRequestAlert=!inProfile&&pendingQuoteRequests.length?`<a class="professional-quote-alert" href="#inicio" data-quote-alert-target="${esc(pendingQuoteRequests[0].id)}" aria-label="Ir al pique con solicitud de cotización"><span class="professional-quote-alert-icon" aria-hidden="true">!</span><div><strong>${pendingQuoteRequests.length===1?'TENÉS UNA SOLICITUD DE COTIZACIÓN':'TENÉS '+pendingQuoteRequests.length+' SOLICITUDES DE COTIZACIÓN'}</strong><span>${pendingQuoteRequests.length===1?'UN CLIENTE TE HABILITÓ PARA COTIZAR ESTE PIQUE. TOCÁ PARA VERLO.':'HAY CLIENTES ESPERANDO TU COTIZACIÓN. TOCÁ PARA VERLAS.'}</span></div><span class="professional-quote-alert-arrow" aria-hidden="true">›</span></a>`:'';
+ const applicationCount=activeAll.filter(o=>o.quoteStatus==='applied'&&!o.hasProfessionalQuote).length,quotedCount=activeAll.filter(o=>o.hasProfessionalQuote&&o.quoteStatus!=='accepted').length,pendingCount=activeAll.filter(o=>o.quoteStatus==='pending'&&!o.hasProfessionalQuote).length;
+ const activeFilters=`<div class="professional-filters-inline"><div class="professional-filter-all"><button type="button" data-active-pique-filter="all" aria-pressed="${professionalActiveFilter==='all'}">TODOS</button></div><div class="professional-active-filters" aria-label="Filtrar piques activos">${applicationCount?`<button type="button" data-active-pique-filter="applied" aria-pressed="${professionalActiveFilter==='applied'}">POSTULACIONES</button>`:''}${quotedCount?`<button type="button" data-active-pique-filter="quoted" aria-pressed="${professionalActiveFilter==='quoted'}">COTIZADO</button>`:''}${pendingCount?`<button type="button" data-active-pique-filter="pending" aria-pressed="${professionalActiveFilter==='pending'}">PARA COTIZAR</button>`:''}</div></div>`;
+ const reviewTitle=!inProfile?`<h2 class="professional-applications-review-title">¡REPASÁ DEBAJO TUS POSTULACIONES!</h2>`:'';
+ const activeSection=activeAll.length?`<section class="quote-requests-section professional-active-section${professionalActiveFilter==='all'?' professional-active-all':''}${inProfile?' professional-profile-active-section':''}"><div class="quote-requests-heading stacked">${reviewTitle}${activeAll.length===1?'':activeFilters}</div>${active.length?`<div class="quote-requests-list">${active.map(o=>professionalRequestCard(o,'active')).join('')}</div>${carouselDots(active.length)}`:`<p class="orders-empty quote-requests-empty" role="status">${professionalActiveFilter==='applied'?'NO TENÉS POSTULACIONES PENDIENTES.':professionalActiveFilter==='quoted'?'NO TENÉS PIQUES COTIZADOS.':professionalActiveFilter==='pending'?'NO TENÉS PIQUES PARA COTIZAR.':'TODAVÍA NO TENÉS PIQUES ABIERTOS.'}</p>`}</section>`:'';
+ if(inProfile){const processSection=coordinating.length?`<section class="professional-profile-process">${coordinating.every(o=>typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished')?`<div class="profile-process-heading"><h2>${coordinating.every(o=>typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished')?'PIQUES EN VALIDACIÓN':'PIQUES EN COORDINACIÓN'} <span class="pique-section-count">${coordinating.length}</span></h2></div>`:''}${coordinating.map(o=>professionalRequestCard(o,'profile-process')).join('')}</section>`:'';if(professionalActiveFilter==='coordinating')professionalActiveFilter='all';const mode=professionalDashboardFilter==='auto'?'active':professionalDashboardFilter;const showActive=['all','active','applied','quoting','coordinating'].includes(mode);return `${['all','execution','coordinating'].includes(mode)?processSection:''}${showActive?activeSection:''}${mode==='unfulfilled'?professionalUnfulfilledSection():''}${mode==='resolved'?professionalResolvedSection():''}`;}
+ const coordinatingSection=coordinating.length?`<section class="quote-requests-section professional-active-section professional-coordinating-section">${coordinating.every(o=>typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished')?`<div class="quote-requests-heading stacked"><div class="pique-section-title"><h2>${coordinating.every(o=>typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished')?'PIQUES EN VALIDACIÓN':'PIQUES EN COORDINACIÓN'} <span class="pique-section-count">${coordinating.length}</span></h2></div></div>`:''}<div class="quote-requests-list">${coordinating.map(o=>professionalRequestCard(o,'home-process')).join('')}</div>${carouselDots(coordinating.length)}</section>`:'';
+ const discoverSection=`<section class="quote-requests-section professional-discover-section">${discover.length?`<div class="quote-requests-heading discover-heading"><h2 class="professional-discover-title">¡MIRÁ LOS TRABAJOS QUE TENEMOS PARA VOS!</h2>${source.some(o=>o.quoteStatus==='available')?`<div class="professional-pique-filters one-filter" aria-label="Filtrar piques para vos"><button type="button" data-pro-pique-filter="all" aria-pressed="${professionalPiquesFilter==='all'}">TODOS</button>${zoneDiscover.length?`<button type="button" data-pro-pique-filter="zone" aria-pressed="${professionalPiquesFilter==='zone'}">EN MI ZONA</button>`:''}</div>`:''}</div><div class="quote-requests-slider" role="region" aria-label="Piques para vos">${discover.map(o=>professionalRequestCard(o,'discover')).join('')}</div>${carouselDots(discover.length)}`:`<div class="professional-discover-empty" role="status"><span>${matchingRequestsError?'NO PUDIMOS CARGAR LOS PIQUES. VOLVÉ A INTENTAR.':'<strong>¡SEGUÍ ATENTO A NUEVAS OPORTUNIDADES!</strong><small>POR AHORA NO HAY PIQUES PARA POSTULARTE.</small>'}</span></div>`}</section>`;
+ return discover.length?`${coordinatingSection}${discoverSection}${activeSection}`:`${discoverSection}${coordinatingSection}${activeSection}`;
+}
+function explore(){return `${back()}${pageHead('ENCONTRÁ LO QUE NECESITÁS','Explorá por rubro','Elegí el servicio y contanos qué necesitás resolver.')}<div class="categories all-categories">${categories.map(c=>categoryButton(c)).join('')}</div>`;}
+function messages(){return `${back()}${pageHead('TUS CONVERSACIONES','Mensajes','Todo lo que necesitás coordinar, en un solo lugar.')}<div class="panel empty">${svg('message')}<h2>Todavía no hay conversaciones</h2><p>El chat con profesionales estará disponible cuando conectemos la aplicación. Por ahora podés probar pedidos y propuestas.</p><a class="btn primary" href="#pedidos">Ver mis pedidos</a></div>`;}
+function verification(){return `${back()}<div class="panel info-panel"><span class="verified-shield">${svg('shield')}</span><h2>Profesionales verificados</h2><p>Este es el diseño del espacio de confianza de PIQUE. En la aplicación final se mostrará qué datos se verificaron y cuándo.</p><p class="muted">En esta demo, los perfiles y las insignias son ficticios. Todavía no hay un proceso real de verificación ni profesionales registrados.</p><a class="btn primary" href="#inicio">Volver al inicio</a></div>`;}
+function notifications(){return `${back()}${pageHead('NOVEDADES','Notificaciones','Avisos de ejemplo de tus pedidos.')}<div class="panel"><a class="notification-item" href="#propuestas/ejemplo"><h3>Tenés propuestas para revisar</h3><p>Compará los precios y la disponibilidad para tu pedido de sanitaria.</p></a><a class="notification-item" href="#pedidos"><h3>Todos tus pedidos, en un lugar</h3><p>Volvé a tus pedidos y continuá donde quedaste.</p></a></div>`;}
+function form(){let body='';if(step===0)body=`<h2>Contanos qué necesitás.</h2><p class="muted small">Cuanto más claro el pedido, mejores las propuestas.</p><div class="request-rubros"><h3 class="question-title">RUBRO</h3><div class="form-category-grid">${categories.map(c=>`<label class="form-category"><input type="radio" name="category" value="${c}" ${draft.category===c?'checked':''}><span>${icon(categories.indexOf(c))}</span><b>${c}</b></label>`).join('')}</div></div><label class="field"><span class="question-title">TÍTULO DE LA SOLICITUD</span><input name="title" maxlength="80" value="${esc(draft.title||'')}" placeholder="Por ejemplo: reparar pérdida de agua"></label><label class="field"><span class="question-title">DESCRIPCIÓN</span><textarea name="description" maxlength="500" placeholder="Por ejemplo: pierde agua la conexión de abajo de la pileta…">${esc(draft.description)}</textarea><div class="hint">Entre 10 y 500 caracteres. No incluyas teléfonos ni datos personales.</div></label>`;if(step===1)body=`<h2>¿Dónde y para cuándo?</h2>${requestZonePicker(draft.zone)}<h3 class="question-title">¿CUÁNDO LO NECESITÁS?</h3><div class="urgencies">${[['Hoy','HOY'],['Esta semana','PRÓXIMOS 7 DÍAS'],['Solo cotizar','SIN FECHA DEFINIDA']].map(([u,s])=>`<label class="urgency"><input type="radio" name="urgency" value="${u}" ${draft.urgency===u?'checked':''}><span><strong>${u==='Hoy'?'URGENTE':u}</strong><span class="small muted">${s}</span></span></label>`).join('')}</div>`;if(step===2)body=`<h2>Así van a ver tu pedido.</h2><p class="small muted">Revisá los detalles antes de continuar.</p>${[['Título',draft.title||draft.description],['Rubro',draft.category],['Tu pedido',draft.description],['Zona',draft.zone],['Cuándo',draft.urgency]].map(([k,v])=>`<div class="summary-line"><small>${k}</small>${esc(v)}</div>`).join('')}`;return `${back('inicio')}<div class="layout"><section class="panel form-panel ${categoryThemeClass(draft.category)}"><div class="step-label">Nuevo pedido · Paso ${step+1} de 3</div><div class="progress">${[0,1,2].map(i=>`<span class="${i<=step?'done':''}"></span>`).join('')}</div><form id="request-form" novalidate>${body}<p class="error" id="form-error" role="alert"></p><div class="form-actions">${step?'<button type="button" class="btn" data-prev>← Anterior</button>':''}<button class="btn primary" type="submit">${step===2?'PUBLICAR PIQUE':'Continuar →'}</button></div></form></section><aside class="panel form-context"><span class="icon-box">${icon(categories.indexOf(draft.category))}</span><h3 class="gap">Un buen pedido empieza por los detalles.</h3><p class="muted small">Contá el problema, dónde ocurre y cuándo necesitás ayuda.</p><div class="summary-line"><small>Tu rubro</small>${esc(draft.category)}</div><p class="small muted">Vos elegís con quién seguir.</p></aside></div>`;}
+let proposalsOnlyApplications=false,proposalsFilterOrder=null;
+function selectedPiqueDetails(o){const finished=typeof coordinationRows!=='undefined'&&coordinationOwner===authUser?.id&&coordinationRows.get(o.id)?.state==='finished';return `<div class="order-strip request-detail v33-request-detail selected-request-details"><div class="request-description">${finished?'<span class="deadline-tag completion-finalized-tag">FINALIZADO</span>':requestStateTags(o)}<h2 class="request-title-single">${esc(o.title||o.description)}</h2>${o.title&&o.description&&o.title!==o.description?`<p class="description-info-tag">${svg('info')}<span>${esc(o.description)}</span></p>`:''}</div><div class="pique-card-divider" aria-hidden="true"></div><div class="request-facts">${requestMetaTags(o)}</div></div>`;}
+function proposals(o){
+ if(orderIsArchived(o))return `${myPiquesBack()}<section class="panel requester-photo-card ${categoryThemeClass(o.category)}"><span class="deadline-tag">ARCHIVADO</span><h2>${esc(o.title||o.description)}</h2><p class="description-info-tag">${svg('info')}<span>${esc(o.description)}</span></p>${orderMetadata(o)}<p class="dashboard-empty">EL PLAZO DE 24 HORAS TERMINÓ SIN QUE SE MARCARA EL TRABAJO COMO RESUELTO.</p></section>`;
+
+  if(proposalsFilterOrder!==o.id){proposalsOnlyApplications=false;proposalsFilterOrder=o.id;}
+  const completed=orderStatus(o)==='FINALIZADO'||Boolean(o.selected||o.assigned);
+  const chosen=o.selected||o.assigned;
+  const matching=providers.filter(p=>p.trades?.includes(o.category)).map(p=>{const quote=o.quotes?.find(q=>q.professional_id===p.id);return {...p,quote,price:quote?.quoted_price??p.price,time:quote?.estimated_minutes??Infinity};});
+  const visible=proposalsOnlyApplications?matching.filter(p=>p.quote?.status==='applied'):matching;
+  const sorted=completed?matching.filter(p=>p.id===chosen):[...visible].sort((a,b)=>sort==='rating'?b.rating-a.rating:a[sort]-b[sort]);
+  const hasResults=completed||matching.length>0;
+  if(completed&&o.status!=='completed'&&typeof coordinationPanel==='function'&&(!coordinationRows.get(o.id)||coordinationRows.get(o.id).state==='proposed')){
+    const card=orderCard(o,true).replace(/<(a|button) class="btn requester-open coordination-card-hint[^"]*"[^>]*>[\s\S]*?<\/\1>/,'');
+    return myPiquesBack()+card.replace('</article>',`<div class="requester-schedule-section"><h2 class="offered-schedule-heading">HORARIOS OFRECIDOS AL PROFESIONAL</h2>${coordinationPanel(o)}</div></article>`);
+  }
+  if(completed){
+    const p=sorted[0];
+    const quote=o.quotes?.find(q=>q.professional_id===chosen);
+    return `${myPiquesBack()}<section class="panel requester-photo-card selected-request-card order-completed modern-selected-detail ${categoryThemeClass(o.category)}">
+      ${typeof coordinationPanel==='function'&&coordinationRows.get(o.id)&&coordinationRows.get(o.id).state!=='proposed'?coordinationPanel({...o,hideCompletionEvidence:coordinationRows.get(o.id)?.state==='finished'}):''}
+      <div class="order-strip request-detail v33-request-detail selected-request-details"><div class="request-description">${typeof coordinationRows!=='undefined'&&coordinationRows.get(o.id)?.state==='finished'?'<span class="deadline-tag completion-finalized-tag">FINALIZADO</span>':requestStateTags(o)}<h2 class="request-title-single" data-fit-title>${esc(o.title||o.description)}</h2>${o.title&&o.description&&o.title!==o.description?`<p class="description-info-tag">${svg('info')}<span>${esc(o.description)}</span></p>`:''}</div><div class="pique-card-divider" aria-hidden="true"></div><div class="request-facts">${requestMetaTags(o)}</div></div>
+      
+      ${typeof coordinationPanel==='function'&&(!coordinationRows.get(o.id)||coordinationRows.get(o.id).state==='proposed')?`<div class="requester-schedule-section"><h2 class="offered-schedule-heading">HORARIOS OFRECIDOS AL PROFESIONAL</h2>${coordinationPanel(o)}</div>`:''}
+      <div class="selected-professional-section completed-order-link"><div class="order-professional"><h2 class="selected-professional-heading coordination-professional-heading">${svg('person')}<span>PROFESIONAL ELEGIDO</span></h2>
+ ${p?`<div class="detail-professional-data"><div class="detail-provider-identity"><div class="avatar">${esc(p.initials)}</div><div><h3>${esc(p.name)}</h3><div class="detail-provider-reputation">${p.realReviews?.length?`<span class="detail-rating"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>${(p.realReviews.reduce((sum,r)=>sum+r.rating,0)/p.realReviews.length).toFixed(1).replace('.',',')}</span>` : ''}<span>${svg('message')}${p.realReviews?.length||0} ${p.realReviews?.length===1?'OPINIÓN':'OPINIONES'}</span></div></div></div><div class="detail-service-tags labeled-meta-tags"><span class="pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">${svg('tool')}</span><span class="meta-copy"><small class="meta-label">RUBRO</small><span class="meta-value">${esc(p.trades.join(' · '))}</span></span></span><span class="pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">${svg('pin')}</span><span class="meta-copy"><small class="meta-label">ZONA</small><span class="meta-value">${esc(providerZones(p))}</span></span></span></div><a class="btn requester-open full detail-profile-button" href="#profesional/${encodeURIComponent(o.id)}/${p.id}">${svg('person')}<span>VER PERFIL COMPLETO</span></a></div><div class="requester-agreed-summary">${quote?.quoted_price!=null?`<span class="price-tag coordination-quote-hint coordination-price"><small class="summary-label-with-icon"><span class="summary-caption-group"><svg class="summary-hint-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M5 9h1m12 6h1"/></svg><span>PRECIO <br>ACORDADO</span></span></small><strong>${money(quote.quoted_price)}</strong></span>`:''}${quote?.estimated_minutes!=null?`<span class="quote-estimate coordination-quote-hint"><small class="summary-label-with-icon"><span class="summary-caption-group"><svg class="summary-hint-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>TIEMPO <br>ESTIMADO</span></span></small><strong>${quoteTimeLabel(quote.estimated_minutes)}</strong></span>`:''}</div>`:'<p class="muted">EL PERFIL DEL PROFESIONAL ASIGNADO NO ESTÁ DISPONIBLE.</p>'}</div>${typeof piqueScheduleFooter==='function'?piqueScheduleFooter(o):''}</div>${typeof completionEvidenceOnly==='function'&&['finished','resolved'].includes(coordinationRows.get(o.id)?.state)?completionEvidenceOnly(o):''}</section>`;
+  }
+  return `${myPiquesBack()}${completed?'<h1 class="sr-only">TU SOLICITUD</h1>':''}${completed&&o.status!=='completed'?`<button class="btn primary full gap" data-complete-order="${esc(o.id)}">${svg('check')}<span>MARCAR COMO RESUELTO</span></button>`:''}
+    <div class="order-strip request-detail v33-request-detail requester-photo-card ${categoryThemeClass(o.category)}"><div class="request-description">${requestStateTags(o)}<h2 class="request-title-single" data-fit-title>${esc(o.title||o.description)}</h2>${o.title&&o.description&&o.title!==o.description?`<p class="description-info-tag">${svg('info')}<span>${esc(o.description)}</span></p>`:''}</div><div class="pique-card-divider" aria-hidden="true"></div><div class="request-facts">${requestMetaTags(o)}</div>${receivedResponsesHint(o)}</div>
+    ${!completed&&hasResults?`<div class="options-divider" aria-hidden="true"></div>`:''}
+    <section class="${completed?'chosen-board':'proposal-board'}" aria-label="Profesionales y propuestas">
+    ${!completed&&hasResults?`<h2 class="options-heading">¡ESTOS SON LOS <span class="options-pique-word">${document.querySelector('.nav-pique-logo')?.outerHTML||''}IQUES</span> DISPONIBLES!</h2>`:''}
+    ${!completed&&hasResults?`${matching.some(p=>p.quote?.status==='applied')?`<div class="proposal-filter-row"><button type="button" data-filter-applications aria-pressed="${proposalsOnlyApplications}">POSTULACIONES <span>${matching.filter(p=>p.quote?.status==='applied').length}</span></button></div>`:''}<div class="sorter" aria-label="Ordenar propuestas">${[['time','LLEGADA'],['price','PRECIO'],['rating','VALORACIÓN']].map(([s,t])=>`<button data-sort="${s}" aria-pressed="${sort===s}"><svg viewBox="0 0 24 24" aria-hidden="true">${s==='time'?'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>':s==='price'?'<path d="M12 3v18M17 7H9a3 3 0 0 0 0 6h6a3 3 0 0 1 0 6H6"/>':'<path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/>'}</svg><span>${t}</span></button>`).join('')}</div>`:''}
+    <div class="proposals">${!completed&&proposalsOnlyApplications&&!sorted.length?'<p class="orders-empty" role="status">TODAVÍA NO HAY POSTULACIONES PENDIENTES PARA ESTE PIQUE.</p>':hasResults?sorted.map(p=>{
+      const hasQuotedPrice=p.quote?.quoted_price!=null;
+      const hasEstimate=p.quote?.estimated_minutes!=null;
+      const showQuoteSummary=hasQuotedPrice||hasEstimate;
+      const zones=providerZones(p);
+      return `<article class="proposal professional-photo-proposal ${categoryThemeClass(o.category)}${completed?' proposal-chosen':''}${p.quote?.status==='applied'?' proposal-application':''}${!p.quote||['pending','rejected'].includes(p.quote?.status)?' proposal-requestable':''}${p.quote?.status==='rejected'?' proposal-rejected-card':''}">
+      ${completed?`<p class="chosen-label">${o.status==='completed'?'✓ RESUELTO':'EN COORDINACIÓN'}</p>`:''}
+      <div class="proposal-top ${showQuoteSummary?'has-price':'no-price'}"><div class="proposal-person-data"><div class="person"><div class="avatar">${p.initials}</div><div class="person-copy"><h3 class="proposal-single-name"><span class="proposal-first-name">${esc(p.name.trim().split(/\s+/)[0])}</span> <span class="proposal-last-name">${esc(p.name.trim().split(/\s+/).slice(1).join(' '))}</span></h3><div class="proposal-reputation">${p.realReviews?.length?`<span class="proposal-score"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg>${(p.realReviews.reduce((sum,r)=>sum+r.rating,0)/p.realReviews.length).toFixed(1).replace('.',',')}</span>`:''}<span class="proposal-opinions">${svg('message')}${p.realReviews?.length||0} ${(p.realReviews?.length||0)===1?'OPINIÓN':'OPINIONES'}</span></div></div></div><div class="proposal-provider-meta"><p class="provider-zones pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">${svg('pin')}</span><span class="meta-copy"><small class="meta-label">ZONA</small><span class="meta-value">${esc(zones)}</span></span></p></div></div>${showQuoteSummary?`<div class="price-column"><div class="price-tag" aria-label="Precio propuesto: ${money(p.price)} pesos uruguayos"><small>PRECIO ACORDADO</small><strong>${hasQuotedPrice?money(p.price):'A COTIZAR'}</strong></div>${hasEstimate?`<span class="quote-estimate">TIEMPO ESTIMADO<br><strong>${quoteTimeLabel(p.quote.estimated_minutes)}</strong></span>`:''}</div>`:''}</div>
+      ${completed?'':p.quote?.status==='applied'?`<div class="quote-decisions application-decisions"><button class="btn quote-accept" data-application-decision="${p.quote.id}" data-decision="pending"><svg class="application-action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>ACEPTAR POSTULACIÓN</span></button><button class="btn quote-reject" data-application-decision="${p.quote.id}" data-decision="rejected"><svg class="application-action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>RECHAZAR POSTULACIÓN</span></button></div>`:p.quote?.status==='quoted'?`<div class="quote-decisions quotation-decisions"><button class="btn quote-accept" aria-label="Aceptar cotización" title="Aceptar" data-quote-decision="${p.quote.id}" data-decision="accepted"><svg class="application-action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m8 12 2.5 2.5L16 9"/></svg><span>ACEPTAR COTIZACIÓN</span></button><button class="btn quote-reject" aria-label="Rechazar cotización" title="Rechazar" data-quote-decision="${p.quote.id}" data-decision="rejected"><svg class="application-action-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="m9 9 6 6m0-6-6 6"/></svg><span>RECHAZAR COTIZACIÓN</span></button></div>`:p.quote?.status==='pending'?'<button type="button" class="btn primary quote-awaiting proposal-request-quotation" disabled><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="mobile-proposal-action-label">COTIZACIÓN<br class="mobile-action-break"> SOLICITADA</span></button>':p.quote?.status==='rejected'?`<p class="quote-rejected">${svg('info')}<span>${p.quote.quoted_at!=null||p.quote.quoted_price!=null?'COTIZACIÓN RECHAZADA':'POSTULACIÓN RECHAZADA'}</span></p>`:`<button class="btn primary proposal-request-quotation" data-request-quote="${p.id}" data-order="${esc(o.id)}"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9l-6-6Z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg><span class="mobile-proposal-action-label">SOLICITAR<br class="mobile-action-break"> COTIZACIÓN</span></button>`}
+      <div class="proposal-profile-footer"><a class="btn requester-open full" href="#profesional/${encodeURIComponent(o.id)}/${p.id}">${svg('person')}<span class="mobile-proposal-action-label">VER PERFIL<br class="mobile-action-break"> COMPLETO</span></a></div>
+    </article>`;}).join(''):(completed&&!sorted.length?'<p class="muted">EL PERFIL DEL PROFESIONAL ASIGNADO NO ESTÁ DISPONIBLE.</p>':'<p class="orders-empty proposals-empty-info" role="status"><span class="orders-info" aria-hidden="true">i</span><span class="proposals-empty-text">AÚN NO ENCONTRAMOS PROFESIONALES QUE APLIQUEN PARA ESTA SOLICITUD</span></p>')}</div></section>`;
+}
+function profile(o,p){
+ const content=profileTab==='work'?(p.resolvedPiques?.length?'<div class="public-resolved-work">'+p.resolvedPiques.map(work=>publicCompletedWorkCard(work,p)).join('')+'</div>':publicProfileEmpty(publicProfessionalName(p)+' AÚN NO RESOLVIO PIQUES.')):profileTab==='photos'?publicWorkPhotos(p):profileTab==='reviews'?publicReviews(p):(p.bio?.trim()?'<p class="public-profile-bio">'+esc(p.bio)+'</p>':publicProfileEmpty('EL PROFESIONAL TODAVÍA NO AGREGÓ UNA PRESENTACIÓN.'));
+ return piqueDetailBack(o.id)+'<section class="panel requester-photo-card public-professional-profile '+categoryThemeClass(p.trades?.[0]||o.category)+'"><div class="public-profile-columns"><div class="public-profile-person">'+(p.photo?'<img class="avatar large" src="'+esc(p.photo)+'" alt="Foto de '+esc(p.name)+'">':'<div class="avatar large">'+esc(p.initials)+'</div>')+'<h1>'+esc(p.name)+'</h1></div><div class="pique-card-divider" aria-hidden="true"></div><div class="public-profile-facts"><h3>RUBROS OFRECIDOS</h3><div class="trade-tags">'+(p.trades||[]).map(t=>'<span class="trade-tag">'+svg((categoryDesign[t]||['tool'])[0])+'<span>'+esc(t)+'</span>'+'</span>').join('')+'</div><h3>ZONAS DE TRABAJO</h3><span class="trade-tag">'+svg('pin')+'<span>'+esc(providerZones(p)||'SIN ESPECIFICAR')+'</span></span></div></div><div class="tabs" role="tablist" aria-label="Perfil del profesional">'+[['about','SOBRE MÍ'],['work','TRABAJOS'],['photos','FOTOS'],['reviews','OPINIONES']].map(([id,t])=>'<button role="tab" id="tab-'+id+'" aria-selected="'+(profileTab===id)+'" aria-controls="profile-panel" data-profile-tab="'+id+'">'+t+'</button>').join('')+'</div><div id="profile-panel" role="tabpanel" aria-labelledby="tab-'+profileTab+'">'+content+'</div>'+'</section>';
+}
+
+function confirm(o,p){const selected=o.selected===p.id;return `${back('propuestas/'+encodeURIComponent(o.id),'Comparar propuestas')}<section class="panel confirmation"><div class="success-icon">${selected?'✓':'↗'}</div><span class="eyebrow">${selected?'SELECCIÓN GUARDADA EN ESTA DEMO':'REVISÁ TU ELECCIÓN'}</span><h1>${selected?`Elegiste a ${p.name.split(' ')[0]}.`:`¿Seguimos con ${p.name.split(' ')[0]}?`}</h1><p class="muted">${selected?'Podés volver a tus pedidos y revisar esta elección cuando quieras.':'Antes de seguir, revisá el alcance de la propuesta.'}</p>${[['Tu pedido',o.description],['Profesional',p.name],['Precio propuesto',money(p.price)+' UYU'],['Incluye',scope(o,p)],['Disponibilidad',arrival(o,p)]].map(([k,v])=>`<div class="summary-line"><small>${k}</small>${esc(v)}</div>`).join('')}<p class="demo-notice">Esta selección es una simulación. No genera una reserva, un pago ni un contacto real. Los materiales adicionales no están incluidos.</p>${selected?'<a class="btn primary full gap" href="#pedidos">Ir a mis pedidos →</a>':`<button class="btn primary full gap" data-confirm="${p.id}" data-order="${esc(o.id)}">Guardar elección de prueba</button>`}</section>`;}
+let ordersFilter='ALL';
+function orderIsQuoting(o){return orderStatus(o)==='PENDIENTE'&&(o.quotes||[]).some(q=>q.status==='quoted'&&q.quoted_price!=null);}
+function orderIsArchived(o){return orderStatus(o)==='ARCHIVADO';}
+let piquesTab='professional',piquesDashboardTab=null;
+function requesterPiquesHeader(){if(!authUser)return '';const html=requesterDashboard(true);const start=html.indexOf('<section class="dashboard-welcome');return start>=0?html.slice(start,html.indexOf('</section>',start)+10):'';}
+function piquesView(){if(!hasActiveProfessional())return requesterPiquesHeader()+ordersView();return `<div class="account-tabs" role="tablist" aria-label="Tus piques">${[['personal','PERFIL SOLICITANTE'],['professional','PERFIL PROFESIONAL']].map(([id,label])=>`<button role="tab" type="button" data-piques-tab="${id}" aria-selected="${piquesTab===id}">${label}</button>`).join('')}</div><div class="piques-tab-panel">${piquesTab==='professional'?professionalDashboard()+matchingRequestsView(true):requesterPiquesHeader()+ordersView()}</div>`;}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-piques-tab]');if(b){piquesTab=b.dataset.piquesTab;render();}});
+function ordersView(){
+ if(dashboardOwner!==authUser?.id){dashboardFilter=route().name==='pedidos'?'auto':'pending';dashboardPriority=null;dashboardExpanded=true;dashboardOwner=authUser?.id;}
+ const rows=userOrders(),done=o=>orderStatus(o)==='FINALIZADO';
+ if(!rows.length)return '<div class="profile-empty-hint" role="status">'+svg('info')+'<span>AÚN NO SOLICITASTE NINGÚN PIQUE.</span></div><a class="btn primary full" href="#nuevo">PUBLICAR MI PRIMER <span class="inline-pique-word">'+document.querySelector('.nav-pique-logo').outerHTML+'IQUE</span></a>';
+ const archived=rows.filter(orderIsArchived),resolved=rows.filter(o=>!orderIsArchived(o)&&done(o));
+ if(dashboardFilter==='resolved')return orderHistorySection('resolved',resolved.length===1?'PIQUE RESUELTO':'PIQUES RESUELTOS',resolved,'TODAVÍA NO TENÉS PIQUES RESUELTOS.');
+ if(dashboardFilter==='archived')return orderHistorySection('archived','PIQUES ARCHIVADOS',archived,'NO TENÉS PIQUES ARCHIVADOS.');
+ const activeRows=rows.filter(o=>!orderIsArchived(o)&&!done(o));
+ const executing=activeRows.filter(o=>Boolean(o.selected||o.assigned)).sort(ongoingPiquePriority);
+ const executionSection=['all','execution'].includes(dashboardFilter)&&executing.length?`<section class="requester-execution-section"><div class="history-card-list">${executing.map(o=>orderCard(o,true)).join('')}</div></section>`:'';
+ if(dashboardFilter==='execution')return executionSection;
+ const pending=activeRows.filter(o=>!executing.includes(o));
+ if(!pending.length)return executionSection;
+ if(['quoting','unquoted'].includes(dashboardFilter)&&!pending.some(o=>dashboardFilter==='quoting'?orderIsQuoting(o):!orderIsQuoting(o)))dashboardFilter='pending';
+ const filtered=pending.filter(o=>(!['quoting','unquoted'].includes(dashboardFilter)||(dashboardFilter==='quoting'?orderIsQuoting(o):!orderIsQuoting(o)))&&(!dashboardPriority||(dashboardPriority==='urgent'?['Hoy','Ahora'].includes(o.urgency):o.urgency==='Esta semana')));
+ const cards=filtered.map(o=>{
+  const received=!done(o)&&(o.quotes||[]).filter(q=>q.status==='quoted').length;
+  const notice=received?`<a class="dashboard-news" href="#propuestas/${encodeURIComponent(o.id)}">${svg('message')}<span>TENÉS ${received===1?'UNA COTIZACIÓN':received+' COTIZACIONES'} PARA REVISAR</span>${svg('chevron')}</a>`:'';
+  return `<div class="dashboard-slide">${orderCard(o,true)}</div>`;
+ }).join('');
+ return `${executionSection}<section class="dashboard-orders" id="piques-pendientes"><div class="dashboard-section-heading"><h2 class="orders-open-title" style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-size:clamp(16px,4.65vw,20px)"><span style="display:inline;margin-right:4px">${filtered.length===1?'MI':'MIS'}</span><span class="section-logo-count" style="display:inline-flex;order:0;margin:0;flex-shrink:0">${homePiqueCounter(filtered.length)}</span><span style="display:inline">${filtered.length===1?'IQUE ABIERTO':'IQUES ABIERTOS'}</span></h2></div><div class="orders-filter-row" aria-label="Filtros de piques"><div class="requester-filters order-all-filters"><button type="button" data-dashboard-all aria-pressed="${!['quoting','unquoted'].includes(dashboardFilter)&&!dashboardPriority}">TODOS</button></div><div class="requester-filters order-state-filters" aria-label="Filtrar por cotización">${[['unquoted','SIN COTIZAR'],['quoting','COTIZANDO']].filter(([id])=>pending.some(o=>id==='quoting'?orderIsQuoting(o):!orderIsQuoting(o))).map(([id,label])=>`<button type="button" data-dashboard-filter="${id}" aria-pressed="${dashboardFilter===id}">${label}</button>`).join('')}</div><div class="requester-filters order-priority-filters" aria-label="Filtrar por plazo">${[['urgent','URGENTES'],['week','PRÓXIMOS DÍAS']].filter(()=>pending.some(o=>['Hoy','Ahora'].includes(o.urgency))&&pending.some(o=>o.urgency==='Esta semana')).map(([id,label])=>`<button type="button" class="priority-${id}" data-dashboard-priority="${id}" aria-pressed="${dashboardPriority===id}">${label}</button>`).join('')}</div></div>${cards?`<div class="${filtered.length<=5?'history-card-list':'requester-slider dashboard-slider'}" role="region" aria-label="Tus piques"${filtered.length>5?' tabindex="0"':''}>${cards}</div>${filtered.length>5?carouselDots(filtered.length):''}`:`<p class="dashboard-empty" role="status">ⓘ ${rows.length?'NO TENÉS PIQUES EN ESTA SELECCIÓN.':'TU PRIMER PIQUE EMPIEZA CON ESO QUE QUERÉS RESOLVER.'}</p>${rows.length?'':'<a class="btn primary full" href="#nuevo">PUBLICAR MI PRIMER <span class="inline-pique-word"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" fill="none" stroke="#0860ff" stroke-width="5"/></svg>IQUE</span></a>'}`}</section>`;
+}
+
+function resolvedHistorySearchIcon(){return '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>';}
+let resolvedHistoryFilters={query:'',category:'',period:'',sort:'newest',owner:null};
+function resolvedHistoryDate(o){return new Date(o.created_at||o.createdAt||0).getTime()||0;}
+function resolvedHistoryCard(o){
+ const archived=resolvedHistoryFilters.kind==='archived',description=o.title&&o.description&&o.title.trim()!==o.description.trim()?o.description:'';
+ const reason=o.archive_reason==='visit_not_made'?'VISITA NO REALIZADA EN EL PLAZO ACORDADO.':o.archive_reason==='work_not_completed'?'TRABAJO NO CULMINADO EN EL PLAZO ACORDADO.':(['Hoy','Ahora'].includes(o.urgency)?'LOS PIQUES CON URGENCIA SE ARCHIVAN A LAS 24 HS DE PUBLICADOS.':'LOS PIQUES SIN URGENCIA SE ARCHIVAN A LOS 7 DÍAS DE PUBLICADOS.');
+ return `<article class="resolved-history-card ${archived?'archived-history-card ':''}${categoryThemeClass(o.category)}"><span class="resolved-status ${archived?'archived-status':''}">${archived?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h18v4H3zM5 8v13h14V8M9 12h6"/></svg>':svg('check')}${archived?'ARCHIVADO':'FINALIZADO'}</span><h3>${esc(o.title||o.description)}</h3><div class="resolved-card-meta"><span>${svg('tool')}${esc(o.category)}</span><span>${svg('pin')}${esc(o.zone)}</span><span>${svg('calendar')}${esc(publicationLabel(o))}</span></div>${description?`<p class="resolved-description">${esc(description)}</p>`:'<div class="resolved-description-spacer"></div>'}${archived?`<p class="archived-card-reason">${esc(reason)}</p><button type="button" class="resolved-details-action archive-republish-button" data-republish-pique="${esc(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 7v5h-5M4 17v-5h5M6 7a7 7 0 0 1 12-2l2 2M4 17l2 2a7 7 0 0 0 12-2"/></svg><span>REPUBLICAR PIQUE</span></button>`:`<a class="resolved-details-action" href="#propuestas/${encodeURIComponent(o.id)}">${resolvedHistorySearchIcon()}<span>VER DETALLES DEL PIQUE</span></a>`}</article>`;
+}
+function resolvedHistoryMatches(rows){
+ const f=resolvedHistoryFilters,normalize=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(),q=normalize(f.query);
+ const cutoff=f.period?Date.now()-Number(f.period)*86400000:0;
+ return rows.filter(o=>(!q||normalize([o.title,o.description,o.category,o.zone].join(' ')).includes(q))&&(!f.category||o.category===f.category)&&(!cutoff||resolvedHistoryDate(o)>=cutoff)).sort((a,b)=>f.sort==='oldest'?resolvedHistoryDate(a)-resolvedHistoryDate(b):f.sort==='title'?String(a.title||a.description).localeCompare(String(b.title||b.description),'es'):resolvedHistoryDate(b)-resolvedHistoryDate(a));
+}
+function resolvedHistoryResults(rows){
+ const visible=resolvedHistoryMatches(rows);
+ return {count:visible.length,html:visible.length?visible.map(resolvedHistoryCard).join(''):'<p class="resolved-search-empty">No hay piques '+(resolvedHistoryFilters.kind==='archived'?'archivados':'resueltos')+' que coincidan con estos filtros.</p>'};
+}
+function resolvedHistoryView(rows,kind='resolved'){
+ if(resolvedHistoryFilters.owner!==authUser?.id||resolvedHistoryFilters.kind!==kind)resolvedHistoryFilters={query:'',category:'',period:'',sort:'newest',owner:authUser?.id,kind};
+ const f=resolvedHistoryFilters,result=resolvedHistoryResults(rows),categories=[...new Set(rows.map(o=>o.category))].sort();
+ return `<section class="resolved-history-view" id="piques-${kind}"><button type="button" class="resolved-back" data-resolved-back>← VER MI ACTIVIDAD</button><div class="resolved-toolbar"><label class="resolved-search">${resolvedHistorySearchIcon()}<input data-resolved-filter="query" type="search" aria-label="Buscar piques ${kind==='archived'?'archivados':'resueltos'}" placeholder="BUSCAR POR TÍTULO, RUBRO O ZONA..." value="${esc(f.query)}"></label><label class="resolved-filter">${svg('calendar')}<select data-resolved-filter="period" aria-label="Filtrar por fecha">${[['','TODAS LAS FECHAS'],['30','ÚLTIMOS 30 DÍAS'],['90','ÚLTIMOS 90 DÍAS'],['365','ÚLTIMO AÑO']].map(([v,l])=>`<option value="${v}" ${v===f.period?'selected':''}>${l}</option>`).join('')}</select></label><label class="resolved-filter">${svg('tool')}<select data-resolved-filter="category" aria-label="Filtrar por rubro"><option value="">TODOS LOS RUBROS</option>${categories.map(c=>`<option value="${esc(c)}" ${c===f.category?'selected':''}>${esc(c.toUpperCase())}</option>`).join('')}</select></label></div><div class="resolved-results-heading"><h2 data-resolved-count>${result.count} ${kind==='archived'?(result.count===1?'PIQUE ARCHIVADO':'PIQUES ARCHIVADOS'):(result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS')}</h2><label class="resolved-sort"><select data-resolved-filter="sort" aria-label="Ordenar piques resueltos">${[['newest','MÁS RECIENTES'],['oldest','MÁS ANTIGUOS'],['title','TÍTULO A–Z']].map(([v,l])=>`<option value="${v}" ${v===f.sort?'selected':''}>${l}</option>`).join('')}</select></label></div><div class="resolved-card-grid" data-resolved-results>${result.html}</div></section>`;
+}
+function syncResolvedHistoryHeader(){
+ document.querySelector('.resolved-history-heading')?.remove();
+ if(!document.querySelector('.resolved-history-view'))return;
+ const archived=resolvedHistoryFilters.kind==='archived';
+ document.querySelector('.brand-header').insertAdjacentHTML('beforeend','<div class="resolved-history-heading"><h1>'+(archived?'PIQUES ARCHIVADOS':'Lo que necesitabas, ya está resuelto.')+'</h1><p>'+(archived?'Volvé a publicarlos cuando lo necesites.':'Todos los piques que ya finalizaste. Mirá los detalles.')+'</p></div>');
+}
+function updateResolvedHistoryResults(){
+ const result=resolvedHistoryResults(userOrders().filter(o=>resolvedHistoryFilters.kind==='archived'?orderIsArchived(o):!orderIsArchived(o)&&orderStatus(o)==='FINALIZADO'));
+ const grid=app.querySelector('[data-resolved-results]'),count=app.querySelector('[data-resolved-count]');
+ if(grid)grid.innerHTML=result.html;if(count)count.textContent=result.count+' '+(resolvedHistoryFilters.kind==='archived'?(result.count===1?'PIQUE ARCHIVADO':'PIQUES ARCHIVADOS'):(result.count===1?'PIQUE RESUELTO':'PIQUES RESUELTOS'));
+}
+app.addEventListener('input',e=>{if(e.target.matches('[data-resolved-filter="query"]')){resolvedHistoryFilters.query=e.target.value;updateResolvedHistoryResults();}});
+app.addEventListener('change',e=>{if(e.target.matches('select[data-resolved-filter]')){resolvedHistoryFilters[e.target.dataset.resolvedFilter]=e.target.value;updateResolvedHistoryResults();}});
+app.addEventListener('click',e=>{if(e.target.closest('[data-resolved-back]')){dashboardFilter='all';dashboardOwner=authUser?.id;go('pedidos');}});
+
+function orderHistorySection(kind,title,rows,empty){
+ if(['resolved','archived'].includes(kind))return resolvedHistoryView(rows,kind);
+ if(!rows.length)return '';
+ const cards=rows.map(o=>orderCard(o,true)).join('');
+ return `<section class="dashboard-orders orders-history" id="piques-${kind}"><div class="dashboard-section-heading"><span class="section-logo-count">${homePiqueCounter(rows.length)}</span><h2>${title.replace(/^P/,'')}</h2></div>${cards?`<div class="${rows.length<=5?'history-card-list':'requester-slider'}" role="region" aria-label="${title}"${rows.length>5?' tabindex="0"':''}>${cards}</div>${rows.length>5?carouselDots(rows.length):''}`:`<p class="dashboard-empty" role="status">ⓘ ${empty}</p>`}</section>`;
+}
+
+function render(){
+ if(!authReady){document.getElementById('home-search').hidden=true;const nav=document.querySelector('.bottom-nav');if(nav)nav.hidden=true;app.innerHTML='<p class="coordination-note" role="status">COMPROBANDO TU SESIÓN…</p>';return;}
+ if(!authUser&&!authRoutes.includes(route().name)){history.replaceState(null,'',location.pathname+location.search+'#ingresar');}
+ const {name,args}=route();app.classList.toggle('home-soft-background',name==='inicio'||!name);app.classList.toggle('piques-soft-background',['pedidos','propuestas','profesional'].includes(name));const greeting=document.querySelector('#home-search h1');if(greeting)greeting.textContent=(authUser?currentFirstName()+', ':'')+'¿QUÉ PRECISÁS RESOLVER HOY?';const bottomNav=document.querySelector('.bottom-nav');if(bottomNav)bottomNav.hidden=!(typeof authUser!=='undefined'&&authUser);document.getElementById('home-search').hidden=name!=='inicio';document.getElementById('app-menu').hidden=true;document.getElementById('menu-toggle').setAttribute('aria-expanded','false');let o=userOrders().find(x=>x.id===args[0]);let p=providers.find(x=>x.id===args[1]);const accountHeader=['pedidos','cuenta'].includes(name);const ordersHeading=document.getElementById('orders-heading');ordersHeading.hidden=!accountHeader;const ordersHeadingTitle=document.getElementById('orders-heading-title');if(ordersHeadingTitle&&accountHeader)ordersHeadingTitle.textContent=name==='pedidos'?`${currentFirstName()}, MIRA TU ACTIVIDAD.`:`${currentFirstName()}, ESTE ES TU PERFIL.`;document.getElementById('order-heading').hidden=!(['propuestas','profesional'].includes(name)&&o);document.getElementById('order-heading').classList.toggle('request-two-column-heading',name==='propuestas'&&Boolean(o));document.querySelector('#order-heading .request-header-back')?.remove();if(name==='propuestas'&&o){document.querySelector('#order-heading h1').textContent=currentFirstName()+', MIRA TU SOLICITUD.';}if(name==='profesional'&&p)document.querySelector('#order-heading h1').textContent=currentFirstName()+', MIRA EL PERFIL DE '+p.name.split(' ')[0]+'.';if(name==='inicio'||!name)app.innerHTML=home();else if(name==='nuevo')app.innerHTML=form();else if(name==='explorar')app.innerHTML=explore();else if(name==='mensajes')app.innerHTML=messages();else if(name==='verificacion')app.innerHTML=verification();else if(name==='notificaciones')app.innerHTML=notifications();else if(name==='pedidos')app.innerHTML=piquesView();else if(name==='coordinar'&&typeof coordinationOrder==='function'&&coordinationOrder(args[0]))app.innerHTML=coordinationView(coordinationOrder(args[0]));else if(name==='propuestas'&&o)app.innerHTML=proposals(o);else if(name==='profesional'&&o&&p)app.innerHTML=profile(o,p);else if(name==='elegir'&&o&&p)app.innerHTML=confirm(o,p);else if(typeof authRoutes!=='undefined'&&authRoutes.includes(name))app.innerHTML=authView(name);else if(name==='cuenta')app.innerHTML=accountView();else if(name==='ofrecer')app.innerHTML=professionalForm();else if(name==='mi-profesional')app.innerHTML=professionalAccount?`${back('cuenta','MI PERFIL')}${typeof authAccountPanel==='function'?authAccountPanel():''}<div class="page-head"><span class="eyebrow">ACTIVO EN ESTA DEMO</span><h1>MI PERFIL PROFESIONAL</h1></div>${professionalPreview(professionalAccount)}<button class="btn full gap" data-professional-start>EDITAR MIS SERVICIOS</button><p class="demo-notice">ESTE PERFIL TODAVÍA NO ES PÚBLICO. LAS SOLICITUDES REALES Y EL GUARDADO DEL PERFIL EN TU CUENTA TODAVÍA NO ESTÁN CONECTADOS.</p>`:accountView();else app.innerHTML=`${back()}<div class="missing-pique-section"><p class="missing-pique-hint">${svg('info')}<span>NO ENCONTRAMOS ESTE PEDIDO.</span></p><a class="btn primary full" href="#pedidos">VER MIS PIQUES</a></div>`;document.querySelectorAll('[data-nav]').forEach(el=>{const active=el.dataset.nav===(['propuestas','profesional','elegir'].includes(name)?'pedidos':name);el.classList.toggle('active',active);active?el.setAttribute('aria-current','page'):el.removeAttribute('aria-current');});document.title=`PIQUE · ${name==='inicio'?'Encontrá a quien lo resuelve':name==='nuevo'?'Nuevo pedido':name==='propuestas'?'Tu solicitud':name==='profesional'?'Perfil del profesional':name==='pedidos'?'Mis pedidos':name==='elegir'?'Tu elección':name==='explorar'?'Explorar':name==='mensajes'?'Mensajes':name==='notificaciones'?'Notificaciones':name==='verificacion'?'Verificación':'Mi perfil'}`;applySectionLogoCounts();integrateProfileHeader();syncResolvedHistoryHeader();scheduleSessionFit();requestAnimationFrame(syncExecutionColumnHeight);}
+function capture(){const form=document.getElementById('request-form');if(!form)return;const data=new FormData(form);for(const field of ['title','category','description','zone','urgency'])if(data.has(field))draft[field]=String(data.get(field));}
+async function saveRemoteOrder(order){if(typeof authClient==='undefined'||!authClient||typeof authUser==='undefined'||!authUser)return;try{await authClient.from('service_requests').insert({id:order.id,user_id:authUser.id,category:order.category,title:order.title||order.description,description:order.description,zone:order.zone,urgency:order.urgency,status:order.status});}catch(error){console.warn('PIQUE: no se pudo guardar el pedido',error);}}
+app.addEventListener('input',e=>{
+ capture();
+ if(e.target.matches('[data-quote-price]')){
+  const output=e.target.closest('.quote-slider')?.querySelector('[data-quote-price-value]');
+  if(output)output.textContent=money(Number(e.target.value));
+ }
+ if(e.target.matches('[data-quote-time]')){
+  const output=e.target.closest('.quote-slider')?.querySelector('[data-quote-time-value]');
+  if(output)output.textContent=quoteTimeLabel(Number(e.target.value));
+ }
+});
+app.addEventListener('change',capture);
+app.addEventListener('submit',e=>{if(e.target.id!=='request-form')return;e.preventDefault();capture();const error=document.getElementById('form-error');if(step===0&&(draft.description.trim().length<10||draft.description.length>500)){error.textContent='Contanos un poco más: escribí al menos 10 caracteres.';app.querySelector('textarea').focus();return;}if(step===1&&!canonicalNeighborhood(draft.zone)){error.textContent='Elegí un barrio de Montevideo de la lista.';app.querySelector('input[name=zone]').focus();return;}if(step===1)draft.zone=canonicalNeighborhood(draft.zone);if(step<2){step++;render();app.focus();}else{const id=globalThis.crypto?.randomUUID?.()||'pedido-'+Date.now();const newOrder={id,...draft,user_id:authUser?.id||null,description:draft.description.trim(),zone:draft.zone.trim(),createdAt:new Date().toISOString(),status:'proposals',selected:null};orders.unshift(newOrder);save();saveRemoteOrder(newOrder);step=0;draft={category:'Sanitaria',description:'',zone:'',urgency:'Hoy'};go('propuestas/'+id);}});
+app.addEventListener('click',e=>{const alert=e.target.closest('[data-quote-alert-target]');if(alert){e.preventDefault();const id=alert.dataset.quoteAlertTarget;professionalActiveFilter='pending';const jump=()=>{const target=document.getElementById('pro-pique-'+id);if(target){target.scrollIntoView({behavior:'smooth',block:'center'});target.classList.add('quote-request-highlight');setTimeout(()=>target.classList.remove('quote-request-highlight'),1800);}};if(route().name!=='inicio'){go('inicio');setTimeout(jump,80);}else{jump();}return;}const el=e.target.closest('button');if(!el)return;if(el.hasAttribute('data-filter-applications')){proposalsOnlyApplications=!proposalsOnlyApplications;render();return;}if(el.hasAttribute('data-dashboard-all')){dashboardFilter='all';dashboardPriority=null;render();return;}if(el.dataset.dashboardPriority){dashboardPriority=dashboardPriority===el.dataset.dashboardPriority?null:el.dataset.dashboardPriority;render();return;}if(el.dataset.dashboardFilter){dashboardFilter=route().name==='pedidos'&&dashboardFilter===el.dataset.dashboardFilter?'all':el.dataset.dashboardFilter;if(route().name!=='pedidos'){dashboardOwner=authUser?.id;piquesTab='personal';piquesDashboardTab='personal';go('pedidos');if(['resolved','archived'].includes(dashboardFilter))requestAnimationFrame(()=>document.getElementById('piques-'+dashboardFilter)?.scrollIntoView({block:'start'}));}else render();return;}if(el.dataset.requesterState){requesterStates[el.dataset.requesterSection]=el.dataset.requesterState;render();return;}if(el.dataset.applicationDecision){decideApplication(el);return;}if(el.dataset.quoteDecision){decideQuote(el);return;}if(el.dataset.applyOrder){applyToPique(el);return;}if(el.dataset.sendQuote){sendProfessionalQuote(el);return;}if(el.hasAttribute('data-new')){draft={category:el.dataset.new,description:'',zone:'',urgency:'Hoy'};step=0;go('nuevo');}if(el.hasAttribute('data-prev')){capture();step=Math.max(0,step-1);render();}if(el.dataset.orderFilter){ordersFilter=el.dataset.orderFilter;render();}if(el.dataset.proPiqueFilter){professionalPiquesFilter=el.dataset.proPiqueFilter;render();}if(el.dataset.activePiqueFilter){professionalActiveFilter=professionalActiveFilter===el.dataset.activePiqueFilter?'all':el.dataset.activePiqueFilter;professionalDashboardFilter='active';render();}if(el.dataset.sort){sort=el.dataset.sort;render();}if(el.dataset.profileTab){profileTab=el.dataset.profileTab;render();app.querySelector(`[data-profile-tab="${profileTab}"]`).focus();}if(el.dataset.requestQuote){requestQuote(el.dataset.order,el.dataset.requestQuote);return;}if(el.dataset.choose)go('elegir/'+el.dataset.order+'/'+el.dataset.choose);if(el.dataset.confirm){const o=orders.find(o=>o.id===el.dataset.order);if(o){o.selected=el.dataset.confirm;o.status='selected';save();render();}}if(el.hasAttribute('data-reset')){if(window.confirm('¿Restablecer la demo? Se borrarán los pedidos de prueba guardados en este navegador.')){orders=referenceOrders.map(normalizeOrder);save();go('inicio');toast('Datos de ejemplo restablecidos.');}}});
+app.addEventListener('keydown',e=>{if(e.target.matches('[role=tab]')&&['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();const ids=['about','work','photos','reviews'];let i=ids.indexOf(profileTab);i=e.key==='Home'?0:e.key==='End'?3:(i+(e.key==='ArrowRight'?1:3))%4;profileTab=ids[i];render();app.querySelector(`[data-profile-tab="${profileTab}"]`).focus();}});
+window.addEventListener('hashchange',()=>{if(route().name==='pedidos'){if(!piquesDashboardTab){dashboardFilter='auto';dashboardPriority=null;professionalDashboardFilter='auto';professionalActiveFilter='all';}piquesTab=piquesDashboardTab||'professional';piquesDashboardTab=null;}if(route().name==='cuenta'&&typeof accountTabOwner!=='undefined')accountTabOwner=null;profileTab='about';render();window.scrollTo({top:0});app.focus({preventScroll:true});});
+render();
+
+document.getElementById('menu-toggle').addEventListener('click',()=>{const menu=document.getElementById('app-menu');menu.hidden=!menu.hidden;document.getElementById('menu-toggle').setAttribute('aria-expanded',String(!menu.hidden));});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){document.getElementById('app-menu').hidden=true;document.getElementById('menu-toggle').setAttribute('aria-expanded','false');}});
+
+document.getElementById('hero-publish').addEventListener('click',()=>{draft={category:'Otros servicios',description:'',zone:'',urgency:'Hoy'};step=0;go('nuevo');});
+if(typeof initializeAuth==='function')initializeAuth();
+
+// Fit account identity text to its column without truncation.
+var sessionFitFrame=0;
+function fitSessionText(){
+ document.querySelectorAll('.session-row h3,.session-row .auth-email').forEach(el=>{
+  el.style.removeProperty('font-size');
+  const style=getComputedStyle(el);
+  const available=el.clientWidth-parseFloat(style.paddingLeft)-parseFloat(style.paddingRight);
+  if(available<=0)return;
+  const range=document.createRange();range.selectNodeContents(el);
+  const width=range.getBoundingClientRect().width;
+  if(width>available)el.style.fontSize=`${parseFloat(style.fontSize)*available/width*0.98}px`;
+ });
+  if(window.innerWidth>=900){
+  const providerNames=[...document.querySelectorAll('.professional-photo-proposal .proposal-single-name')];
+  let sharedNameSize=Infinity;
+  providerNames.forEach(el=>{
+   el.style.removeProperty('font-size');
+   el.style.setProperty('white-space','nowrap','important');
+   let size=parseFloat(getComputedStyle(el).fontSize);
+   while(el.scrollWidth>el.clientWidth && size>7){
+    size-=0.25;
+    el.style.setProperty('font-size',`${size}px`,'important');
+   }
+   sharedNameSize=Math.min(sharedNameSize,size);
+  });
+  if(Number.isFinite(sharedNameSize))providerNames.forEach(el=>el.style.setProperty('font-size',`${sharedNameSize}px`,'important'));
+ }
+document.querySelectorAll('[data-fit-title],[data-fit-card-title],.options-heading,.professional-photo-proposal .provider-zones .meta-value').forEach(el=>{
+  if(el.matches('.professional-card-quoted .quote-request-left > h3')){el.style.removeProperty('font-size');el.style.setProperty('white-space','normal','important');return;}
+  if(innerWidth<=600&&el.matches('.order-pending .request-title,.professional-card-pending .quote-request-left > h3')){el.style.removeProperty('font-size');el.style.setProperty('white-space','normal','important');return;}
+  if(innerWidth>899&&el.matches('.professional-card-pending .quote-request-left > h3')){el.style.removeProperty('font-size');el.style.setProperty('white-space','normal','important');return;}
+  el.style.removeProperty('font-size');
+  el.style.setProperty('white-space','nowrap','important');
+  let size=parseFloat(getComputedStyle(el).fontSize);
+  while(el.scrollWidth>el.clientWidth && size>1){
+   size-=0.5;
+   el.style.setProperty('font-size',`${size}px`,'important');
+  }
+ });
+}
+function fitProviderReputations(){
+ if(innerWidth<900)return;
+ const rows=[...document.querySelectorAll('.professional-photo-proposal .proposal-reputation')];
+ let shared=Infinity;
+ rows.forEach(row=>{
+  const parts=[...row.querySelectorAll('.proposal-score,.proposal-opinions')];
+  parts.forEach(e=>e.style.removeProperty('font-size'));
+  let size=Math.min(...parts.map(e=>parseFloat(getComputedStyle(e).fontSize)));
+  row.style.setProperty('flex-wrap','nowrap','important');
+  while(row.scrollWidth>row.clientWidth&&size>6){size-=.25;parts.forEach(e=>e.style.setProperty('font-size',`${size}px`,'important'));}
+  shared=Math.min(shared,size);
+ });
+ if(Number.isFinite(shared))rows.forEach(row=>row.querySelectorAll('.proposal-score,.proposal-opinions').forEach(e=>e.style.setProperty('font-size',`${shared}px`,'important')));
+}
+function fitOpenPiqueValues(){
+ if(innerWidth>600){document.querySelectorAll('.order-pending.requester-photo-card .labeled-meta-tag:not(:last-child) .meta-value').forEach(el=>el.style.removeProperty('font-size'));return;}
+ document.querySelectorAll('.order-pending.requester-photo-card').forEach(card=>{
+  const values=[...card.querySelectorAll('.labeled-meta-tag:not(:last-child) .meta-value')];
+  let shared=Infinity;
+  values.forEach(el=>{
+   el.style.removeProperty('font-size');
+   el.style.setProperty('white-space','nowrap','important');
+   let size=parseFloat(getComputedStyle(el).fontSize);
+   while(el.scrollWidth>el.clientWidth&&size>6){size-=.25;el.style.setProperty('font-size',`${size}px`,'important');}
+   shared=Math.min(shared,size);
+  });
+  if(Number.isFinite(shared))values.forEach(el=>el.style.setProperty('font-size',`${shared}px`,'important'));
+ });
+}
+function polishQuotedCards(){
+ const set=(el,styles)=>{if(!el)return;for(const [name,value] of Object.entries(styles))el.style.setProperty(name,value,'important');};
+ const width=window.innerWidth;
+ document.querySelectorAll('.matching-request.professional-card-quoted').forEach(card=>{
+  const title=card.querySelector(':scope > .quote-request-left > h3');
+  set(title,{'font-size':width<=600?'19px':width<=899?'20px':'22px','line-height':'1.12','font-weight':'900','letter-spacing':'-.35px','color':'#fff','text-shadow':'0 1px 3px rgba(4,25,86,.38)','white-space':'normal','overflow':'visible','text-overflow':'clip','margin':'0'});
+  card.querySelectorAll('.pique-meta-tag.labeled-meta-tag').forEach(tag=>set(tag,{'display':'grid','grid-template-columns':'44px minmax(0,1fr)','gap':'0','min-height':'58px','height':'58px','padding':'0','align-items':'stretch','box-sizing':'border-box'}));
+  card.querySelectorAll('.pique-meta-tag .meta-icon').forEach(icon=>set(icon,{'height':'100%','min-height':'32px','display':'grid','place-items':'center','padding':'0','width':'100%','min-width':'0','box-sizing':'border-box','align-self':'stretch','border-right':'0','position':'relative','left':'0','margin':'0'}));
+  card.querySelectorAll('.pique-meta-tag .meta-icon svg').forEach(svg=>set(svg,{'width':'18px','height':'18px','flex':'0 0 18px'}));
+  card.querySelectorAll('.professional-details-tag').forEach(tag=>set(tag,{'display':'grid','grid-template-columns':'44px minmax(0,1fr)','align-items':'stretch','gap':'0','width':'100%','min-height':'58px','height':'58px','margin':'0','padding':'0','box-sizing':'border-box','border':'1px solid rgba(207,226,255,.74)','border-bottom':'1px solid rgba(207,226,255,.74)','border-radius':'11px','background':'rgba(226,239,255,.18)','color':'#fff','overflow':'hidden'}));
+  card.querySelectorAll('.professional-details-tag .details-tag-icon').forEach(icon=>set(icon,{'width':'18px','height':'18px','align-self':'center','justify-self':'center','margin':'0','flex':'0 0 18px','color':'#fff'}));
+  card.querySelectorAll('.professional-details-tag .details-tag-copy').forEach(copy=>set(copy,{'display':'flex','flex-direction':'column','justify-content':'center','gap':'4px','min-width':'0','padding':'6px 8px','border-left':'1px solid rgba(215,232,255,.65)'}));
+  card.querySelectorAll('.professional-details-tag .details-tag-label').forEach(label=>set(label,{'font-size':'11px','line-height':'1.2','font-weight':'700','color':'#cfe5ff'}));
+  card.querySelectorAll('.professional-details-tag .details-tag-value').forEach(value=>set(value,{'font-size':'14px','line-height':'1.25','font-weight':'900','color':'#fff','overflow-wrap':'anywhere'}));
+  card.querySelectorAll('.pique-meta-tag .meta-copy').forEach(copy=>set(copy,{'justify-content':'center','gap':'4px','padding':'6px 8px'}));
+  card.querySelectorAll('.pique-meta-tag .meta-label').forEach(label=>set(label,{'font-size':'11px','line-height':'1.2','margin':'0'}));
+  card.querySelectorAll('.pique-meta-tag .meta-value').forEach(value=>set(value,{'font-size':'14px','line-height':'1.25','font-weight':'900'}));
+  if(width<=899){
+   card.querySelector('.labeled-meta-tag:last-child .meta-label')?.style.setProperty('display','inline','important');
+   card.querySelector('.labeled-meta-tag:last-child .meta-time')?.style.setProperty('display','none','important');
+  }
+  card.querySelectorAll('.professional-quote-summary>div').forEach((hint,index)=>set(hint,{
+   'display':'flex','flex-direction':'column','align-items':'center','justify-content':'center','gap':'4px',
+   'min-height':width<=600?'62px':'68px','height':width<=600?'62px':'68px','padding':'6px 8px',
+   'box-sizing':'border-box','border':`1px solid ${index===0?'#b8e6d5':'#c8d9f7'}`,
+   'border-radius':'10px','background':index===0?'#e9f7ef':'#edf3ff',
+   'box-shadow':'none'
+  }));
+  card.querySelectorAll('.professional-quote-summary span').forEach(label=>set(label,{'font-size':width<=600?'9px':'10px','line-height':'1.15','font-weight':'800','letter-spacing':'.2px','text-align':'center','color':'#3f5f94'}));
+  card.querySelectorAll('.professional-quote-summary strong').forEach((value,index)=>set(value,{'font-size':width<=600?'20px':'22px','line-height':'1','font-weight':'900','color':index===0?'#078363':'#0754c9','text-align':'center'}));
+  set(card.querySelector('.postulation-inside-title'),{'grid-area':'heading','display':'flex','align-items':'center','justify-content':'center','min-height':'0','height':'auto','margin':'0','padding':'0 0 8px','font-size':width<=600?'18px':'20px','line-height':'1.1','white-space':'nowrap'});
+  if(width<=600){
+   set(card,{'grid-template-columns':'minmax(0,1fr)','grid-template-areas':'"heading" "left" "divider" "right" "footer"','column-gap':'0','row-gap':'9px','align-items':'stretch'});
+   set(card.querySelector('.quote-request-left'),{'grid-area':'left','width':'100%','min-width':'0'});
+   set(card.querySelector('.matching-request-divider'),{'grid-area':'divider','width':'100%','height':'1px','min-height':'1px','align-self':'stretch'});
+   set(card.querySelector('.quote-request-controls'),{'grid-area':'right','width':'100%','min-width':'0'});
+   set(card.querySelector('.professional-card-footer'),{'grid-area':'footer','width':'100%','padding-top':'2px'});
+   set(card.querySelector('.pique-meta-tags'),{'width':'100%','gap':'5px'});
+  }else if(width<=899){
+   set(card,{'grid-template-columns':'minmax(0,1fr) 1px minmax(0,1fr)','grid-template-areas':'"heading heading heading" "left divider right" "footer footer footer"','column-gap':'14px','row-gap':'12px','align-items':'stretch'});
+   set(card.querySelector('.postulation-inside-title'),{'width':'100%','padding':'0 0 8px','margin':'0'});
+   set(card.querySelector('.quote-request-left'),{'grid-area':'left','min-width':'0'});
+   set(card.querySelector('.matching-request-divider'),{'grid-area':'divider','width':'1px','height':'100%','min-height':'0'});
+   set(card.querySelector('.quote-request-controls'),{'grid-area':'right','min-width':'0'});
+   set(card.querySelector('.professional-card-footer'),{'grid-area':'footer','width':'100%','padding-top':'2px'});
+  }
+ });
+}
+function scheduleSessionFit(){cancelAnimationFrame(sessionFitFrame);sessionFitFrame=requestAnimationFrame(()=>{fitSessionText();fitProviderReputations();fitOpenPiqueValues();polishQuotedCards();});} 
+window.addEventListener('resize',scheduleSessionFit);
+new MutationObserver(scheduleSessionFit).observe(app,{childList:true,subtree:true,characterData:true});
+new ResizeObserver(scheduleSessionFit).observe(app);
+document.fonts.ready.then(scheduleSessionFit);
+scheduleSessionFit();
+
+function carouselDots(count){return count>1?`<div class="pique-carousel-dots" aria-label="Elegir tarjeta">${Array.from({length:count},(_,i)=>`<button type="button" data-carousel-dot="${i}" aria-label="Ver tarjeta ${i+1}" aria-pressed="${i===0}"></button>`).join('')}</div>`:'';}
+app.addEventListener('click',e=>{
+ const dot=e.target.closest('[data-carousel-dot]');if(!dot)return;
+ const slider=dot.parentElement.previousElementSibling,card=slider?.children[Number(dot.dataset.carouselDot)];if(!card)return;
+ slider.scrollTo({left:slider.scrollLeft+card.getBoundingClientRect().left-slider.getBoundingClientRect().left,behavior:'smooth'});
+});
+app.addEventListener('scroll',e=>{
+ const slider=e.target;if(!slider.matches?.('.requester-slider,.quote-requests-slider,.professional-active-section .quote-requests-list'))return;
+ const dots=slider.nextElementSibling;if(!dots?.matches('.pique-carousel-dots'))return;
+ const left=slider.getBoundingClientRect().left;let active=0,distance=Infinity;
+ Array.from(slider.children).forEach((card,i)=>{const d=Math.abs(card.getBoundingClientRect().left-left);if(d<distance){distance=d;active=i;}});
+ if(slider.scrollLeft>=slider.scrollWidth-slider.clientWidth-2)active=slider.children.length-1;
+ dots.querySelectorAll('button').forEach((dot,i)=>dot.setAttribute('aria-pressed',String(i===active)));
+},true);
+
+
+
+function integrateProfileHeader(){
+ const header=document.querySelector('.brand-header');
+ header.querySelector('.dashboard-welcome')?.remove();header.querySelector('.account-tabs')?.remove();const tabs=app.querySelector('.account-tabs');if(tabs)header.append(tabs);
+ const card=['cuenta','pedidos'].includes(route().name)?app.querySelector('.dashboard-welcome'):null;
+ header.classList.toggle('profile-integrated',Boolean(card));
+ header.classList.toggle('professional-profile-integrated',Boolean(card?.classList.contains('professional-dashboard')));
+ if(card){const professionalStats=card.classList.contains('professional-dashboard')?card.querySelector('.dashboard-stats'):null;header.append(card);if(tabs)card.querySelector('.dashboard-person').append(tabs);if(professionalStats){professionalStats.classList.add('professional-dashboard-band');app.prepend(professionalStats);}document.getElementById('orders-heading').hidden=true;requestAnimationFrame(fitProfileGreeting);}
+}
+document.querySelector('.brand-header').addEventListener('click',e=>{
+ const button=e.target.closest('[data-dashboard-filter]');if(!button)return;
+ dashboardFilter=button.dataset.dashboardFilter;dashboardOwner=authUser?.id;dashboardExpanded=true;piquesTab='personal';piquesDashboardTab='personal';go('pedidos');
+});
+
+function fitProfileGreeting(){
+ const title=document.querySelector('.profile-integrated .dashboard-identity h2');if(!title)return;
+ title.style.fontSize='22px';
+ let size=22;
+ while(title.scrollWidth>title.clientWidth&&size>1){size-=.5;title.style.fontSize=size+'px';}
+}
+window.addEventListener('resize',fitProfileGreeting);
+
+function professionalDashboard(){
+ if(professionalDashboardFilterOwner!==authUser?.id){professionalDashboardFilter='auto';professionalDashboardFilterOwner=authUser?.id;}
+ const rows=matchingRequestsOwner===authUser.id?matchingRequests:[];
+ const executingCount=rows.filter(o=>o.quoteStatus==='accepted').length;
+ if(route().name==='pedidos'&&professionalDashboardFilter==='auto'&&matchingRequestsOwner===authUser.id)professionalDashboardFilter=executingCount?'execution':'active';
+ const activeCount=rows.filter(o=>['applied','pending','quoted'].includes(o.quoteStatus)).length;
+ const counts=[activeCount?['active',activeCount,'PIQUES ACTIVOS']:['created',new Set([...rows,...(professionalHistoryOwner===authUser.id?professionalUnfulfilled:[]),...(professionalResolvedOwner===authUser.id?professionalResolvedPiques:[])].map(o=>o.id)).size,'POSTULACIONES'],['unfulfilled',professionalHistoryOwner===authUser.id?professionalUnfulfilled.length:null,'ARCHIVADOS'],['resolved',professionalResolvedOwner===authUser.id?professionalResolvedCount:null,'RESUELTOS']];
+ if(['all','active'].includes(professionalDashboardFilter)&&activeCount===0&&executingCount===0){if((counts[1][1]||0)>0)professionalDashboardFilter='unfulfilled';else if((counts[2][1]||0)>0)professionalDashboardFilter='resolved';}
+ const p=professionalAccount;
+ return `<section class="dashboard-welcome dashboard-welcome-columns professional-dashboard"><div class="dashboard-person"><span class="dashboard-avatar">${p.photo?`<img src="${esc(p.photo)}" alt="Tu foto">`:esc(((p.firstName||'')[0]||'P')+((p.lastName||'')[0]||''))}</span><div class="dashboard-identity"><h2>${esc(currentFirstName())}, ${route().name==='pedidos'?'MIRA TU ACTIVIDAD.':'ESTE ES TU PERFIL.'}</h2></div></div><div class="dashboard-stats">${counts.filter(([id,count])=>['active','created'].includes(id)||count===null||count>0).map(([id,count,label])=>`<button type="button" data-pro-summary="${id}" ${count===0?'disabled aria-disabled="true"':''}><strong>${homePiqueCounter(count??'—')}</strong><span>${(count===1?label.replace(/POSTULACIONES$/,'POSTULACIÓN').replace(/ACTIVOS$/,'ACTIVO').replace(/ARCHIVADOS$/,'ARCHIVADO').replace(/RESUELTOS$/,'RESUELTO'):label).replace(/^PIQUES? /,'')}</span></button>`).join('')}${executingCount?`<div class="dashboard-execution-count" role="button" tabindex="0" data-highlight-execution><strong>${homePiqueCounter(executingCount)}</strong><span>¡EN MARCHA!</span></div>`:''}</div></section>`;
+}
+app.addEventListener('click',e=>{const b=e.target.closest('[data-pro-summary]');if(!b)return;e.stopImmediatePropagation();professionalDashboardFilter=b.dataset.proSummary==='created'?'all':b.dataset.proSummary;if(['active','all'].includes(professionalDashboardFilter))professionalActiveFilter='all';if(['applied','quoting','coordinating'].includes(professionalDashboardFilter))professionalActiveFilter=professionalDashboardFilter;piquesTab='professional';piquesDashboardTab='professional';if(route().name==='pedidos')render();else go('pedidos');const target=professionalDashboardFilter==='unfulfilled'?'#professional-unfulfilled':professionalDashboardFilter==='resolved'?'#professional-resolved':'.professional-active-section';requestAnimationFrame(()=>document.querySelector(target)?.scrollIntoView({behavior:'smooth',block:'start'}));},true);
+
+function professionalUnfulfilledSection(){
+ const rows=(professionalHistoryOwner===authUser?.id?[...professionalUnfulfilled]:[]).sort((a,b)=>new Date(b.created_at||b.createdAt||0).getTime()-new Date(a.created_at||a.createdAt||0).getTime());
+ if(!rows.length)return '';
+ return `<section id="professional-unfulfilled" class="orders-history dashboard-orders"><div class="quote-requests-heading stacked"><div class="pique-section-title"><h2 style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-size:clamp(16px,4.65vw,20px)"><span class="section-logo-count" style="display:inline-flex;order:0;margin:0;flex-shrink:0;background:none;border:0;padding:0">${homePiqueCounter(rows.length)}</span><span>${rows.length===1?'IQUE ARCHIVADO':'IQUES ARCHIVADOS'}</span></h2></div></div><div class="unfulfilled-order-list">${rows.map(o=>{const urgent=['Hoy','Ahora'].includes(o.urgency);return `<article class="panel order requester-photo-card ${categoryThemeClass(o.category)}"><div class="pending-order-layout unfulfilled-pique-layout resolved-card-columns"><div class="pending-order-main"><div class="pique-state-row">${deadlineTag(o)}</div><h3 class="request-title" data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description${['inicio','propuestas','pedidos'].includes(route().name)?' description-info-tag':''}">${['inicio','propuestas','pedidos'].includes(route().name)?svg('info'):'' }<span>${esc(o.description)}</span></p></div><div class="pique-card-divider" aria-hidden="true"></div><div class="pending-order-meta">${resolvedRequestMetaTags(o)}</div><p class="archive-policy-note ${o.unfulfilledReason?'rejected':urgent?'urgent':'agenda'}">${o.unfulfilledReason?svg('info')+'<span>'+esc(o.unfulfilledReason)+'</span>':urgent?'LOS PIQUES CON URGENCIA SE ARCHIVAN A LAS 24HS DE PUBLICADOS.':'LOS PIQUES SIN URGENCIA SE ARCHIVAN A LOS 7 DÍAS DE PUBLICADOS.'}</p></div></article>`;}).join('')}</div></section>`;
+}
+function resolvedFinalizationDate(o){
+ const row=Array.isArray(o.pique_coordination)?o.pique_coordination[0]:o.pique_coordination;
+ const value=row?.updated_at;
+ if(!value||!Number.isFinite(new Date(value).getTime()))return 'SIN ESPECIFICAR';
+ return new Intl.DateTimeFormat('es-UY',{timeZone:'America/Montevideo',day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(value));
+}
+function professionalResolvedSection(){
+ const rows=professionalResolvedOwner===authUser?.id?professionalResolvedPiques:[];if(!rows.length)return '';
+ return `<section id="professional-resolved" class="orders-history dashboard-orders"><div class="quote-requests-heading stacked"><div class="pique-section-title"><h2 style="display:flex;flex-direction:row;align-items:center;justify-content:center;gap:4px;white-space:nowrap;font-size:clamp(16px,4.65vw,20px)"><span class="section-logo-count" style="display:inline-flex;order:0;margin:0;flex-shrink:0;background:none;border:0;padding:0">${homePiqueCounter(rows.length)}</span><span>${rows.length===1?'IQUE RESUELTO':'IQUES RESUELTOS'}</span></h2></div></div><div class="dashboard-order-list">${rows.map(o=>`<article class="panel order requester-photo-card professional-resolved-card ${categoryThemeClass(o.category)}"><div class="resolved-card-columns"><div><div class="pique-state-row"><span class="deadline-tag completion-finalized-tag">FINALIZADO</span></div><h3 class="request-title" data-fit-card-title>${esc(o.title||o.description)}</h3><p class="order-description${['inicio','propuestas','pedidos'].includes(route().name)?' description-info-tag':''}">${['inicio','propuestas','pedidos'].includes(route().name)?svg('info'):'' }<span>${esc(o.description)}</span></p></div><div class="pique-card-divider" aria-hidden="true"></div><div class="resolved-card-details">${resolvedRequestMetaTags(o)}</div></div><div class="resolved-card-price"><span class="price-tag"><small>PRECIO <br>ACORDADO</small><strong>${o.quotedPrice!=null?money(o.quotedPrice):'SIN ESPECIFICAR'}</strong></span><span class="resolved-finalization-hint"><small>FECHA DE<br>FINALIZACIÓN</small><strong>${resolvedFinalizationDate(o)}</strong></span></div><div class="resolved-details-separator" aria-hidden="true"></div><a class="btn requester-open full" href="#coordinar/${encodeURIComponent(o.id)}"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6.5"/><path d="m15 15 6 6"/></svg><span>VER MÁS DETALLES</span></a></article>`).join('')}</div></section>`;
+}
+
+app.addEventListener('click',async e=>{const b=e.target.closest('[data-complete-order]');if(!b)return;if(!confirmCompletion())return;b.disabled=true;const owner=authUser?.id;try{const {data,error}=await authClient.from('service_requests').update({status:'completed'}).eq('id',b.dataset.completeOrder).eq('user_id',owner).eq('status','selected').select('id');if(error||!data?.length)throw Error('closed');if(authUser?.id!==owner)return;await loadRemoteOrders();render();toast('PIQUE RESUELTO.');}catch{toast('NO SE PUDO COMPLETAR. EL PIQUE PUEDE HABER VENCIDO.');await loadRemoteOrders();render();}});
+function confirmCompletion(){return window.confirm('¿EL TRABAJO YA ESTÁ TERMINADO?');}
+setInterval(()=>{if(!authUser||!['inicio','cuenta','pedidos','propuestas'].includes(route().name))return;const expired=[...userOrders(),...matchingRequests].some(o=>o.status!=='archived'&&orderIsArchived(o));if(expired){loadRemoteOrders().then(()=>loadMatchingRequests());}},30000);
+
+function publicCompletedWorkCard(work,p){const review=p.realReviews?.find(r=>r.request_id===work.id);return '<article class="public-resolved-work-card"><div class="public-work-heading"><h3>'+esc(work.title)+'</h3></div><p class="public-profile-bio">'+esc(work.description||'')+'</p><div class="public-work-score"><strong>PUNTUACIÓN</strong><span>'+(review?'★ '+Number(review.rating).toFixed(1).replace('.',','):'SIN VALORACIÓN')+'</span></div></article>';}
+function publicWorkPhotos(p){return (p.resolvedPiques||[]).map(work=>'<article class="public-resolved-work-card public-photo-card"><h3>'+esc(work.title)+'</h3><div class="public-work-gallery">'+(work.completion_photos||[]).map((src,i)=>'<button type="button" class="completion-photo-tile" data-public-work-photo="'+esc(work.id)+'" data-photo-index="'+i+'" aria-label="Ampliar foto '+(i+1)+'"><img src="'+esc(src)+'" alt="Foto del trabajo terminado" loading="lazy"><span>FOTO '+(i+1)+' · AMPLIAR</span></button>').join('')+'</div></article>').join('')||publicProfileEmpty(publicProfessionalName(p)+' AÚN NO PUBLICÓ FOTOS.');}
+
+function resolvedRequestMetaTags(o){
+ const parts=publicationLabel(o).split(' · '),date=parts[0]||'SIN ESPECIFICAR',time=parts[1]||'SIN ESPECIFICAR';
+ const items=[['tool','RUBRO',esc(o.category)],['pin','ZONA',esc(String(o.zone||'SIN ESPECIFICAR').replace(/,?\\s*MONTEVIDEO\\s*$/i,''))],['calendar','CREADO','<span class="meta-date">'+esc(date)+'</span><span class="meta-time">'+esc(time)+'</span>']];
+ return '<div class="pique-meta-tags labeled-meta-tags">'+items.map(([icon,label,value])=>'<span class="pique-meta-tag labeled-meta-tag"><span class="meta-icon" aria-hidden="true">'+svg(icon)+'</span><span class="meta-copy"><small class="meta-label">'+label+'</small><span class="meta-value">'+value+'</span></span></span>').join('')+'</div>';
+}
+
+function homePiqueCounter(count){return `<svg class="home-pique-counter" viewBox="0 0 50 65" aria-label="${count} ${count===1?'pique':'piques'}"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><text x="26" y="33" text-anchor="middle" fill="white" stroke="none" font-family="Nunito Sans,Arial,sans-serif" font-size="25" font-weight="700">${count}</text></svg>`;}
+
+function applySectionLogoCounts(){if(!['inicio','pedidos'].includes(route().name))return;app.querySelectorAll('.dashboard-section-heading,.pique-section-title,.requester-home-section .section-heading').forEach(row=>{const title=row.querySelector('h2');const count=row.querySelector('span');if(!title||!count||count.querySelector('svg')||!/^PIQUES?\b/.test(title.textContent))return;const value=Number(count.textContent.trim());if(!Number.isFinite(value))return;count.remove();title.textContent=title.textContent.replace(/^P/,'').trim();count.classList.add('section-logo-count');count.innerHTML=homePiqueCounter(value);row.prepend(count);});}
+
+function myPiquesBack(){if(route().name==='propuestas')return '';return `<a class="btn requester-open full profile-my-piques-button details-my-piques-button" href="#pedidos">${document.querySelector('.nav-pique-logo')?.outerHTML||''}<span>VOLVER A MIS PIQUES</span></a>`;}
+
+document.addEventListener('click',e=>{const link=e.target.closest('a[href="#pedidos"]');if(!link)return;dashboardFilter='auto';dashboardPriority=null;professionalDashboardFilter='auto';professionalActiveFilter='all';if(route().name==='pedidos')render();});
+
+function piqueDetailBack(id){return `<a class="btn requester-open full profile-my-piques-button details-my-piques-button" href="#propuestas/${encodeURIComponent(id)}">${document.querySelector('.nav-pique-logo')?.outerHTML||''}<span>VOLVER AL PIQUE</span></a>`;}
+
+function syncExecutionColumnHeight(){app.querySelectorAll(".professional-card-coordinating:not(.professional-waiting-schedule):not(.coordination-three-card)").forEach(card=>{const left=card.querySelector(":scope>.quote-request-left"),right=card.querySelector(":scope>.quote-request-controls");if(!left||!right)return;card.style.setProperty("--pique-copy-height",getComputedStyle(left).height);});}
+window.addEventListener("resize",()=>requestAnimationFrame(syncExecutionColumnHeight));
+const executionColumnObserver=new ResizeObserver(syncExecutionColumnHeight);
+const executionCardObserver=new MutationObserver(()=>{app.querySelectorAll(".professional-card-coordinating>.quote-request-left").forEach(left=>executionColumnObserver.observe(left));});
+executionCardObserver.observe(app,{childList:true,subtree:true});
+
+function highlightExecutionCard(){const professional=!!app.querySelector('.professional-dashboard-band,.professional-dashboard');if(professional){professionalDashboardFilter='execution';professionalActiveFilter='all';}else{dashboardFilter='execution';dashboardPriority=null;}const focusCard=()=>requestAnimationFrame(()=>{const card=app.querySelector('.professional-profile-process .professional-card-coordinating,.requester-execution-section article,.requester-home-progress')?.closest('article');if(!card)return;card.classList.remove('execution-card-highlight');void card.offsetWidth;card.classList.add('execution-card-highlight');card.scrollIntoView({behavior:'smooth',block:'center'});});if(route().name!=='pedidos'){piquesDashboardTab=professional?'professional':'requester';window.addEventListener('hashchange',focusCard,{once:true});go('pedidos');}else{render();focusCard();}}
+document.addEventListener('click',e=>{if(!e.target.closest('[data-highlight-execution]'))return;e.stopImmediatePropagation();highlightExecutionCard();},true);
+document.addEventListener('keydown',e=>{if(!e.target.closest('[data-highlight-execution]')||!['Enter',' '].includes(e.key))return;e.preventDefault();highlightExecutionCard();});
+
+function publicProfileEmpty(message){return `<p class="public-profile-empty" role="status">${svg("info")}<span>${esc(message)}</span></p>`;}
+
+function publicProfessionalName(p){return String(p.name||"EL PROFESIONAL").trim().split(/\s+/)[0].toUpperCase();}
+
+app.addEventListener('click',async event=>{
+ const button=event.target.closest('[data-republish-pique]');if(!button||button.disabled||!authUser)return;
+ button.disabled=true;const buttonContent=button.innerHTML;button.textContent='REPUBLICANDO…';
+ try{
+  const {data,error}=await authClient.rpc('republish_pique',{p_request_id:button.dataset.republishPique});
+  if(error||!data)throw error||Error('No request returned');
+  await loadRemoteOrders();dashboardFilter='pending';dashboardPriority=null;
+  go('propuestas/'+encodeURIComponent(data));toast('PIQUE REPUBLICADO. CONSERVAMOS LAS COTIZACIONES.');
+ }catch(error){button.disabled=false;button.innerHTML=buttonContent;toast('NO SE PUDO REPUBLICAR. VOLVÉ A INTENTAR.');}
+});
+
+// Safari can report intermediate viewport heights while rotating a phone.
+function syncPhoneOrientation(){
+ const shortSide=Math.min(screen.width,screen.height);
+ const isPhone=navigator.maxTouchPoints>0&&shortSide<=480;
+ document.documentElement.classList.toggle('phone-landscape',isPhone&&matchMedia('(orientation: landscape)').matches);
+ requestAnimationFrame(()=>{scheduleSessionFit();fitProfileGreeting();});
+}
+window.addEventListener('orientationchange',syncPhoneOrientation);
+window.addEventListener('resize',syncPhoneOrientation);
+window.visualViewport?.addEventListener('resize',syncPhoneOrientation);
+syncPhoneOrientation();

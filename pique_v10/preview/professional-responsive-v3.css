@@ -1,0 +1,611 @@
+/* PIQUES · profesional · arreglo de tarjetas responsivas, 25/10/2026.
+   Esta capa tiene prioridad sobre los !important sin capa de los estilos históricos.
+   Se mantiene separada para no alterar pantallas del solicitante ni la lógica JS. */
+@layer pique-tablet-professional-fix {
+  /* La raya de 1px de cada rótulo se posicionaba contra la tarjeta entera y la cruzaba de arriba a abajo. */
+  #app .professional-discover-section .matching-request .pique-meta-tag::after,
+  #app .professional-active-section .matching-request .pique-meta-tag::after {
+    content:none !important;
+    display:none !important;
+  }
+
+  /* La raya encima de "Repasá" venía del borde de la SECCIÓN, no de la tarjeta. */
+  #app .quote-requests-section.professional-active-section {
+    border-top: 0 !important;
+    border-block-start: 0 !important;
+    box-shadow: none !important;
+  }
+  #app .quote-requests-section.professional-discover-section {
+    border-bottom: 0 !important;
+  }
+  #app .professional-active-section .quote-requests-heading::before,
+  #app .professional-active-section .quote-requests-heading::after {
+    content: none !important;
+    display: none !important;
+  }
+
+  /* No rayas divisorias dentro de las tarjetas del inicio del profesional. */
+  #app .professional-discover-section .matching-request > .matching-request-divider,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .matching-request-divider {
+    display: none !important;
+    width: 0 !important;
+    border: 0 !important;
+  }
+  #app .professional-discover-section .matching-request > .professional-card-footer,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .professional-card-footer {
+    border-top: 0 !important;
+    border-block-start: 0 !important;
+    box-shadow: none !important;
+    padding-top: 0 !important;
+  }
+
+  /* Detalles usa un solo divisor: el borde izquierdo del bloque de texto.
+     Algunas reglas antiguas también dibujaban una raya con pseudo-elementos. */
+  #app .professional-discover-section .matching-request .professional-details-tag,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag {
+    column-gap: 0 !important;
+  }
+  #app .professional-discover-section .matching-request .professional-details-tag::before,
+  #app .professional-discover-section .matching-request .professional-details-tag::after,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag::before,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag::after,
+  #app .professional-discover-section .matching-request .professional-details-tag > .details-tag-icon::before,
+  #app .professional-discover-section .matching-request .professional-details-tag > .details-tag-icon::after,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag > .details-tag-icon::before,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag > .details-tag-icon::after {
+    content: none !important;
+    display: none !important;
+    border: 0 !important;
+    background: none !important;
+    box-shadow: none !important;
+  }
+  #app .professional-discover-section .matching-request .professional-details-tag > .details-tag-icon,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag > .details-tag-icon {
+    border-right: 0 !important;
+  }
+  #app .professional-discover-section .matching-request .professional-details-tag > .details-tag-copy,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-details-tag > .details-tag-copy {
+    gap: 4px !important;
+    border-left: 1px solid rgba(215,232,255,.65) !important;
+  }
+
+  /* Cotización: precio y tiempo en columnas iguales, con etiquetas compactas
+     y espaciado interior equilibrado. Esto cubre cotizando y cotizado. */
+  #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) > .quote-request-controls {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-template-rows: minmax(0,auto) !important;
+    align-items: stretch !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+  }
+  #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-request-controls > .quote-slider {
+    box-sizing: border-box !important;
+    width: 100% !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 100px !important;
+    margin: 0 !important;
+    padding: 9px 7px !important;
+    display: flex !important;
+    flex-flow: column nowrap !important;
+    justify-content: center !important;
+    align-items: stretch !important;
+    gap: 5px !important;
+  }
+  #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head {
+    display: flex !important;
+    flex-flow: column nowrap !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    flex: 0 1 auto !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: center !important;
+    grid-template-rows: none !important;
+  }
+  #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > b {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+    font-weight: 800 !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > strong {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    font-size: clamp(17px, 3.9vw, 24px) !important;
+    line-height: 1.12 !important;
+    font-weight: 900 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+  }
+  #app .professional-active-section .professional-card-quoted .quote-sent-hint {
+    min-height: 80px !important;
+    justify-content: center !important;
+  }
+  #app .professional-active-section .quote-sent-hint .quote-slider-head {min-height: 0 !important;}
+  #app .professional-active-section .quote-slider input[type="range"] {
+    display:block !important;
+    flex: 0 0 auto !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Una tarjeta por página en ambos sliders, incluso con pocas postulaciones. */
+  @media (max-width: 899px) {
+    #app .professional-discover-section .quote-requests-slider,
+    #app .professional-active-section:not(.professional-coordinating-section) .quote-requests-list {
+      display:flex !important;
+      flex-flow:row nowrap !important;
+      width:100% !important;
+      max-width:100% !important;
+      box-sizing:border-box !important;
+      gap:12px !important;
+      overflow-x:auto !important;
+      overflow-y:hidden !important;
+      scroll-snap-type:x mandatory !important;
+      overscroll-behavior-inline:contain !important;
+      scrollbar-width:none !important;
+      margin:0 !important;
+      padding:0 0 12px !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request,
+    #app .professional-active-section:not(.professional-coordinating-section) .quote-requests-list > .matching-request {
+      flex: 0 0 100% !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      box-sizing:border-box !important;
+      scroll-snap-align:start !important;
+      margin:0 !important;
+    }
+    #app .professional-discover-section .quote-requests-slider::-webkit-scrollbar,
+    #app .professional-active-section .quote-requests-list::-webkit-scrollbar {display:none !important;}
+  }
+
+  /* Tablet: detalles arriba; los dos controles abajo de los detalles, NO al costado.
+     La franja de foto sigue recortada a la derecha. */
+  @media (min-width: 481px) and (max-width: 899px) {
+    #app .professional-discover-section .matching-request.professional-card-discover::after {
+      -webkit-mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+      mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-pending:not(.professional-card-discover),
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-quoted {
+      display:grid !important;
+      grid-template-columns:minmax(0, 73%) minmax(0,27%) !important;
+      grid-template-rows:auto auto auto !important;
+      grid-template-areas:"left photo" "controls photo" "footer photo" !important;
+      gap:10px 0 !important;
+      align-items:start !important;
+      padding:14px !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) > .quote-request-left {
+      grid-area:left !important;
+      grid-column:1 !important;
+      grid-row:1 !important;
+      width:100% !important;
+      min-width:0 !important;
+      box-sizing:border-box !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) > .quote-request-controls {
+      grid-area:controls !important;
+      grid-column:1 !important;
+      grid-row:2 !important;
+      width:100% !important;
+      min-width:0 !important;
+      padding:0 !important;
+      gap:8px !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) > .professional-card-footer {
+      grid-area:footer !important;
+      grid-column:1 !important;
+      grid-row:3 !important;
+      width:100% !important;
+      padding:0 !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted)::after {
+      content:"" !important;
+      display:block !important;
+      position:absolute !important;
+      top:0 !important;
+      bottom:0 !important;
+      right:0 !important;
+      left:auto !important;
+      width:28% !important;
+      height:auto !important;
+      background-image:linear-gradient(90deg,rgba(7,86,204,.55) 0%,rgba(7,86,204,.14) 14%,transparent 30%),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position:right center !important;
+      background-size:cover !important;
+      clip-path:ellipse(100% 78% at 100% 50%) !important;
+      -webkit-mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+      mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+      z-index:0 !important;
+      pointer-events:none !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) > :is(.quote-request-left,.quote-request-controls,.professional-card-footer) {
+      position:relative !important;
+      z-index:1 !important;
+    }
+    #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > b {font-size:11px !important;}
+    /* Sin la barra vertical de color que recorre el borde izquierdo de toda la tarjeta. */
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted)::before {
+      content:none !important;
+      display:none !important;
+      background:none !important;
+    }
+
+    /* Cotizado reserva 28% + 6px para la curva. Cotizando necesita
+       exactamente la misma anchura útil para que sus tags no la alcancen. */
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-pending:not(.professional-card-quoted):not(.professional-card-discover) {
+      grid-template-columns:minmax(0,1fr) !important;
+      grid-template-areas:"left" "controls" "footer" !important;
+      padding-right:calc(28% + 6px) !important;
+      background:linear-gradient(110deg,#0340b8,#0756cc) right center / cover !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-pending:not(.professional-card-quoted):not(.professional-card-discover) > .quote-request-left {
+      padding-top:12px !important;
+    }
+
+    /* Postulaciones conserva en tablet la misma franja de foto que Cotizado. */
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout {
+      display:grid !important;
+      grid-template-columns:minmax(0,1fr) !important;
+      grid-template-rows:auto auto auto !important;
+      grid-template-areas:"left" "controls" "footer" !important;
+      gap:10px 0 !important;
+      align-items:start !important;
+      padding:14px calc(28% + 6px) 14px 14px !important;
+      box-sizing:border-box !important;
+      background:linear-gradient(110deg,#0340b8,#0756cc) right center / cover !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout > .quote-request-left {
+      grid-area:left !important;
+      grid-column:1 !important;
+      grid-row:1 !important;
+      width:100% !important;
+      min-width:0 !important;
+      box-sizing:border-box !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout > .quote-request-controls {
+      grid-area:controls !important;
+      grid-column:1 !important;
+      grid-row:2 !important;
+      width:100% !important;
+      min-width:0 !important;
+      padding:0 !important;
+      gap:8px !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout > .application-waiting-footer {
+      grid-area:footer !important;
+      grid-column:1 !important;
+      grid-row:3 !important;
+      width:100% !important;
+      min-width:0 !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout::after {
+      content:"" !important;
+      display:block !important;
+      position:absolute !important;
+      top:0 !important;
+      bottom:0 !important;
+      right:0 !important;
+      left:auto !important;
+      width:28% !important;
+      height:auto !important;
+      background-image:linear-gradient(90deg,rgba(7,86,204,.55) 0%,rgba(7,86,204,.14) 14%,transparent 30%),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position:right center !important;
+      background-size:cover !important;
+      clip-path:ellipse(100% 78% at 100% 50%) !important;
+      -webkit-mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+      mask-image:radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+      z-index:0 !important;
+      pointer-events:none !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout > :is(.quote-request-left,.quote-request-controls,.application-waiting-footer) {
+      position:relative !important;
+      z-index:1 !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request.professional-card-applied.professional-application-layout::before {
+      content:none !important;
+      display:none !important;
+      background:none !important;
+    }
+  }
+
+  /* Mobile: recuperar el azul; las reglas de 425px escondían la foto y
+     dejaban blanco sobre blanco el texto de las postulaciones disponibles. */
+  @media (max-width: 480px) {
+    #app .professional-discover-section .matching-request.professional-card-discover,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted,.professional-card-applied) {
+      position:relative !important;
+      isolation:isolate !important;
+      display:flex !important;
+      flex-flow:column nowrap !important;
+      align-items:stretch !important;
+      gap:10px !important;
+      padding:14px 12px !important;
+      box-sizing:border-box !important;
+      overflow:hidden !important;
+      background:#0752c5 !important;
+      background-image:linear-gradient(110deg,#0752c5 0%,#0752c5 64%,#0765d7 100%) !important;
+      color:#fff !important;
+      min-width:0 !important;
+    }
+    /* En móvil NO se muestra la foto ni el corte curvo: fondo azul limpio. */
+    #app .professional-discover-section .professional-card-discover::after,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted,.professional-card-applied)::after {
+      content:none !important;
+      display:none !important;
+      background:none !important;
+      background-image:none !important;
+      clip-path:none !important;
+    }
+    #app .professional-discover-section .professional-card-discover::before,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted,.professional-card-applied)::before {
+      content:none !important;
+      display:none !important;
+      background-image:none !important;
+    }
+    #app .professional-discover-section .professional-card-discover > :is(.quote-request-left,.quote-request-controls,.professional-card-footer),
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted,.professional-card-applied) > :is(.quote-request-left,.quote-request-controls,.professional-card-footer) {
+      position:relative !important;
+      z-index:1 !important;
+      grid-column:auto !important;
+      grid-row:auto !important;
+      grid-area:auto !important;
+      width:100% !important;
+      max-width:100% !important;
+      min-width:0 !important;
+      box-sizing:border-box !important;
+      padding:0 !important;
+      margin:0 !important;
+    }
+    #app .professional-discover-section .professional-card-discover > .quote-request-controls:empty {display:none !important;}
+    #app .professional-discover-section .professional-card-discover .quote-request-left > h3,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .quote-request-left > h3 {
+      align-self:flex-start !important;
+      text-align:left !important;
+      max-width:100% !important;
+      width:100% !important;
+      overflow-wrap:anywhere !important;
+      color:white !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .quote-request-controls {
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      gap:6px !important;
+    }
+    #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-request-controls > .quote-slider {
+      min-height:100px !important;
+      padding:10px 8px !important;
+    }
+    #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > b {
+      font-size:9px !important;
+      line-height:1.15 !important;
+    }
+    #app .professional-active-section .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > strong {font-size:18px !important;}
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .pique-meta-tags {
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      grid-template-rows:auto !important;
+      gap:6px !important;
+      flex:initial !important;
+    }
+    #app .professional-discover-section .matching-request .professional-card-footer,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-card-footer {
+      border-top:0 !important;
+      padding-top:0 !important;
+    }
+    /* Los dos valores siempre van uno al lado del otro debajo de los datos. */
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) > .quote-request-controls {
+      display:grid !important;
+      grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+      grid-template-rows:auto !important;
+      align-items:stretch !important;
+      column-gap:7px !important;
+      width:100% !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head {
+      justify-content:center !important;
+      align-items:center !important;
+      min-height:0 !important;
+      gap:2px !important;
+      margin-block:auto !important;
+    }
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > b,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted) .quote-slider-head > strong {
+      margin:0 !important;
+      padding:0 !important;
+      text-align:center !important;
+    }
+  }
+}
+
+
+/* v5 - Ajustes finales tablet/móvil profesional */
+@layer pique-tablet-professional-fix {
+  /* TABLET: la tarjeta disponible usa la misma lógica visual curva que COTIZADO */
+  @media (min-width: 481px) and (max-width: 899px) {
+    #app .professional-discover-section .matching-request.professional-card-discover {
+      position: relative !important;
+      isolation: isolate !important;
+      display: grid !important;
+      grid-template-columns: minmax(0,73%) minmax(0,27%) !important;
+      grid-template-rows: auto auto !important;
+      grid-template-areas: "left photo" "footer photo" !important;
+      align-items: start !important;
+      gap: 10px 0 !important;
+      padding: 14px !important;
+      overflow: hidden !important;
+      background: #0752c5 !important;
+      min-height: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover > .quote-request-left {
+      grid-area: left !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover > .quote-request-controls {
+      display: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover > .professional-card-footer {
+      grid-area: footer !important;
+      width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover::after {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      top: 0 !important;
+      bottom: 0 !important;
+      right: 0 !important;
+      width: 28% !important;
+      background-image: linear-gradient(90deg,rgba(7,86,204,.55) 0%,rgba(7,86,204,.14) 14%,transparent 30%), var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position: right center !important;
+      background-size: cover !important;
+      clip-path: ellipse(100% 78% at 100% 50%) !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover::before {
+      content: none !important;
+      display: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-request-tags {
+      display: grid !important;
+      grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+      gap: 8px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      margin: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .professional-card-footer .professional-apply {
+      width: 100% !important;
+    }
+  }
+
+  /* MÓVIL: soltar compresión heredada en disponibles y cotizados */
+  @media (max-width: 480px) {
+    #app .professional-discover-section .matching-request.professional-card-discover,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request:is(.professional-card-pending,.professional-card-quoted,.professional-card-applied) {
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      grid-template-columns: none !important;
+      grid-template-areas: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-status-row,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row {
+      display: flex !important;
+      flex-wrap: wrap !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 6px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-status-row > *,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row > * {
+      flex: 0 1 auto !important;
+      min-width: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-status-row .available-badge,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row .available-badge,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row .quote-status,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row .deadline-tag {
+      max-width: 100% !important;
+      white-space: nowrap !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-request-left,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .quote-request-left {
+      display: flex !important;
+      flex-direction: column !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      gap: 8px !important;
+      flex: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .order-description,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .order-description {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-request-tags,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .pique-meta-tags {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      display: grid !important;
+      grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+      gap: 6px !important;
+      margin: 0 !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .quote-request-tags > *,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .pique-meta-tags > * {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .details-tag-copy,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .details-tag-copy,
+    #app .professional-discover-section .matching-request.professional-card-discover .details-tag-value,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .details-tag-value,
+    #app .professional-discover-section .matching-request.professional-card-discover h3,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request h3 {
+      min-width: 0 !important;
+      max-width: 100% !important;
+      overflow-wrap: anywhere !important;
+      word-break: break-word !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .professional-card-footer,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-card-footer {
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover .professional-card-footer .professional-apply,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request .professional-card-footer .btn {
+      width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+}

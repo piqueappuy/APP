@@ -1,0 +1,309 @@
+/* PIQUES | Inicio profesional: curva segura y carrusel de ancho completo.
+   Este archivo se carga al final. No altera la lógica de las cotizaciones
+   ni los listados de las pestañas perfil y solicitante. */
+@layer pique-tablet-professional-fix {
+  /* En laptop y escritorio, los dos carruseles no se transforman en grillas
+     de dos columnas ni se limitan a tarjetas de 680px. */
+  @media (min-width: 900px) {
+    #app .professional-discover-section .quote-requests-slider,
+    #app .professional-active-section:not(.professional-profile-active-section):not(.professional-coordinating-section) .quote-requests-list {
+      display: flex !important;
+      flex-direction: row !important;
+      flex-wrap: nowrap !important;
+      align-items: stretch !important;
+      grid-template-columns: none !important;
+      grid-auto-flow: initial !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      justify-content: flex-start !important;
+      gap: 18px !important;
+      margin: 0 !important;
+      padding: 0 0 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory !important;
+      overscroll-behavior-x: contain !important;
+      scrollbar-width: none !important;
+    }
+    #app .professional-discover-section .quote-requests-slider::-webkit-scrollbar,
+    #app .professional-active-section:not(.professional-profile-active-section):not(.professional-coordinating-section) .quote-requests-list::-webkit-scrollbar {
+      display: none !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request,
+    #app .professional-active-section:not(.professional-profile-active-section):not(.professional-coordinating-section) .quote-requests-list > .matching-request {
+      flex: 0 0 100% !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      box-sizing: border-box !important;
+      margin: 0 !important;
+      grid-column: auto !important;
+      scroll-snap-align: start !important;
+      scroll-snap-stop: always !important;
+    }
+  }
+
+  /* Tablet: usar la misma curva elíptica de COTIZADO,
+     pero desplazada hacia la derecha para no pisar RUBRO/ZONA/botón. */
+  @media (min-width: 481px) and (max-width: 899px) {
+    #app .professional-discover-section .matching-request.professional-card-discover::after {
+      content: "" !important;
+      display: block !important;
+      position: absolute !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: auto !important;
+      width: 28% !important;
+      height: auto !important;
+      background-image: linear-gradient(90deg, rgba(7,86,204,.55) 0%,rgba(7,86,204,.14) 14%,transparent 30%), var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position: right center !important;
+      background-size: cover !important;
+      clip-path: ellipse(100% 78% at 100% 50%) !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+    }
+    #app .professional-discover-section .matching-request.professional-card-discover > .quote-request-left,
+    #app .professional-discover-section .matching-request.professional-card-discover > .professional-card-footer {
+      position: relative !important;
+      z-index: 1 !important;
+    }
+  }
+}
+
+/* V9 - corrección de causa raíz: no reservar DOS VECES el espacio de la foto.
+   Las reglas históricas ya dejaban padding-right de ~25% para la curva;
+   V8 añadía a ese contenido reducido una grilla 72/28. En vez de volver
+   a partirlo, usamos UNA sola columna con la reserva de foto como padding. */
+@layer pique-tablet-professional-fix {
+  @media (min-width: 481px) {
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover {
+      position: relative !important;
+      isolation: isolate !important;
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: auto auto !important;
+      grid-template-areas: "left" "footer" !important;
+      align-items: start !important;
+      column-gap: 0 !important;
+      row-gap: 12px !important;
+      overflow: hidden !important;
+      box-sizing: border-box !important;
+      padding: 16px calc(28% + 6px) 16px 16px !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover > .quote-request-left {
+      grid-area: left !important;
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover > .professional-card-footer {
+      grid-area: footer !important;
+      grid-column: 1 !important;
+      grid-row: 2 !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border-top: 0 !important;
+      position: relative !important;
+      z-index: 1 !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover > .quote-request-controls,
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover > .matching-request-divider {
+      display: none !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover .professional-details-tag,
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover .quote-request-tags,
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover .professional-apply {
+      box-sizing: border-box !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover .quote-request-tags {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      grid-template-rows: none !important;
+      grid-auto-rows: auto !important;
+      gap: 7px !important;
+      margin: 0 !important;
+      align-items: stretch !important;
+      flex: 0 0 auto !important;
+      height: auto !important;
+      min-height: 0 !important;
+      max-height: none !important;
+      align-content: start !important;
+    }
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover .quote-request-tags > .pique-meta-tag {
+      position: static !important;
+      grid-column: auto !important;
+      grid-row: auto !important;
+      order: 0 !important;
+      margin: 0 !important;
+      left: auto !important;
+      right: auto !important;
+      top: auto !important;
+      bottom: auto !important;
+      transform: none !important;
+      justify-self: stretch !important;
+      align-self: stretch !important;
+      min-height: 48px !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+  }
+  @media (min-width: 900px) {
+    #app .professional-discover-section .quote-requests-slider > .matching-request.professional-card-discover {
+      padding: 18px calc(26% + 18px) 18px 18px !important;
+    }
+  }
+}
+
+/* V11: fecha de publicación en la cabecera, frente al estado.
+   RUBRO y ZONA son las únicas etiquetas debajo de los detalles. */
+@layer pique-tablet-professional-fix {
+  #app .professional-discover-section .matching-request .quote-status-row:has(.professional-card-created),
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row:has(.professional-card-created) {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 24px !important;
+    box-sizing: border-box !important;
+    inset: auto !important;
+    transform: none !important;
+    margin: 0 0 12px !important;
+  }
+  #app .matching-request .quote-status-row > .professional-card-created {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 5px !important;
+    position: static !important;
+    flex: 0 0 auto !important;
+    margin-left: auto !important;
+    padding: 0 !important;
+    width: auto !important;
+    height: auto !important;
+    color: #e0eeff !important;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    font-size: 10px !important;
+    line-height: 1.1 !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+  }
+  #app .matching-request .professional-card-created svg {
+    display: block !important;
+    width: 15px !important;
+    height: 15px !important;
+    flex: 0 0 15px !important;
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 1.8 !important;
+  }
+  /* La fecha de las tarjetas profesionales va sin calendario en tablet y móvil. */
+  @media (max-width: 899px) {
+    #app .matching-request .professional-card-created > svg {
+      display: none !important;
+    }
+  }
+  /* Nunca repartir RUBRO/ZONA en tres columnas por una fecha inexistente. */
+  #app .professional-discover-section .matching-request .quote-request-tags,
+  #app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-request-tags {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+}
+
+/* V12 unlayered: la fecha vive en la fila de DISPONIBLE, no como tercer chip.
+   Fuera de @layer para ganar a quotation-caption-layout.css. */
+#app.mobile-app-root,
+#app {
+  --pique-date-header: 1;
+}
+#app .professional-discover-section .matching-request .quote-status-row,
+#app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  margin: 0 0 12px !important;
+}
+#app .professional-discover-section .matching-request .quote-status-row > .professional-card-created,
+#app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-status-row > .professional-card-created {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-end !important;
+  gap: 5px !important;
+  position: static !important;
+  inset: auto !important;
+  flex: 0 0 auto !important;
+  margin-left: auto !important;
+  padding: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  min-height: 0 !important;
+  color: #e0eeff !important;
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  font-size: 12px !important;
+  line-height: 1.1 !important;
+  font-weight: 800 !important;
+  white-space: nowrap !important;
+  grid-column: auto !important;
+  grid-row: auto !important;
+}
+#app .professional-discover-section .matching-request .quote-request-tags,
+#app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-request-tags {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-flow: row !important;
+}
+#app .professional-discover-section .matching-request .quote-request-tags > .pique-meta-tag:has(.meta-date),
+#app .professional-discover-section .matching-request .quote-request-tags > .pique-meta-tag:nth-child(n+3),
+#app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-request-tags > .pique-meta-tag:has(.meta-date),
+#app .professional-active-section:not(.professional-coordinating-section) .matching-request .quote-request-tags > .pique-meta-tag:nth-child(n+3) {
+  display: none !important;
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+
+/* Borde azul fino en todos los filtros profesionales. */
+#app .professional-discover-section .professional-pique-filters button,
+#app .professional-active-section .professional-filters-inline button {
+  border: 1px solid #78b5ff !important;
+}
+

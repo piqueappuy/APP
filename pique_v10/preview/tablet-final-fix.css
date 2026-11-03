@@ -1,0 +1,92 @@
+/* PIQUES - Corrección de tarjetas del profesional, tablets.
+   Esta capa permite que los estilos importantes de este parche prevalezcan
+   sobre las reglas antiguas, sin modificar la lógica de la aplicación. */
+@layer pique-tablet-professional-fix {
+  @media (min-width: 481px) and (max-width: 899px) {
+
+    /* Una tarjeta COMPLETA por desplazamiento: no mostrar parte de la siguiente. */
+    #app .professional-discover-section .quote-requests-slider,
+    #app .professional-active-section:not(.professional-coordinating-section) .quote-requests-list {
+      display: flex !important;
+      flex-flow: row nowrap !important;
+      align-items: flex-start !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      min-width: 0 !important;
+      padding: 0 0 12px !important;
+      margin-inline: 0 !important;
+      gap: 12px !important;
+      overflow-x: auto !important;
+      overflow-y: hidden !important;
+      scroll-snap-type: x mandatory !important;
+      scroll-padding-inline: 0 !important;
+      overscroll-behavior-x: contain !important;
+      scrollbar-width: none !important;
+      box-sizing: border-box !important;
+    }
+
+    #app .professional-discover-section .quote-requests-slider::-webkit-scrollbar,
+    #app .professional-active-section:not(.professional-coordinating-section) .quote-requests-list::-webkit-scrollbar {
+      display: none !important;
+    }
+
+    #app .professional-discover-section .quote-requests-slider > .matching-request,
+    #app .professional-active-section:not(.professional-coordinating-section) .quote-requests-list > .matching-request {
+      flex: 0 0 100% !important;
+      box-sizing: border-box !important;
+      width: 100% !important;
+      min-width: 0 !important;
+      max-width: 100% !important;
+      margin-inline: 0 !important;
+      scroll-snap-align: start !important;
+      scroll-snap-stop: always !important;
+    }
+
+    /* Sin las rayas que aparecían encima de POSTULARME y ENVIAR COTIZACIÓN. */
+    #app .professional-discover-section .professional-card-footer,
+    #app .professional-active-section:not(.professional-coordinating-section) .professional-card-footer,
+    #app .professional-active-section:not(.professional-coordinating-section) .pending-quote-footer {
+      border-top: 0 !important;
+      border-block-start: 0 !important;
+      box-shadow: none !important;
+    }
+
+    /* Quitar las líneas separadoras internas heredadas de otros diseños. */
+    #app .professional-discover-section .matching-request > .matching-request-divider,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .matching-request-divider {
+      display: none !important;
+      visibility: hidden !important;
+      border: 0 !important;
+      background: transparent !important;
+    }
+
+    /* Mantener el ancho de los paneles internos sin columna de 1px. */
+    #app .professional-discover-section .professional-card-discover,
+    #app .professional-active-section:not(.professional-coordinating-section) .professional-card-pending,
+    #app .professional-active-section:not(.professional-coordinating-section) .professional-quoted-layout,
+    #app .professional-active-section:not(.professional-coordinating-section) .professional-application-layout {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+      grid-template-areas: "left right" "footer footer" !important;
+      column-gap: 12px !important;
+    }
+
+    #app .professional-discover-section .matching-request > .quote-request-left,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .quote-request-left {
+      grid-column: 1 !important;
+      grid-row: 1 !important;
+    }
+
+    #app .professional-discover-section .matching-request > .quote-request-controls,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .quote-request-controls {
+      grid-column: 2 !important;
+      grid-row: 1 !important;
+    }
+
+    #app .professional-discover-section .matching-request > .professional-card-footer,
+    #app .professional-active-section:not(.professional-coordinating-section) .matching-request > .professional-card-footer {
+      grid-area: footer !important;
+      grid-column: 1 / -1 !important;
+      grid-row: 2 !important;
+    }
+  }
+}

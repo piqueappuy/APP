@@ -1,0 +1,467 @@
+#app .requester-search-section .requester-search-header {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  min-width: 0 !important;
+  margin: 0 0 14px !important;
+}
+
+#app .requester-search-section .requester-search-title {
+  display: flex !important;
+  align-items: center !important;
+  flex: 1 1 auto !important;
+  flex-wrap: wrap !important;
+  gap: 3px !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  color: #0751ca !important;
+  font: 900 15px/1.15 Nunito, Arial, sans-serif !important;
+  letter-spacing: -.25px !important;
+  overflow-wrap: anywhere !important;
+}
+
+#app .requester-search-section .requester-search-title .postulation-logo-word {
+  display: inline-flex !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+}
+
+#app .requester-search-section .requester-search-title .nav-pique-logo {
+  width: 13px !important;
+  height: 17px !important;
+  flex: 0 0 13px !important;
+}
+
+#app .requester-search-section .requester-filters {
+  flex: 0 0 auto !important;
+  flex-wrap: nowrap !important;
+  gap: 6px !important;
+  margin: 0 !important;
+}
+
+#app .requester-search-section .requester-filters button {
+  border: 1px solid #78b5ff !important;
+}
+
+@media (min-width: 900px) {
+  #app .requester-search-section .requester-search-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  #app .requester-search-section .requester-search-title {
+    flex: none !important;
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: clamp(28px, 2.8vw, 34px) !important;
+    line-height: 1.12 !important;
+  }
+
+  #app .requester-search-section .requester-filters {
+    align-self: center !important;
+    justify-content: center !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 899px) {
+  #app .requester-search-section .requester-search-header {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+
+  #app .requester-search-section .requester-search-title {
+    flex: none !important;
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 28px !important;
+    line-height: 1.12 !important;
+  }
+
+  #app .requester-search-section .requester-filters {
+    align-self: center !important;
+    justify-content: center !important;
+  }
+
+}
+
+#app .requester-search-section .requester-search-slider {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  gap: 12px !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  scroll-snap-type: x mandatory !important;
+  overscroll-behavior-inline: contain;
+}
+
+#app .requester-search-section .requester-search-slider > .requester-photo-card {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: start !important;
+}
+
+@media (max-width: 600px) {
+  #app .requester-search-section .requester-search-header {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+  #app .requester-search-section .requester-search-title {
+    flex: 0 0 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 18px !important;
+  }
+  #app .requester-search-section .requester-filters {
+    justify-content: center !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Match the open professional card's type scale and vertical rhythm. */
+@layer requester-card-spacing {
+  #app .requester-search-section .order-pending.requester-photo-card {
+    gap: 10px !important;
+    padding-top: 18px !important;
+    padding-bottom: 18px !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card .pending-order-layout {
+    row-gap: 8px !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card .pique-state-row {
+    margin-bottom: 2px !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card > :is(.pending-order-layout, .received-responses-hint, .pending-order-action) {
+    position: relative !important;
+    z-index: 1 !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card > .received-responses-hint,
+  #app .requester-search-section .order-pending.requester-photo-card > .pending-order-action {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card > .received-responses-hint {
+    align-self: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  #app .requester-search-section .order-pending.requester-photo-card > .pending-order-action {
+    border-top: 0 !important;
+    padding-top: 0 !important;
+  }
+}
+
+@media (max-width: 899px) {
+  @layer requester-card-spacing {
+    #app .requester-search-section .order-pending.requester-photo-card::after {
+      opacity: 1 !important;
+      background-image: linear-gradient(90deg,rgba(7,86,204,.55) 0%,rgba(7,86,204,.14) 14%,transparent 30%),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      clip-path: ellipse(100% 78% at 100% 50%) !important;
+      mask-image: radial-gradient(ellipse 100% 78% at 100% 50%,#000 72%,rgba(0,0,0,.7) 84%,transparent 100%) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .deadline-tag {
+      font-size: 12px !important;
+      line-height: 16px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .request-title {
+      font-size: 20px !important;
+      line-height: 1 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-label, .pique-meta-tag:not(:last-child) .meta-label) {
+      font-size: 12px !important;
+      line-height: 1.05 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-value, .pique-meta-tag:not(:last-child) .meta-value) {
+      font-size: 12px !important;
+      line-height: 1.12 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag {
+      height: auto !important;
+      min-height: 49px !important;
+      max-height: none !important;
+      grid-template-columns: 46px minmax(0, 1fr) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .details-tag-copy {
+      padding: 0 12px !important;
+      gap: 4px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) {
+      height: auto !important;
+      min-height: 58px !important;
+      max-height: none !important;
+      grid-template-columns: 44px minmax(0, 1fr) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon {
+      width: 44px !important;
+      min-width: 44px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-copy {
+      padding: 0 12px !important;
+      gap: 4px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-meta .pique-meta-tag:last-child {
+      background: none !important;
+      border: 0 !important;
+      box-shadow: none !important;
+      padding: 0 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-meta .pique-meta-tag:last-child .meta-icon {
+      display: none !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-meta .pique-meta-tag:last-child .meta-copy {
+      padding: 0 !important;
+      border: 0 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .meta-date {
+      display: flex !important;
+      align-items: center !important;
+      height: 20px !important;
+      font-size: 17px !important;
+      line-height: 20px !important;
+      font-weight: 700 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-meta .pique-meta-tag:last-child :is(.meta-copy, .meta-value) {
+      height: 20px !important;
+      line-height: 20px !important;
+      align-items: center !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-action .btn {
+      min-height: 48px !important;
+      height: 48px !important;
+      font-size: 10px !important;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  @layer requester-card-spacing {
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag > svg {
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      min-height: 20px !important;
+      max-width: 20px !important;
+      max-height: 20px !important;
+      place-self: center !important;
+      margin: 0 !important;
+      transform: translateX(.6px) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon {
+      display: grid !important;
+      place-items: center !important;
+      padding: 0 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon svg {
+      width: 20px !important;
+      height: 20px !important;
+      min-width: 20px !important;
+      min-height: 20px !important;
+      max-width: 20px !important;
+      max-height: 20px !important;
+      place-self: center !important;
+      margin: 0 !important;
+      transform: translateX(1px) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tags > .pique-meta-tag:first-child .meta-icon svg {
+      transform: translateX(1.4px) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag::after,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child)::after {
+      left: 36px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card {
+      padding-top: 16px !important;
+      padding-bottom: 14px !important;
+      border-left: 0 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card::before {
+      content: none !important;
+      display: none !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card::after {
+      content: "" !important;
+      display: block !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      z-index: 0 !important;
+      pointer-events: none !important;
+      opacity: .18 !important;
+      background-image: linear-gradient(rgba(7,78,190,.6),rgba(7,78,190,.6)),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position: center !important;
+      background-size: cover !important;
+      clip-path: none !important;
+      mask-image: none !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .deadline-tag {
+      font-size: 10px !important;
+      line-height: 12px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .request-title {
+      font-size: 18px !important;
+      line-height: 1 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-label, .pique-meta-tag:not(:last-child) .meta-label) {
+      font-size: 9px !important;
+      line-height: 1.1 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-value, .pique-meta-tag:not(:last-child) .meta-value) {
+      font-size: 12px !important;
+      line-height: 1.15 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) {
+      min-height: 52px !important;
+      grid-template-columns: 36px minmax(0, 1fr) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .details-tag-copy,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-copy {
+      padding: 5px 8px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon {
+      width: 36px !important;
+      min-width: 36px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-value, .pique-meta-tag:not(:last-child) .meta-value) {
+      white-space: normal !important;
+      overflow-wrap: anywhere !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .meta-date {
+      font-size: 14px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pending-order-action .btn {
+      font-size: 14px !important;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  @layer requester-card-spacing {
+    #app .requester-search-section .order-pending.requester-photo-card::after {
+      opacity: .035 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .request-title {
+      font-size: 14px !important;
+      overflow-wrap: anywhere !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .meta-date {
+      font-size: 11.5px !important;
+      font-weight: 800 !important;
+      color: #fff !important;
+      transform: translateY(-2px) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-label, .pique-meta-tag:not(:last-child) .meta-label) {
+      font-size: 9px !important;
+      line-height: 1.1 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-value, .pique-meta-tag:not(:last-child) .meta-value) {
+      font-size: 11px !important;
+      line-height: 1.15 !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-value {
+      font-size: 10px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) {
+      min-height: 54px !important;
+      grid-template-columns: 28px minmax(0, 1fr) !important;
+      background-color: rgb(54, 116, 205) !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag::after,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child)::after {
+      left: 28px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .search-details-tag > svg,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon svg {
+      width: 18px !important;
+      height: 18px !important;
+      min-width: 18px !important;
+      min-height: 18px !important;
+      max-width: 18px !important;
+      max-height: 18px !important;
+      place-self: center !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .details-tag-copy,
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-copy {
+      gap: 4px !important;
+      padding: 5px 1px 5px 6px !important;
+    }
+
+    #app .requester-search-section .order-pending.requester-photo-card .pique-meta-tag:not(:last-child) .meta-icon {
+      width: 28px !important;
+      min-width: 28px !important;
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: 899px) {
+  @layer requester-card-spacing {
+    #app .requester-search-section .order-pending.requester-photo-card .meta-date {
+      font-size: 14px !important;
+      line-height: 1.05 !important;
+      font-weight: 700 !important;
+      letter-spacing: .2px !important;
+      color: #fff !important;
+    }
+  }
+}

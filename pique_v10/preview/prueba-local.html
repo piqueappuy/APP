@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es-UY">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#073dbc"><title>PIQUE</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap"><link rel="stylesheet" href="style.css?v=dashboard-summary-spacing-20261102"><link rel="stylesheet" href="desktop.css?v=8"><link rel="stylesheet" href="home-adjustments.css">
+<link rel="stylesheet" href="local-test.css"><link rel="stylesheet" href="tablet-typography.css"><link rel="stylesheet" href="tablet-layout.css?v=slider-tablet-20261025b"><link rel="stylesheet" href="requester-search.css?v=applications-compact-20261024w"><link rel="stylesheet" href="quotation-caption-layout.css?v=sin-divisor-20261025b">
+<link rel="stylesheet" href="tablet-final-fix.css?v=fullwidth-no-divider-20261025b">
+<link rel="stylesheet" href="professional-responsive-v3.css?v=20261025-v15-tablet-all-photo-fade">
+<link rel="stylesheet" href="professional-slider-v7.css?v=v14-blue-filter-border-20261026">
+<link rel="stylesheet" href="requester-search-carousel.css?v=tablet-home-12px-20261102zz">
+<link rel="stylesheet" href="request-detail-mobile.css?v=proposal-buttons-fluid-612-20261102h">
+<link rel="stylesheet" href="public-profile-contrast.css?v=20261101-white-text">
+</head>
+<body>
+<div class="mobile-app">
+  <header class="brand-header">
+    <div class="brand-bar">
+      <button class="header-icon" id="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="app-menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18M3 12h18M3 19h18"/></svg></button>
+      <a class="wordmark" href="#inicio" aria-label="PIQUE inicio"><svg class="pique-mark" viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path class="logo-check" d="m18 27 7 7 12-13"/></svg><span>IQUE</span></a>
+      <a class="header-icon notification-link" href="#notificaciones" aria-label="Notificaciones"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M9 21h6M12 2V1"/></svg><span class="notification-count" hidden></span></a>
+    </div>
+    <nav id="app-menu" class="app-menu" aria-label="Menú" hidden><a href="#inicio">Inicio</a><a href="#pedidos">Mis pedidos</a><a href="#explorar">Explorar rubros</a><a href="#cuenta">Mi perfil</a></nav>
+    <div id="home-search" class="home-search"><h1>¿QUÉ PRECISÁS RESOLVER HOY?</h1><button id="hero-publish" class="publish-banner" data-new="Otros servicios"><span class="publish-plus"><svg viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="M26 15v20M16 25h20" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/></svg></span><span class="publish-copy"><h2>PUBLICAR PEDIDO</h2><p>Contanos qué necesitás y recibí cotizaciones de profesionales.</p></span><span class="publish-illustration" aria-hidden="true"><svg class="publish-clipboard" viewBox="0 0 160 120" aria-hidden="true"><circle cx="85" cy="62" r="51" fill="#dcefff"/><g transform="translate(22 11) rotate(-12 55 49)"><rect x="25" y="11" width="75" height="91" rx="10" fill="#8fd0ff" opacity=".5"/><rect x="17" y="7" width="75" height="91" rx="9" fill="#f5fbff" stroke="#0872ff" stroke-width="3"/><rect x="38" y="2" width="34" height="14" rx="5" fill="#bce7ff" stroke="#0872ff" stroke-width="3"/><path d="m29 33 4 4 7-8m-11 26 4 4 7-8m-11 26 4 4 7-8" fill="none" stroke="#1699ff" stroke-width="3" stroke-linecap="round"/><path d="M48 33h29M48 55h29M48 77h22" stroke="#85bfff" stroke-width="3" stroke-linecap="round"/></g><path d="m15 37-8-5m8 54-8 5m121-63 7-8m3 70 8 4" stroke="#83c8ff" stroke-width="3" stroke-linecap="round"/></svg></span><svg class="chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg></button></div>
+    <div id="order-heading" class="home-search request-heading" hidden><h1>TU SOLICITUD, UN PASO MÁS CERCA</h1></div>
+    <div id="orders-heading" class="orders-header-row" hidden><h1 id="orders-heading-title"></h1></div>
+  </header>
+  <main id="app" tabindex="-1"></main>
+  
+  <nav class="bottom-nav" aria-label="Navegación principal">
+    <a href="#inicio" data-nav="inicio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m2 10 10-8 10 8-2 2-2-2v12h-5v-7h-2v7H6V10l-2 2z"/></svg><span>INICIO</span></a>
+    <a href="#nuevo" data-nav="nuevo" class="publish-nav"><span class="publish-circle"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M3 12h18"/></svg></span><span>PUBLICAR</span></a>
+    <a href="#pedidos" data-nav="pedidos" aria-label="Mis piques"><svg class="nav-pique-logo" viewBox="0 0 50 65" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 60V27C3 12 13 2 26 2s23 10 23 24-10 24-24 24h-8L7 63c-2 2-4 1-4-3Z"/><path d="m18 27 7 7 12-13" stroke="white" stroke-width="5" fill="none"/></svg><span>PIQUES</span></a>
+    <a href="#cuenta" data-nav="cuenta"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="6" r="4"/><path d="M3 22v-3a9 7 0 0 1 18 0v3Z"/></svg><span>PERFIL</span></a>
+    <button type="button" class="bottom-signout" data-auth-signout aria-label="Salir"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h5"/><path d="m14 8 4 4-4 4M8 12h10"/></svg><span>SALIR</span></button>
+  </nav>
+</div>
+<div id="toast" role="status" aria-live="polite"></div>
+<script src="local-test.js"></script>
+<script>window.PIQUE_SUPABASE={url:"local",publishableKey:"local-test"};</script>
+<script src="auth.js"></script>
+<script src="quotes.js?v=republished-history-4"></script>
+<script src="order-data.js?v=agreed-deadline-3"></script>
+<script src="neighborhoods.js?v=forms-20260927d"></script>
+<script src="professional-account.js?v=profile-svg-8"></script>
+<script src="app.js?v=summary-12px-preserve-tablet-20261102b"></script>
+<script src="coordination.js?v=completion-icons-7"></script>
+<script src="reviews.js?v=white-yellow-score-3"></script>
+<script src="quotation-typography.js?v=professional-date-row-20261026"></script><script src="mobile-title-size.js?v=skip-proposal-board-summary-20261102c"></script>
+<script src="quotation-caption-fit.js?v=v17-discover-laptop-spacing-20261026"></script>
+<script src="responsive-reflow.js?v=20261025-breakpoints-1"></script>
+<script src="professional-meta-layout-v12.js?v=20261101-tablet-date-header"></script>
+<script src="professional-discover-laptop.js?v=20261101-budget-both-320-11"></script>
+<script src="professional-pending-mobile.js?v=20261026-1"></script>
+<script src="requester-slider-height.js?v=20261028-1"></script>
+<script src="request-detail-mobile.js?v=proposal-buttons-fluid-612-20261102h"></script>
+<script src="proposal-action-icons.js?v=20261101-row-icons"></script>
+</body></html>

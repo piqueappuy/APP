@@ -1,0 +1,303 @@
+/* The open request uses the same mobile card rhythm as the requester home card. */
+#app .received-responses-hint.has-postulation {
+  border-color: #ffdf82 !important;
+  background: linear-gradient(135deg, #e6aa22, #f5c94a) !important;
+  color: #0754b8 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 4px 11px rgba(140, 94, 0, .24) !important;
+}
+#app .received-responses-hint.has-postulation svg { display: none !important; }
+@media (max-width: 600px) {
+  @layer request-detail-home {
+    #app .request-detail-home-card {
+      position: relative !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: stretch !important;
+      gap: 8px !important;
+      width: calc(100% + 26px) !important;
+      max-width: none !important;
+      height: auto !important;
+      min-height: 0 !important;
+      margin: 0 -13px 20px !important;
+      padding: 16px 10px 14px !important;
+      box-sizing: border-box !important;
+      overflow: hidden !important;
+      border: 1px solid #84baff !important;
+      border-left: 0 !important;
+      border-radius: 17px !important;
+      background: #0751c2 !important;
+    }
+    #app .request-detail-home-card::before { content: none !important; display: none !important; }
+    #app .request-detail-home-card::after {
+      content: '' !important;
+      display: block !important;
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      opacity: .18 !important;
+      pointer-events: none !important;
+      z-index: 0 !important;
+      background-image: linear-gradient(rgba(7,78,190,.6),rgba(7,78,190,.6)),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position: center !important;
+      background-size: cover !important;
+      clip-path: none !important;
+      mask-image: none !important;
+    }
+    #app .request-detail-home-card > :is(.request-description,.request-facts) { display: contents !important; }
+    #app .request-detail-home-card > .pique-card-divider { display: none !important; }
+    #app .request-detail-home-card .pique-state-row,
+    #app .request-detail-home-card .request-title-single,
+    #app .request-detail-home-card .search-details-tag,
+    #app .request-detail-home-card .pique-meta-tags,
+    #app .request-detail-home-card .received-responses-hint { position: relative !important; z-index: 1 !important; }
+    #app .request-detail-home-card .pique-state-row {
+      order: 1 !important; display: flex !important; align-items: center !important;
+      width: 100% !important; min-height: 20px !important; margin: 0 !important; padding: 0 !important;
+    }
+    #app .request-detail-home-card .deadline-tag {
+      display: inline-flex !important; align-items: center !important;
+      width: max-content !important; min-width: 0 !important; height: auto !important;
+      margin: 0 !important; padding: 3px 6px !important;
+      font-size: 10px !important; line-height: 12px !important;
+    }
+    #app .request-detail-home-card .request-title-single {
+      order: 2 !important; display: block !important;
+      width: 100% !important; height: auto !important; min-height: 0 !important;
+      margin: 0 !important; padding: 0 !important;
+      color: white !important; font: 900 18px/1 Nunito,Arial,sans-serif !important;
+      white-space: nowrap !important; overflow: hidden !important; text-overflow: ellipsis !important;
+    }
+    #app .request-detail-home-card .search-details-tag,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) {
+      display: grid !important; grid-template-columns: 36px minmax(0,1fr) !important;
+      align-items: stretch !important; width: 100% !important;
+      height: auto !important; min-height: 52px !important; max-height: none !important;
+      margin: 0 !important; padding: 0 !important; gap: 0 !important;
+      box-sizing: border-box !important;
+      border: 1px solid rgba(207,226,255,.74) !important;
+      border-radius: 11px !important;
+      background: rgba(226,239,255,.18) !important;
+      box-shadow: inset 3px 0 #8fc5ff !important;
+      overflow: hidden !important;
+    }
+    #app .request-detail-home-card .search-details-tag { order: 3 !important; }
+    #app .request-detail-home-card .search-details-tag::before,
+    #app .request-detail-home-card .search-details-tag::after,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child)::before,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child)::after { content: none !important; display: none !important; }
+    #app .request-detail-home-card .search-details-tag > svg,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-icon svg {
+      display: block !important; width: 20px !important; height: 20px !important;
+      min-width: 20px !important; min-height: 20px !important;
+      max-width: 20px !important; max-height: 20px !important;
+      margin: 0 !important; padding: 0 !important; border: 0 !important;
+      place-self: center !important; transform: translateX(1px) !important;
+    }
+    #app .request-detail-home-card .search-details-tag > svg { transform: translateX(.6px) !important; }
+    #app .request-detail-home-card .pique-meta-tag:first-child .meta-icon svg { transform: translateX(1.4px) !important; }
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-icon {
+      display: grid !important; place-items: center !important;
+      width: 36px !important; min-width: 36px !important; height: 100% !important;
+      margin: 0 !important; padding: 0 !important; border: 0 !important;
+    }
+    #app .request-detail-home-card .details-tag-copy,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-copy {
+      display: flex !important; flex-direction: column !important; justify-content: center !important;
+      align-items: flex-start !important; align-self: stretch !important;
+      min-width: 0 !important; width: 100% !important; height: 100% !important;
+      margin: 0 !important; padding: 5px 8px !important; gap: 4px !important;
+      box-sizing: border-box !important;
+      border-left: 1px solid rgba(215,232,255,.65) !important;
+    }
+    #app .request-detail-home-card :is(.details-tag-label,.pique-meta-tag:not(:last-child) .meta-label) {
+      display: block !important; margin: 0 !important; color: #cfe5ff !important;
+      font: 700 9px/1.1 Nunito,Arial,sans-serif !important;
+    }
+    #app .request-detail-home-card :is(.details-tag-value,.pique-meta-tag:not(:last-child) .meta-value) {
+      display: block !important; min-width: 0 !important; margin: 0 !important;
+      color: white !important; font: 900 12px/1.15 Nunito,Arial,sans-serif !important;
+      white-space: normal !important; overflow-wrap: anywhere !important;
+    }
+    #app .request-detail-home-card .pique-meta-tags {
+      order: 4 !important; display: grid !important; grid-template-columns: repeat(2,minmax(0,1fr)) !important;
+      gap: 6px !important; width: 100% !important; margin: 0 !important; padding: 0 !important;
+    }
+    #app .request-detail-home-card .pique-meta-tag:last-child {
+      position: absolute !important; top: 16px !important; right: 10px !important;
+      display: block !important; width: auto !important; height: 20px !important;
+      margin: 0 !important; padding: 0 !important; border: 0 !important;
+      background: none !important; box-shadow: none !important;
+    }
+    #app .request-detail-home-card .pique-meta-tag:last-child .meta-icon,
+    #app .request-detail-home-card .pique-meta-tag:last-child .meta-label,
+    #app .request-detail-home-card .pique-meta-tag:last-child .meta-time { display: none !important; }
+    #app .request-detail-home-card .pique-meta-tag:last-child .meta-copy,
+    #app .request-detail-home-card .pique-meta-tag:last-child .meta-value {
+      display: flex !important; align-items: center !important; width: auto !important;
+      height: 20px !important; margin: 0 !important; padding: 0 !important;
+      border: 0 !important; color: white !important;
+    }
+    #app .request-detail-home-card .meta-date { color: white !important; font: 800 14px/20px Nunito,Arial,sans-serif !important; }
+    #app .request-detail-home-card .received-responses-hint {
+      order: 5 !important; align-self: stretch !important;
+      width: 100% !important; max-width: none !important; margin: 0 !important;
+      box-sizing: border-box !important;
+    }
+  }
+}
+
+/* Match the request summary's mobile photo treatment to the proposal card below. */
+@media (max-width: 600px) {
+  #app#app .proposal-request-summary::before { content: none !important; display: none !important; }
+  #app#app .proposal-request-summary::after {
+    content: '' !important; display: block !important; position: absolute !important;
+    inset: 0 !important; width: 100% !important; height: 100% !important;
+    opacity: .18 !important; z-index: 0 !important; pointer-events: none !important;
+    background-image: linear-gradient(rgba(7,78,190,.6),rgba(7,78,190,.6)),var(--discover-photo,url('assets/otros-servicios-background.png')) !important;
+    background-position: center !important; background-size: cover !important;
+    clip-path: none !important; mask-image: none !important;
+  }
+  #app#app .proposal-request-summary > * { position: relative !important; z-index: 1 !important; }
+}
+
+@media (max-width: 899px) {
+  #app .proposal-board .professional-photo-proposal .proposal-top::before,
+  #app .proposal-board .professional-photo-proposal .proposal-top::after,
+  #app .proposal-board .professional-photo-proposal .price-column::before,
+  #app .proposal-board .professional-photo-proposal .price-column::after,
+  #app .proposal-board .professional-photo-proposal .quotation-decisions::before,
+  #app .proposal-board .professional-photo-proposal .quotation-decisions::after {
+    content: none !important;
+    display: none !important;
+  }
+  #app .proposal-board .professional-photo-proposal .price-column {
+    border-left: 0 !important;
+    padding-left: 0 !important;
+    box-shadow: none !important;
+  }
+}
+@media (max-width: 360px) {
+  @layer request-detail-home {
+    #app .request-detail-home-card::after { opacity: .035 !important; }
+    #app .request-detail-home-card .request-title-single { font-size: 14px !important; }
+    #app .request-detail-home-card .meta-date { font-size: 11.5px !important; }
+    #app .request-detail-home-card .search-details-tag,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) {
+      grid-template-columns: 28px minmax(0,1fr) !important;
+      min-height: 54px !important; background: rgb(54,116,205) !important;
+    }
+    #app .request-detail-home-card .search-details-tag > svg,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-icon svg {
+      width: 18px !important; height: 18px !important;
+      min-width: 18px !important; min-height: 18px !important;
+      max-width: 18px !important; max-height: 18px !important;
+    }
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-icon { width: 28px !important; min-width: 28px !important; }
+    #app .request-detail-home-card .details-tag-copy,
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-copy { padding: 5px 1px 5px 6px !important; }
+    #app .request-detail-home-card .details-tag-value { font-size: 11px !important; }
+    #app .request-detail-home-card .pique-meta-tag:not(:last-child) .meta-value { font-size: 10px !important; }
+  }
+}
+
+@media (max-width: 600px) {
+  @layer request-detail-home {
+    #app .proposal-board { background: transparent !important; border: 0 !important; box-shadow: none !important; }
+    #app .proposal-board::before,
+    #app .proposal-board::after { content: none !important; display: none !important; }
+    #app .professional-photo-proposal { border-left: 0 !important; }
+    #app .professional-photo-proposal::before { content: none !important; display: none !important; }
+    #app .professional-photo-proposal::after {
+      content: '' !important; display: block !important;
+      position: absolute !important; inset: 0 !important;
+      width: 100% !important; height: 100% !important;
+      opacity: .28 !important; z-index: 0 !important;
+      background-image: linear-gradient(rgba(7,78,190,.35),rgba(7,78,190,.35)),var(--discover-photo, url('assets/otros-servicios-background.png')) !important;
+      background-position: center !important; background-size: cover !important;
+      clip-path: none !important; mask-image: none !important;
+      pointer-events: none !important;
+    }
+    #app .professional-photo-proposal > * { position: relative !important; z-index: 1 !important; }
+    #app .professional-photo-proposal .provider-zones::before,
+    #app .professional-photo-proposal .provider-zones::after { content: none !important; display: none !important; }
+    #app .professional-photo-proposal .provider-zones .meta-copy { border-left: 1px solid rgba(215,232,255,.65) !important; }
+    #app .professional-photo-proposal .mobile-action-break { display: none !important; }
+  }
+}
+/* The tablet request photo uses the same softened curve as the larger cards. */
+@media (min-width: 601px) and (max-width: 899px) {
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .request-detail-home-card::after {
+    background-image: linear-gradient(90deg, rgba(7, 81, 194, .9) 0%, rgba(7, 81, 194, .5) 12%, rgba(7, 81, 194, .12) 28%, transparent 48%), var(--discover-photo) !important;
+    background-size: cover !important;
+    background-position: center right !important;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 899px) {
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .request-detail-home-card::after { background-image: linear-gradient(90deg, rgba(7,81,194,.94), rgba(7,81,194,.5) 13%, rgba(7,81,194,.12) 30%, transparent 48%), var(--discover-photo) !important; }
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .proposal-board .options-heading { font-size: 24px !important; line-height: 1.2 !important; }
+}
+
+@media (min-width: 900px) {
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .proposal-board .professional-photo-proposal .provider-zones::after { content: none !important; display: none !important; }
+}
+
+/* Tablet home request card: keep the same softened full-card photo as mobile. */
+@media (min-width: 601px) and (max-width: 899px) {
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .requester-search-section .order-pending.requester-photo-card {
+    background: #0751c2 !important;
+    isolation: isolate !important;
+  }
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .requester-search-section .order-pending.requester-photo-card::after {
+    content: '' !important; position: absolute !important;
+    inset: 0 !important; width: 100% !important; height: 100% !important;
+    z-index: 0 !important; opacity: .18 !important; pointer-events: none !important;
+    background-image: linear-gradient(rgba(7,78,190,.6),rgba(7,78,190,.6)),var(--discover-photo,url('assets/otros-servicios-background.png')) !important;
+    background-position: center !important; background-size: cover !important;
+    clip-path: none !important; mask-image: none !important;
+  }
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .requester-search-section .order-pending.requester-photo-card > * {
+    position: relative !important; z-index: 1 !important;
+  }
+}
+
+@media (min-width: 900px) {
+  #app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app#app .proposal-board .options-heading { font-size: 28px !important; line-height: 1.2 !important; }
+}
+
+/* Tablet home card: match mobile photo fade and keep all tag text at 12px. */
+@media (min-width: 601px) and (max-width: 899px) {
+  #app#app#app .requester-search-section .order-pending.requester-photo-card::after {
+    opacity: .18 !important;
+    background-image: linear-gradient(rgba(7,78,190,.6),rgba(7,78,190,.6)),var(--discover-photo,url('assets/otros-servicios-background.png')) !important;
+    background-position: center !important;
+    background-size: cover !important;
+    clip-path: none !important;
+    mask-image: none !important;
+  }
+  #app#app#app .requester-search-section .order-pending.requester-photo-card :is(.details-tag-label,.details-tag-value,.pique-meta-tag:not(:last-child) .meta-label,.pique-meta-tag:not(:last-child) .meta-value) {
+    font-size: 12px !important;
+  }
+}
+
+/* Tablet: valor meta del resumen del pique (rubro y zona). */
+@media (min-width: 601px) and (max-width: 899px) {
+  #app#app#app .proposal-request-summary .pique-meta-tags > .pique-meta-tag:not(:last-child) .meta-label,
+  #app#app#app .proposal-request-summary .pique-meta-tags > .pique-meta-tag:not(:last-child) .meta-value {
+    font-size: 12px !important;
+  }
+}
+
+/* Tablet and web: keep only heading, filters and proposals; remove white board panel. */
+@media (min-width: 601px) {
+  #app#app .proposal-board {
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+  }
+  #app#app#app#app#app .proposal-board .sorter button {
+    font-size: clamp(12px, 2vw, 14px) !important;
+  }
+}

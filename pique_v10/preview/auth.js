@@ -2,6 +2,9 @@ let authClient=null,authUser=null,authReady=false,authUnavailable=false,authBusy
 const authRoutes=['ingresar','registro','recuperar','actualizar-clave'];
 function authError(error){
  const code=error?.code;
+ if(error?.status===402||String(error?.message||'').includes('exceed_egress_quota'))return 'EL SERVICIO ESTÁ TEMPORALMENTE RESTRINGIDO POR SU CUOTA DE DATOS. INTENTÁ MÁS TARDE.';
+ if(error?.name==='AuthRetryableFetchError'||error?.message==='Failed to fetch'||error?.message==='fetch failed')return 'NO PUDIMOS CONECTARNOS AL SERVIDOR. REVISÁ LA CONEXIÓN Y VOLVÉ A INTENTAR.';
+ if(error?.status>=500)return 'EL SERVIDOR DE ACCESO NO PUDO RESPONDER. VOLVÉ A INTENTAR EN UN MOMENTO.';
  if(code==='invalid_credentials')return 'CORREO O CONTRASEÑA INCORRECTOS.';
  if(code==='email_not_confirmed')return 'CONFIRMÁ TU CORREO ANTES DE INGRESAR.';
  if(code==='weak_password')return 'ELEGÍ UNA CONTRASEÑA MÁS SEGURA, DE AL MENOS 8 CARACTERES.';
@@ -33,10 +36,10 @@ async function loadRemoteProfessional(){
       }else{
         // A profile from the old browser-only demo must never look active for a logged-in user.
         professionalAccount=null;
-        localStorage.removeItem('pique-professional-v1');
+        localStorage.removeItem((window.PIQUE_LOCAL_TEST?'pique-local-professional-v1':'pique-professional-v1'));
       }
       if(professionalAccount){
-      localStorage.setItem('pique-professional-v1',JSON.stringify(professionalAccount));
+      localStorage.setItem((window.PIQUE_LOCAL_TEST?'pique-local-professional-v1':'pique-professional-v1'),JSON.stringify(professionalAccount));
       }
     }
     await loadMatchingRequests();
@@ -123,7 +126,7 @@ async function initializeAuth(){
    authUser=session?.user||null;
    if(changed){
     professionalAccount=null;
-    localStorage.removeItem('pique-professional-v1');
+    localStorage.removeItem((window.PIQUE_LOCAL_TEST?'pique-local-professional-v1':'pique-professional-v1'));
     if(authReady&&!authBusy&&authUser)setTimeout(async()=>{await Promise.all([loadRemoteProfessional(),loadRemoteOrders()]);if(!authRoutes.includes(route().name))render();},0);
    }
    const headerSignout=document.getElementById('auth-header-signout');if(headerSignout)headerSignout.hidden=!authUser;
@@ -134,7 +137,7 @@ async function initializeAuth(){
   const {data,error}=await authClient.auth.getSession();if(error)throw error;
   authUser=data.session?.user||null;
   const headerSignout=document.getElementById('auth-header-signout');if(headerSignout)headerSignout.hidden=!authUser;
-  if(typeof professionalAccount!=='undefined'){professionalAccount=null;localStorage.removeItem('pique-professional-v1');}
+  if(typeof professionalAccount!=='undefined'){professionalAccount=null;localStorage.removeItem((window.PIQUE_LOCAL_TEST?'pique-local-professional-v1':'pique-professional-v1'));}
   await loadRemoteProfessional();
   await loadRemoteOrders();
   await loadRemoteProviders();
@@ -169,7 +172,7 @@ document.addEventListener('submit',async e=>{
    status.textContent='CONTRASEÑA ACTUALIZADA. YA PODÉS VOLVER A MI PERFIL.';
   }
   form.querySelectorAll('input[type=password]').forEach(input=>input.value='');
- }catch(error){errorEl.textContent=authError(error);}
+ }catch(error){console.warn('PIQUE: acceso fallido',{name:error?.name,code:error?.code,status:error?.status});errorEl.textContent=authError(error);}
  finally{authBusy=false;button.disabled=false;button.textContent=mode==='registro'?'CREAR CUENTA':mode==='recuperar'?'ENVIAR ENLACE':mode==='actualizar-clave'?'GUARDAR CONTRASEÑA':'INGRESAR';}
 });
 window.piqueSignOut=async()=>{try{if(authClient)await authClient.auth.signOut({scope:'local'});authUser=null;location.hash='#ingresar';render();}finally{authBusy=false;}};

@@ -1,0 +1,10 @@
+PIQUES - parche responsive v4
+
+Reemplazar los tres archivos en pique_v10/preview/.
+
+En MOVIL (<=480 px): azul completo sin foto curva; precio/tiempo en dos bloques juntos.
+En TABLET (481-899 px): foto curva a la derecha; controles precio/tiempo abajo en dos columnas; carrusel tarjetas ancho completo.
+Todas las vistas: sin raya horizontal superior de la seccion Repasa tus postulaciones.
+
+La aplicacion local sigue usando local-test.js sin Supabase.
+Abrir: http://127.0.0.1:8765/prueba-local.html (Ctrl+Shift+R).

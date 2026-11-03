@@ -1,0 +1,4 @@
+#app .public-professional-profile .public-profile-person h1,
+#app .public-professional-profile #profile-panel > .public-profile-bio {
+  color: #fff !important;
+}

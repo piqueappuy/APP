@@ -1,0 +1,5 @@
+2026/10/25-13:41:07.833 7824 Creating DB C:\Users\Usuario\Documents\Codex\Pique\APP\pique_v10\preview\.edge-debug-9333\Default\EdgeCoupons/coupons_data.db since it was missing.
+2026/10/25-13:41:07.844 7824 Reusing MANIFEST C:\Users\Usuario\Documents\Codex\Pique\APP\pique_v10\preview\.edge-debug-9333\Default\EdgeCoupons/coupons_data.db/MANIFEST-000001
+2026/10/25-13:41:08.052 aa6c Level-0 table #5: started
+2026/10/25-13:41:08.057 aa6c Level-0 table #5: 683273 bytes OK
+2026/10/25-13:41:08.059 aa6c Delete type=0 #3
