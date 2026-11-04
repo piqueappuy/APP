@@ -493,6 +493,11 @@ let quotedCardStyleReference=null;
 function polishQuotedCards(){
  const set=(el,styles)=>{if(!el)return;for(const [name,value] of Object.entries(styles))el.style.setProperty(name,value,'important');};
  const width=window.innerWidth;
+  const completedRequestTagText=document.querySelectorAll('.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-value,.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-date,.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-time');
+  completedRequestTagText.forEach(el=>{
+   if(width>=601&&width<=899){set(el,{'font-size':'12px'});el.dataset.tabletTagFontApplied='true';}
+   else if(el.dataset.tabletTagFontApplied==='true'){el.style.removeProperty('font-size');delete el.dataset.tabletTagFontApplied;}
+  });
  if(width>=900){
   document.querySelectorAll('.professional-active-section:not(.professional-coordinating-section) .quote-requests-list').forEach(slider=>{
    set(slider,{'display':'flex','flex-direction':'row','flex-wrap':'nowrap','align-items':'stretch','width':'100%','min-width':'0','max-width':'100%','box-sizing':'border-box','gap':'14px','margin':'0','padding':'0 0 12px','overflow-x':'auto','overflow-y':'hidden','scroll-snap-type':'x mandatory','overscroll-behavior-x':'contain','scrollbar-width':'none'});
