@@ -493,7 +493,7 @@ let quotedCardStyleReference=null;
 function polishQuotedCards(){
  const set=(el,styles)=>{if(!el)return;for(const [name,value] of Object.entries(styles))el.style.setProperty(name,value,'important');};
  const width=window.innerWidth;
-  const completedRequestTagText=document.querySelectorAll('.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-value,.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-date,.order.order-completed .order-request > .pique-meta-tags > .pique-meta-tag .meta-time');
+  const completedRequestTagText=document.querySelectorAll('.order.order-completed .validation-meta-list .meta-value,.order.order-completed .validation-meta-list .meta-date,.order.order-completed .validation-meta-list .meta-time');
   completedRequestTagText.forEach(el=>{
    if(width>=601&&width<=899){set(el,{'font-size':'12px'});el.dataset.tabletTagFontApplied='true';}
    else if(el.dataset.tabletTagFontApplied==='true'){el.style.removeProperty('font-size');delete el.dataset.tabletTagFontApplied;}
