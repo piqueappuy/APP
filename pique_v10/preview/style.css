@@ -7603,3 +7603,8 @@ body .mobile-app main#app.piques-soft-background{padding-left:28px!important;pad
 
 /* Lift dashboard summary items slightly while preserving space below the row. */
 .mobile-app .brand-header.profile-integrated .dashboard-welcome:not(.professional-dashboard) .dashboard-stats>:is(button,.dashboard-stat-static){transform:translateY(-23px)!important}
+
+/* Keep the agreed price and time hints in the validation card visually aligned with the quote input cards. */
+#app#app#app#app .order.order-completed.requester-report-finished .requester-agreed-summary>.coordination-quote-hint{box-sizing:border-box!important;border:1px solid #bdd3f6!important;border-left-width:3px!important;border-radius:8px!important}
+#app#app#app#app .order.order-completed.requester-report-finished .requester-agreed-summary>.coordination-price{background:#e2f6ed!important;border-color:#b9e5d2!important;border-left-color:#139b70!important;color:#087957!important}
+#app#app#app#app .order.order-completed.requester-report-finished .requester-agreed-summary>.quote-estimate{background:#e8f2ff!important;border-color:#bdd3f6!important;border-left-color:#2b72e9!important;color:#0751ca!important}
