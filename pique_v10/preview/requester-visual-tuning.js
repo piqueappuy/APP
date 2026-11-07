@@ -41,26 +41,28 @@
       });
     }
 
-    document.querySelectorAll('#app .selected-professional-section.completed-order-link').forEach(section => {
-      const professional = section.querySelector(':scope > .order-professional');
-      const summary = professional?.querySelector(':scope > .requester-agreed-summary') || section.querySelector(':scope > .requester-agreed-summary');
-      if (!professional || !summary) return;
+    document.querySelectorAll('#app .order.order-completed.requester-report-finished .order-professional, #app .selected-professional-section.completed-order-link .order-professional').forEach(professional => {
+      const summary = professional.querySelector(':scope > .requester-agreed-summary');
+      if (!summary) return;
       if (desktop) {
-        // Move only the price/time row. The professional identity and its layout stay intact.
-        if (summary.parentElement !== section) section.insertBefore(summary, professional.nextSibling);
-        set(section, 'display', 'flex');
-        set(section, 'flex-direction', 'column');
-        set(section, 'gap', '12px');
-        set(professional, 'width', '100%');
+        // Keep the professional in the first column; give only the hints a full-width row below.
+        if (summary.parentElement !== professional) professional.append(summary);
+        set(professional, 'display', 'grid');
+        set(professional, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
+        set(professional, 'column-gap', '12px');
+        set(professional, 'row-gap', '12px');
+        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption').forEach(heading => set(heading, 'grid-column', '1 / -1'));
+        const person = professional.querySelector(':scope > .chosen-person,:scope > .detail-professional-data');
+        if (person) set(person, 'grid-column', '1');
+        set(summary, 'grid-column', '1 / -1');
         set(summary, 'width', '100%');
         set(summary, 'display', 'grid');
         set(summary, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
         set(summary, 'gap', '12px');
       } else {
-        if (summary.parentElement !== professional) professional.append(summary);
-        ['display','flex-direction','gap'].forEach(key => section.style.removeProperty(key));
-        professional.style.removeProperty('width');
-        ['width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
+        ['display','grid-template-columns','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
+        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => node.style.removeProperty('grid-column'));
+        ['grid-column','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
       }
     });
 
@@ -80,8 +82,8 @@
         set(button, 'align-items', 'center');
         set(button, 'justify-content', 'center');
         set(button, 'gap', '8px');
-        set(button, 'background', index === 0 ? 'rgba(20,145,91,.82)' : 'rgba(197,55,69,.82)');
-        set(button, 'border', index === 0 ? '1px solid rgba(129,229,177,.95)' : '1px solid rgba(255,160,167,.95)');
+        set(button, 'background', index === 0 ? 'rgba(20,145,91,.46)' : 'rgba(197,55,69,.46)');
+        set(button, 'border', index === 0 ? '1px solid rgba(129,229,177,.8)' : '1px solid rgba(255,160,167,.8)');
         set(button, 'color', '#fff');
         set(button, 'box-shadow', 'inset 0 1px 0 rgba(255,255,255,.22)');
         const icon = button.querySelector('svg');
