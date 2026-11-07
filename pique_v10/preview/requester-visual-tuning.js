@@ -49,20 +49,28 @@
         if (summary.parentElement !== professional) professional.append(summary);
         set(professional, 'display', 'grid');
         set(professional, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
+        set(professional, 'grid-template-rows', 'auto auto auto');
         set(professional, 'column-gap', '12px');
         set(professional, 'row-gap', '12px');
-        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption').forEach(heading => set(heading, 'grid-column', '1 / -1'));
+        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption').forEach(heading => {
+          set(heading, 'grid-column', '1 / -1');
+          set(heading, 'grid-row', '1');
+        });
         const person = professional.querySelector(':scope > .chosen-person,:scope > .detail-professional-data');
-        if (person) set(person, 'grid-column', '1');
+        if (person) {
+          set(person, 'grid-column', '1');
+          set(person, 'grid-row', '2');
+        }
         set(summary, 'grid-column', '1 / -1');
+        set(summary, 'grid-row', '3');
         set(summary, 'width', '100%');
         set(summary, 'display', 'grid');
         set(summary, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
         set(summary, 'gap', '12px');
       } else {
-        ['display','grid-template-columns','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
-        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => node.style.removeProperty('grid-column'));
-        ['grid-column','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
+        ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
+        professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => {node.style.removeProperty('grid-column');node.style.removeProperty('grid-row');});
+        ['grid-column','grid-row','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
       }
     });
 
@@ -82,10 +90,10 @@
         set(button, 'align-items', 'center');
         set(button, 'justify-content', 'center');
         set(button, 'gap', '8px');
-        set(button, 'background', index === 0 ? 'rgba(20,145,91,.46)' : 'rgba(197,55,69,.46)');
-        set(button, 'border', index === 0 ? '1px solid rgba(129,229,177,.8)' : '1px solid rgba(255,160,167,.8)');
-        set(button, 'color', '#fff');
-        set(button, 'box-shadow', 'inset 0 1px 0 rgba(255,255,255,.22)');
+        set(button, 'background', index === 0 ? '#d9f4e6' : '#fde3e5');
+        set(button, 'border', index === 0 ? '1px solid #89d6ad' : '1px solid #e69aa1');
+        set(button, 'color', index === 0 ? '#08784a' : '#a3313b');
+        set(button, 'box-shadow', 'inset 0 1px 0 rgba(255,255,255,.7)');
         const icon = button.querySelector('svg');
         if (icon) {
           set(icon, 'display', 'block');
