@@ -41,24 +41,26 @@
       });
     }
 
-    document.querySelectorAll('#app .order.order-completed.requester-report-finished .order-professional, #app .selected-professional-section.completed-order-link .order-professional').forEach(professional => {
-      const person = professional.querySelector(':scope > .chosen-person');
-      const summary = professional.querySelector(':scope > .requester-agreed-summary');
-      if (!person || !summary) return;
+    document.querySelectorAll('#app .selected-professional-section.completed-order-link').forEach(section => {
+      const professional = section.querySelector(':scope > .order-professional');
+      const summary = professional?.querySelector(':scope > .requester-agreed-summary') || section.querySelector(':scope > .requester-agreed-summary');
+      if (!professional || !summary) return;
       if (desktop) {
-        set(professional, 'display', 'flex');
-        set(professional, 'flex-wrap', 'wrap');
-        set(person, 'flex', '0 0 100%');
-        set(person, 'width', '100%');
-        set(summary, 'flex', '0 0 100%');
+        // Move only the price/time row. The professional identity and its layout stay intact.
+        if (summary.parentElement !== section) section.insertBefore(summary, professional.nextSibling);
+        set(section, 'display', 'flex');
+        set(section, 'flex-direction', 'column');
+        set(section, 'gap', '12px');
+        set(professional, 'width', '100%');
         set(summary, 'width', '100%');
         set(summary, 'display', 'grid');
         set(summary, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
         set(summary, 'gap', '12px');
       } else {
-        ['display','flex-wrap'].forEach(key => professional.style.removeProperty(key));
-        ['flex','width'].forEach(key => { person.style.removeProperty(key); summary.style.removeProperty(key); });
-        ['display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
+        if (summary.parentElement !== professional) professional.append(summary);
+        ['display','flex-direction','gap'].forEach(key => section.style.removeProperty(key));
+        professional.style.removeProperty('width');
+        ['width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
       }
     });
 
@@ -73,14 +75,15 @@
       set(actions, 'gap', '12px');
       actions.querySelectorAll('button').forEach((button, index) => {
         set(button, 'min-height', '54px');
-        set(button, 'border-radius', '9px');
+        set(button, 'border-radius', '8px');
         set(button, 'display', 'flex');
         set(button, 'align-items', 'center');
         set(button, 'justify-content', 'center');
         set(button, 'gap', '8px');
-        set(button, 'background', index === 0 ? 'rgba(25,166,105,.20)' : 'rgba(226,67,80,.20)');
-        set(button, 'border', index === 0 ? '1px solid #70d4a4' : '1px solid #f08c94');
-        set(button, 'color', index === 0 ? '#d8ffeb' : '#ffe3e5');
+        set(button, 'background', index === 0 ? 'rgba(20,145,91,.82)' : 'rgba(197,55,69,.82)');
+        set(button, 'border', index === 0 ? '1px solid rgba(129,229,177,.95)' : '1px solid rgba(255,160,167,.95)');
+        set(button, 'color', '#fff');
+        set(button, 'box-shadow', 'inset 0 1px 0 rgba(255,255,255,.22)');
         const icon = button.querySelector('svg');
         if (icon) {
           set(icon, 'display', 'block');
