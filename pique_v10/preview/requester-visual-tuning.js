@@ -26,11 +26,42 @@
 
     document.querySelectorAll('#app .requester-agreed-summary .validation-hint-track').forEach(track => set(track, 'display', 'none'));
     document.querySelectorAll('#app .selected-request-card.order-completed').forEach(card => {
-      if (!card.querySelector('.coordination-panel.finished-report-panel')) return;
+      const panel = card.querySelector('.coordination-panel.finished-report-panel');
+      if (!panel) return;
+      const details = card.querySelector('.selected-request-details');
+      if (details && panel.previousElementSibling !== details) details.after(panel);
       card.querySelectorAll('.coordination-panel .visit-steps, .completion-finalized-tag').forEach(node => set(node, 'display', 'none'));
+      const firstName = card.querySelector('.detail-provider-identity h3')?.textContent.trim().split(/\s+/)[0];
+      const note = panel.querySelector('.professional-arrival-note');
+      const noteText = `${firstName ? firstName.toUpperCase() : 'EL PROFESIONAL'} INDICÓ QUE RESOLVIÓ TU PIQUE.`;
+      if (note && note.textContent !== noteText) note.textContent = noteText;
       card.querySelectorAll('.coordination-actions .btn, .coordination-actions .btn span').forEach(node => set(node, 'font-weight', '900'));
       card.querySelectorAll('.selected-request-details .meta-label, .detail-service-tags .meta-label, .pique-schedule-footer small, .requester-agreed-summary .summary-caption-group > span').forEach(node => set(node, 'font-size', '11px'));
       card.querySelectorAll('.selected-request-details .meta-value, .detail-service-tags .meta-value, .pique-schedule-footer strong, .requester-agreed-summary > .coordination-quote-hint > strong').forEach(node => set(node, 'font-size', '13px'));
+      card.querySelectorAll('.selected-request-details .meta-copy, .detail-service-tags .meta-copy').forEach(node => {
+        set(node, 'display', 'flex'); set(node, 'flex-direction', 'column'); set(node, 'gap', '2px');
+      });
+      const provider = card.querySelector('.detail-professional-data');
+      if (provider) {
+        const tags = provider.querySelector('.detail-service-tags');
+        const trade = tags?.querySelector('.pique-meta-tag:first-child');
+        if (trade) set(trade, 'display', 'none');
+        if (desktop && width >= 1000) {
+          set(provider, 'display', 'grid'); set(provider, 'grid-template-columns', 'max-content minmax(0,1fr) max-content');
+          set(provider, 'align-items', 'center'); set(provider, 'gap', '12px');
+          const identity = provider.querySelector('.detail-provider-identity');
+          if (identity) { set(identity, 'grid-column', '1'); set(identity, 'align-self', 'center'); }
+          if (tags) { set(tags, 'grid-column', '2'); set(tags, 'width', '100%'); set(tags, 'min-width', '0'); }
+          const profile = provider.querySelector('.detail-profile-button');
+          if (profile) { set(profile, 'grid-column', '3'); set(profile, 'width', 'max-content'); set(profile, 'max-width', '100%'); set(profile, 'margin', '0'); }
+        }
+      }
+      const hints = card.querySelector('.selected-professional-section .requester-agreed-summary');
+      if (hints) {
+        set(hints, 'display', 'grid'); set(hints, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
+        set(hints, 'gap', '12px'); set(hints, 'width', '100%');
+        [...hints.children].forEach(hint => { set(hint, 'width', '100%'); set(hint, 'min-width', '0'); set(hint, 'box-sizing', 'border-box'); });
+      }
     });
     document.querySelectorAll('#app .validation-meta-item, #app .pique-meta-tag.labeled-meta-tag').forEach(tag => {
       if (tag.querySelector('.meta-label')?.textContent.trim().toUpperCase() !== 'CREADO') return;
