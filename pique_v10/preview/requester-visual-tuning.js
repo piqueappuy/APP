@@ -82,13 +82,22 @@
             if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
             if (rating) { set(rating, 'grid-column', '2'); set(rating, 'grid-row', '2'); set(rating, 'align-self', 'center'); }
             if (profile) { set(profile, 'grid-column', '1'); set(profile, 'grid-row', '2'); }
-            person.querySelectorAll('.chosen-provider-location .meta-value,.combined-opinions-count').forEach(value => set(value, 'font-size', '13px'));
-            person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
-              set(tag, 'background', 'transparent');
-              set(tag, 'border', '0');
-              set(tag, 'box-shadow', 'none');
-              set(tag, 'padding', '0');
-            });
+            const reference = professional.closest('.order')?.querySelector('.validation-meta-item');
+            if (reference) {
+              const referenceStyle = getComputedStyle(reference);
+              person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
+                ['background','border','border-radius','box-shadow','min-height','padding'].forEach(key => set(tag, key, referenceStyle.getPropertyValue(key)));
+                set(tag, 'box-sizing', 'border-box');
+                set(tag, 'width', '100%');
+              });
+              const labelSize = getComputedStyle(reference.querySelector('.meta-label')).fontSize;
+              const valueSize = getComputedStyle(reference.querySelector('.meta-value')).fontSize;
+              person.querySelectorAll('.chosen-provider-location .meta-label').forEach(label => set(label, 'font-size', labelSize));
+              person.querySelectorAll('.chosen-provider-location .meta-value,.combined-opinions-count').forEach(value => set(value, 'font-size', valueSize));
+              if (rating) set(rating, 'width', '100%');
+              const opinionsTag = person.querySelector('.combined-opinions-tag');
+              if (opinionsTag) { set(opinionsTag, 'display', 'flex'); set(opinionsTag, 'align-items', 'center'); }
+            }
           }
         }
         set(summary, 'grid-column', '1 / -1');
