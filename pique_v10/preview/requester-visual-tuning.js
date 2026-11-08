@@ -85,18 +85,38 @@
             const reference = professional.closest('.order')?.querySelector('.validation-meta-item');
             if (reference) {
               const referenceStyle = getComputedStyle(reference);
+              const tagHeight = `${reference.getBoundingClientRect().height}px`;
               person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
-                ['background','border','border-radius','box-shadow','min-height','padding'].forEach(key => set(tag, key, referenceStyle.getPropertyValue(key)));
+                ['background','border','border-radius','box-shadow'].forEach(key => set(tag, key, referenceStyle.getPropertyValue(key)));
                 set(tag, 'box-sizing', 'border-box');
                 set(tag, 'width', '100%');
+                set(tag, 'height', tagHeight);
+                set(tag, 'min-height', tagHeight);
+                set(tag, 'padding', '0');
               });
               const labelSize = getComputedStyle(reference.querySelector('.meta-label')).fontSize;
               const valueSize = getComputedStyle(reference.querySelector('.meta-value')).fontSize;
               person.querySelectorAll('.chosen-provider-location .meta-label').forEach(label => set(label, 'font-size', labelSize));
               person.querySelectorAll('.chosen-provider-location .meta-value,.combined-opinions-count').forEach(value => set(value, 'font-size', valueSize));
-              if (rating) set(rating, 'width', '100%');
+              if (rating) { set(rating, 'display', 'block'); set(rating, 'position', 'static'); set(rating, 'width', '100%'); set(rating, 'height', tagHeight); }
+              if (zone) {
+                set(zone, 'display', 'grid');
+                set(zone, 'grid-template-columns', '44px minmax(0,1fr)');
+                const icon = zone.querySelector('.meta-icon');
+                const copy = zone.querySelector('.meta-copy');
+                if (icon) { set(icon, 'display', 'grid'); set(icon, 'place-items', 'center'); set(icon, 'height', '100%'); }
+                if (copy) { set(copy, 'display', 'flex'); set(copy, 'flex-direction', 'column'); set(copy, 'justify-content', 'center'); set(copy, 'height', '100%'); set(copy, 'padding', '0 10px'); set(copy, 'border-left', '1px solid rgba(215,232,255,.65)'); }
+              }
               const opinionsTag = person.querySelector('.combined-opinions-tag');
-              if (opinionsTag) { set(opinionsTag, 'display', 'flex'); set(opinionsTag, 'align-items', 'center'); }
+              if (opinionsTag) {
+                set(opinionsTag, 'display', 'flex'); set(opinionsTag, 'align-items', 'center');
+                const score = opinionsTag.querySelector('.combined-rating-score');
+                const count = opinionsTag.querySelector('.combined-opinions-count');
+                if (score) set(score, 'display', 'none');
+                if (count) { set(count, 'display', 'flex'); set(count, 'align-items', 'center'); set(count, 'gap', '10px'); set(count, 'width', '100%'); set(count, 'height', '100%'); }
+                const icon = count?.querySelector('svg');
+                if (icon) { set(icon, 'box-sizing', 'border-box'); set(icon, 'width', '44px'); set(icon, 'height', '100%'); set(icon, 'padding', '17px 12px'); set(icon, 'border-right', '1px solid rgba(215,232,255,.65)'); }
+              }
             }
           }
         }
