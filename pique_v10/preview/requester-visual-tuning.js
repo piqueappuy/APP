@@ -86,37 +86,47 @@
             if (reference) {
               const referenceStyle = getComputedStyle(reference);
               const tagHeight = `${reference.getBoundingClientRect().height}px`;
-              person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
-                ['background','border','border-radius','box-shadow'].forEach(key => set(tag, key, referenceStyle.getPropertyValue(key)));
-                set(tag, 'box-sizing', 'border-box');
-                set(tag, 'width', '100%');
-                set(tag, 'height', tagHeight);
-                set(tag, 'min-height', tagHeight);
-                set(tag, 'padding', '0');
-              });
               const labelSize = getComputedStyle(reference.querySelector('.meta-label')).fontSize;
               const valueSize = getComputedStyle(reference.querySelector('.meta-value')).fontSize;
-              person.querySelectorAll('.chosen-provider-location .meta-label').forEach(label => set(label, 'font-size', labelSize));
-              person.querySelectorAll('.chosen-provider-location .meta-value,.combined-opinions-count').forEach(value => set(value, 'font-size', valueSize));
-              if (rating) { set(rating, 'display', 'block'); set(rating, 'position', 'static'); set(rating, 'width', '100%'); set(rating, 'height', tagHeight); }
-              if (zone) {
-                set(zone, 'display', 'grid');
-                set(zone, 'grid-template-columns', '44px minmax(0,1fr)');
-                const icon = zone.querySelector('.meta-icon');
-                const copy = zone.querySelector('.meta-copy');
-                if (icon) { set(icon, 'display', 'grid'); set(icon, 'place-items', 'center'); set(icon, 'height', '100%'); }
-                if (copy) { set(copy, 'display', 'flex'); set(copy, 'flex-direction', 'column'); set(copy, 'justify-content', 'center'); set(copy, 'height', '100%'); set(copy, 'padding', '0 10px'); set(copy, 'border-left', '1px solid rgba(215,232,255,.65)'); }
-              }
-              const opinionsTag = person.querySelector('.combined-opinions-tag');
-              if (opinionsTag) {
-                set(opinionsTag, 'display', 'flex'); set(opinionsTag, 'align-items', 'center');
-                const score = opinionsTag.querySelector('.combined-rating-score');
-                const count = opinionsTag.querySelector('.combined-opinions-count');
-                if (score) set(score, 'display', 'none');
-                if (count) { set(count, 'display', 'flex'); set(count, 'align-items', 'center'); set(count, 'gap', '10px'); set(count, 'width', '100%'); set(count, 'height', '100%'); }
-                const icon = count?.querySelector('svg');
-                if (icon) { set(icon, 'box-sizing', 'border-box'); set(icon, 'width', '44px'); set(icon, 'height', '100%'); set(icon, 'padding', '17px 12px'); set(icon, 'border-right', '1px solid rgba(215,232,255,.65)'); }
-              }
+              // These original nodes carry many legacy rules and pseudo separators.
+              // Render clean cards using the same geometry as the tags above.
+              [zone, rating].filter(Boolean).forEach(node => set(node, 'display', 'none'));
+              const cards = [
+                ['zone', 'BARRIO', zone?.querySelector('.meta-value')?.textContent?.trim() || '', zone?.querySelector('svg')],
+                ['opinions', 'OPINIONES', rating?.querySelector('.combined-opinions-count')?.textContent?.trim().replace(/\s*OPINIONES\s*/i, '') || '0', rating?.querySelector('.combined-opinions-count svg')]
+              ];
+              cards.forEach(([kind, labelText, valueText, sourceIcon], index) => {
+                let card = person.querySelector(`:scope > [data-chosen-card="${kind}"]`);
+                if (!card) {
+                  card = document.createElement('div');
+                  card.dataset.chosenCard = kind;
+                  const iconCell = document.createElement('span');
+                  const copy = document.createElement('span');
+                  const label = document.createElement('small');
+                  const value = document.createElement('strong');
+                  iconCell.append(sourceIcon?.cloneNode(true) || document.createElement('span'));
+                  copy.append(label, value);
+                  card.append(iconCell, copy);
+                  person.append(card);
+                }
+                const [iconCell, copy] = card.children;
+                const [label, value] = copy.children;
+                label.textContent = labelText;
+                value.textContent = valueText;
+                set(card, 'grid-column', '2'); set(card, 'grid-row', String(index + 1));
+                set(card, 'display', 'grid'); set(card, 'grid-template-columns', '40px minmax(0,1fr)');
+                set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', tagHeight);
+                ['background','border','border-radius','box-shadow'].forEach(key => set(card, key, referenceStyle.getPropertyValue(key)));
+                set(iconCell, 'display', 'grid'); set(iconCell, 'place-items', 'center');
+                set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '1px solid rgba(215,232,255,.65)');
+                const icon = iconCell.querySelector('svg');
+                if (icon) { set(icon, 'display', 'block'); set(icon, 'width', '18px'); set(icon, 'height', '18px'); set(icon, 'fill', 'none'); set(icon, 'stroke', 'white'); set(icon, 'stroke-width', '2'); }
+                set(copy, 'display', 'flex'); set(copy, 'flex-direction', 'column'); set(copy, 'justify-content', 'center');
+                set(copy, 'gap', '2px'); set(copy, 'padding', '0 8px'); set(copy, 'min-width', '0');
+                set(label, 'display', 'block'); set(label, 'font-size', labelSize); set(label, 'line-height', '1.2'); set(label, 'font-weight', '400'); set(label, 'color', 'white');
+                set(value, 'display', 'block'); set(value, 'font-size', valueSize); set(value, 'line-height', '1.2'); set(value, 'font-weight', '900'); set(value, 'color', 'white');
+                set(value, 'white-space', 'nowrap'); set(value, 'overflow', 'hidden'); set(value, 'text-overflow', 'ellipsis');
+              });
             }
           }
         }
@@ -127,6 +137,8 @@
         set(summary, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
         set(summary, 'gap', '12px');
       } else {
+        professional.querySelectorAll('[data-chosen-card]').forEach(card => card.remove());
+        professional.querySelectorAll('.chosen-provider-location,.chosen-rating').forEach(node => node.style.removeProperty('display'));
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
         professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => {node.style.removeProperty('grid-column');node.style.removeProperty('grid-row');});
         ['grid-column','grid-row','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
