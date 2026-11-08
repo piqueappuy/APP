@@ -94,16 +94,22 @@
               set(identity, 'grid-row', '1');
               set(identity, 'display', 'grid');
               set(identity, 'grid-template-columns', '32px max-content');
-              set(identity, 'grid-template-rows', '32px 16px');
+              set(identity, 'grid-template-rows', '17px 12px');
               set(identity, 'column-gap', '10px');
-              set(identity, 'row-gap', '2px');
+              set(identity, 'row-gap', '3px');
+              set(identity, 'height', '32px'); set(identity, 'min-height', '32px'); set(identity, 'max-height', '32px');
               set(identity, 'align-items', 'center');
               set(identity, 'align-self', 'center');
               const avatar = identity.querySelector('.avatar');
-              if (avatar) { set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1'); set(avatar, 'align-self', 'center'); }
+              if (avatar) {
+                set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1 / 3');
+                set(avatar, 'width', '32px'); set(avatar, 'height', '32px'); set(avatar, 'align-self', 'center');
+              }
               const name = identity.querySelector('.chosen-professional-name');
               if (name) {
-                set(name, 'font-size', '17px'); set(name, 'line-height', '1.2');
+                set(name, 'font-size', '17px'); set(name, 'line-height', '17px');
+                set(name, 'height', '17px'); set(name, 'min-height', '0');
+                set(name, 'margin', '0'); set(name, 'padding', '0');
                 set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'center');
               }
               let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
@@ -145,7 +151,8 @@
                 set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
                 set(ratingLine, 'grid-column', '2'); set(ratingLine, 'grid-row', '2');
                 set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', '12px');
-                set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1.2');
+                set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '12px');
+                set(ratingLine, 'height', '12px'); set(ratingLine, 'min-height', '0');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
                 [scoreGroup, opinionsGroup].forEach(group => {
                   set(group, 'display', 'inline-flex'); set(group, 'align-items', 'center'); set(group, 'gap', '4px');
@@ -157,7 +164,7 @@
                 const message = opinionsGroup.querySelector('svg');
                 if (message) { set(message, 'fill', 'none'); set(message, 'stroke', 'currentColor'); }
                 set(scoreGroup, 'display', score ? 'inline-flex' : 'none');
-                set(divider, 'display', score ? 'block' : 'none'); set(divider, 'height', '13px');
+                set(divider, 'display', score ? 'block' : 'none'); set(divider, 'height', '12px');
                 set(divider, 'border-left', '1px solid rgba(215,232,255,.7)');
                 const adjacentScore = identity.querySelector('.name-adjacent-rating');
                 if (adjacentScore) set(adjacentScore, 'display', 'none');
@@ -211,6 +218,8 @@
                 set(card, 'max-width', 'none');
                 set(card, 'justify-self', 'stretch');
                 set(card, 'background', 'transparent'); set(card, 'border', '0');
+                set(card, 'border-left', '1px solid rgba(215,232,255,.7)');
+                set(card, 'padding-left', '10px');
                 set(card, 'border-radius', '0'); set(card, 'box-shadow', 'none');
                 set(iconCell, 'display', 'grid'); set(iconCell, 'place-items', 'center');
                 set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '0');
@@ -244,9 +253,9 @@
           const name = block.querySelector('.chosen-professional-name');
           if (name) identity.insertBefore(name, block);
           block.remove();
-          ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self'].forEach(key => identity.style.removeProperty(key));
-          ['grid-column','grid-row','align-self'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
-          ['grid-column','grid-row','align-self'].forEach(key => name?.style.removeProperty(key));
+          ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self','height','min-height','max-height'].forEach(key => identity.style.removeProperty(key));
+          ['grid-column','grid-row','align-self','width','height'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
+          ['grid-column','grid-row','align-self','font-size','line-height','height','min-height','margin','padding'].forEach(key => name?.style.removeProperty(key));
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
