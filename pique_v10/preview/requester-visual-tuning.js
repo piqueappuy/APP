@@ -172,13 +172,12 @@
               set(profile, 'align-self', 'center'); set(profile, 'white-space', 'nowrap');
               set(profile, 'min-width', '0'); set(profile, 'max-width', '100%');
               set(profile, 'padding', '0 12px'); set(profile, 'margin', '0');
+              set(profile, 'height', '34px'); set(profile, 'min-height', '34px'); set(profile, 'max-height', '34px');
               set(profile, 'font-size', '16px');
               profile.querySelectorAll('span').forEach(label => set(label, 'font-size', '16px'));
             }
             const reference = professional.closest('.order')?.querySelector('.validation-meta-item');
             if (reference) {
-              const referenceStyle = getComputedStyle(reference);
-              const tagHeight = `${reference.getBoundingClientRect().height}px`;
               const labelSize = getComputedStyle(reference.querySelector('.meta-label')).fontSize;
               const valueSize = getComputedStyle(reference.querySelector('.meta-value')).fontSize;
               // These original nodes carry many legacy rules and pseudo separators.
@@ -206,21 +205,28 @@
                 label.textContent = labelText;
                 value.textContent = valueText;
                 set(card, 'grid-column', '2'); set(card, 'grid-row', '1');
-                set(card, 'display', 'grid'); set(card, 'grid-template-columns', '40px minmax(0,1fr)');
-                set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', tagHeight);
+                set(card, 'display', 'grid'); set(card, 'grid-template-columns', '22px minmax(0,1fr)');
+                set(card, 'column-gap', '6px'); set(card, 'align-self', 'center');
+                set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', 'auto');
                 set(card, 'max-width', 'none');
                 set(card, 'justify-self', 'stretch');
-                ['background','border','border-radius','box-shadow'].forEach(key => set(card, key, referenceStyle.getPropertyValue(key)));
+                set(card, 'background', 'transparent'); set(card, 'border', '0');
+                set(card, 'border-radius', '0'); set(card, 'box-shadow', 'none');
                 set(iconCell, 'display', 'grid'); set(iconCell, 'place-items', 'center');
-                set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '1px solid rgba(215,232,255,.65)');
+                set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '0');
                 const icon = iconCell.querySelector('svg');
                 if (icon) { set(icon, 'display', 'block'); set(icon, 'width', '18px'); set(icon, 'height', '18px'); set(icon, 'fill', 'none'); set(icon, 'stroke', 'white'); set(icon, 'stroke-width', '2'); }
                 set(copy, 'display', 'flex'); set(copy, 'flex-direction', 'column'); set(copy, 'justify-content', 'center');
-                set(copy, 'gap', '2px'); set(copy, 'padding', '0 8px'); set(copy, 'min-width', '0');
+                set(copy, 'gap', '2px'); set(copy, 'padding', '0'); set(copy, 'min-width', '0');
                 set(label, 'display', 'block'); set(label, 'font-size', labelSize); set(label, 'line-height', '1.2'); set(label, 'font-weight', '400'); set(label, 'color', 'white');
                 set(value, 'display', 'block'); set(value, 'font-size', valueSize); set(value, 'line-height', '1.2'); set(value, 'font-weight', '900'); set(value, 'color', 'white');
                 set(value, 'white-space', 'nowrap'); set(value, 'overflow', 'hidden'); set(value, 'text-overflow', 'ellipsis');
               });
+              const zoneCopy = person.querySelector('[data-chosen-card="zone"] > span:last-child');
+              if (profile && zoneCopy) {
+                const contentHeight = `${Math.ceil(zoneCopy.getBoundingClientRect().height)}px`;
+                ['height', 'min-height', 'max-height'].forEach(key => set(profile, key, contentHeight));
+              }
             }
           }
         }
@@ -244,7 +250,7 @@
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
-          ['grid-column','grid-row','width','min-width','max-width','font-size','align-self','white-space','padding','margin'].forEach(key => button.style.removeProperty(key));
+          ['grid-column','grid-row','width','min-width','max-width','font-size','align-self','white-space','padding','margin','height','min-height','max-height'].forEach(key => button.style.removeProperty(key));
           button.querySelectorAll('span').forEach(label => label.style.removeProperty('font-size'));
         });
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
