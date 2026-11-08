@@ -34,9 +34,9 @@
         }
         card.querySelectorAll('.deadline-tag').forEach(tag => set(tag, 'font-size', '11px'));
         card.querySelectorAll('.request-date,.created-date,.order-date').forEach(date => set(date, 'font-size', '12px'));
-        card.querySelectorAll('.details-tag-label,.meta-label').forEach(label => set(label, 'font-size', '10px'));
+        card.querySelectorAll('.details-tag-label,.meta-label').forEach(label => set(label, 'font-size', '12px'));
         card.querySelectorAll('.details-tag-value,.meta-value').forEach(value => {
-          set(value, 'font-size', '12px');
+          set(value, 'font-size', '14px');
           set(value, 'line-height', '1.2');
         });
       });
@@ -93,19 +93,30 @@
                 if (!ratingLine) {
                   ratingLine = document.createElement('span');
                   ratingLine.dataset.chosenRatingLine = '';
+                  const sourceIcon = person.querySelector('.combined-opinions-count svg');
+                  if (sourceIcon) ratingLine.append(sourceIcon.cloneNode(true));
+                  ratingLine.append(document.createElement('span'));
                   nameBlock.append(ratingLine);
                 }
-                const score = person.querySelector('.combined-rating-score')?.textContent?.trim() || '';
                 const opinions = person.querySelector('.combined-opinions-count')?.textContent?.trim() || '';
-                ratingLine.textContent = `${score ? `★ ${score}` : ''}${score && opinions ? '  ·  ' : ''}${opinions}`;
-                set(ratingLine, 'display', 'block'); set(ratingLine, 'font-size', '12px');
+                ratingLine.querySelector('span').textContent = opinions;
+                set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
+                set(ratingLine, 'gap', '4px'); set(ratingLine, 'font-size', '12px');
                 set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1.2');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
-                identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => set(node, 'display', 'none'));
+                const opinionsIcon = ratingLine.querySelector('svg');
+                if (opinionsIcon) { set(opinionsIcon, 'display', 'block'); set(opinionsIcon, 'width', '12px'); set(opinionsIcon, 'height', '12px'); set(opinionsIcon, 'fill', 'none'); set(opinionsIcon, 'stroke', 'currentColor'); }
+                const adjacentScore = identity.querySelector('.name-adjacent-rating');
+                if (adjacentScore) set(adjacentScore, 'display', 'inline-flex');
+                identity.querySelectorAll('.chosen-inline-score').forEach(node => set(node, 'display', 'none'));
               }
             }
             if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
-            if (profile) { set(profile, 'grid-column', '1 / -1'); set(profile, 'grid-row', '2'); set(profile, 'width', '100%'); }
+            if (profile) {
+              set(profile, 'grid-column', '1 / -1'); set(profile, 'grid-row', '2'); set(profile, 'width', '100%');
+              set(profile, 'font-size', '16px');
+              profile.querySelectorAll('span').forEach(label => set(label, 'font-size', '16px'));
+            }
             const reference = professional.closest('.order')?.querySelector('.validation-meta-item');
             if (reference) {
               const referenceStyle = getComputedStyle(reference);
@@ -170,7 +181,8 @@
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
-          ['grid-column','grid-row','width'].forEach(key => button.style.removeProperty(key));
+          ['grid-column','grid-row','width','font-size'].forEach(key => button.style.removeProperty(key));
+          button.querySelectorAll('span').forEach(label => label.style.removeProperty('font-size'));
         });
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
         professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => {node.style.removeProperty('grid-column');node.style.removeProperty('grid-row');});
