@@ -25,6 +25,13 @@
     });
 
     document.querySelectorAll('#app .requester-agreed-summary .validation-hint-track').forEach(track => set(track, 'display', 'none'));
+    document.querySelectorAll('#app .selected-request-card.order-completed').forEach(card => {
+      if (!card.querySelector('.coordination-panel.finished-report-panel')) return;
+      card.querySelectorAll('.coordination-panel .visit-steps, .completion-finalized-tag').forEach(node => set(node, 'display', 'none'));
+      card.querySelectorAll('.coordination-actions .btn, .coordination-actions .btn span').forEach(node => set(node, 'font-weight', '900'));
+      card.querySelectorAll('.selected-request-details .meta-label, .detail-service-tags .meta-label, .pique-schedule-footer small, .requester-agreed-summary .summary-caption-group > span').forEach(node => set(node, 'font-size', '11px'));
+      card.querySelectorAll('.selected-request-details .meta-value, .detail-service-tags .meta-value, .pique-schedule-footer strong, .requester-agreed-summary > .coordination-quote-hint > strong').forEach(node => set(node, 'font-size', '13px'));
+    });
     document.querySelectorAll('#app .validation-meta-item, #app .pique-meta-tag.labeled-meta-tag').forEach(tag => {
       if (tag.querySelector('.meta-label')?.textContent.trim().toUpperCase() !== 'CREADO') return;
       const date = tag.querySelector('.meta-date');
