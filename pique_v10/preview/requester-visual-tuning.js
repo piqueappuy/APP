@@ -58,8 +58,18 @@
         });
         const person = professional.querySelector(':scope > .chosen-person,:scope > .detail-professional-data');
         if (person) {
-          set(person, 'grid-column', '1');
+          set(person, 'grid-column', '1 / -1');
           set(person, 'grid-row', '2');
+          if (person.classList.contains('chosen-person')) {
+            set(person, 'width', '100%');
+            set(person, 'grid-template-columns', '44px minmax(0,1fr) auto');
+            person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
+              set(tag, 'background', 'transparent');
+              set(tag, 'border', '0');
+              set(tag, 'box-shadow', 'none');
+              set(tag, 'padding', '0');
+            });
+          }
         }
         set(summary, 'grid-column', '1 / -1');
         set(summary, 'grid-row', '3');
