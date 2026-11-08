@@ -63,7 +63,26 @@
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
             set(person, 'width', '100%');
-            set(person, 'grid-template-columns', '44px minmax(0,1fr) auto');
+            set(person, 'grid-template-columns', 'minmax(0,1fr) minmax(0,1fr)');
+            set(person, 'grid-template-rows', 'auto auto');
+            set(person, 'gap', '8px 16px');
+            const identity = person.querySelector('.chosen-identity');
+            const zone = person.querySelector('.chosen-provider-location');
+            const rating = person.querySelector('.chosen-rating');
+            const profile = person.querySelector('.professional-profile-button');
+            if (identity) {
+              set(identity, 'grid-column', '1');
+              set(identity, 'grid-row', '1');
+              set(identity, 'display', 'flex');
+              set(identity, 'align-items', 'center');
+              set(identity, 'gap', '10px');
+              const name = identity.querySelector('.chosen-professional-name');
+              if (name) { set(name, 'font-size', '17px'); set(name, 'line-height', '1.2'); }
+            }
+            if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
+            if (rating) { set(rating, 'grid-column', '2'); set(rating, 'grid-row', '2'); set(rating, 'align-self', 'center'); }
+            if (profile) { set(profile, 'grid-column', '1'); set(profile, 'grid-row', '2'); }
+            person.querySelectorAll('.chosen-provider-location .meta-value,.combined-opinions-count').forEach(value => set(value, 'font-size', '13px'));
             person.querySelectorAll('.chosen-provider-location,.combined-opinions-tag').forEach(tag => {
               set(tag, 'background', 'transparent');
               set(tag, 'border', '0');
