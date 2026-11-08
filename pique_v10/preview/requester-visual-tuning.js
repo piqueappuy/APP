@@ -194,8 +194,8 @@
                 set(card, 'grid-column', '2'); set(card, 'grid-row', '1');
                 set(card, 'display', 'grid'); set(card, 'grid-template-columns', '40px minmax(0,1fr)');
                 set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', tagHeight);
-                set(card, 'max-width', `${reference.getBoundingClientRect().width}px`);
-                set(card, 'justify-self', 'start');
+                set(card, 'max-width', 'none');
+                set(card, 'justify-self', 'stretch');
                 ['background','border','border-radius','box-shadow'].forEach(key => set(card, key, referenceStyle.getPropertyValue(key)));
                 set(iconCell, 'display', 'grid'); set(iconCell, 'place-items', 'center');
                 set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '1px solid rgba(215,232,255,.65)');
