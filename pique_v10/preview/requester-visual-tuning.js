@@ -25,6 +25,7 @@
     });
 
     if (desktop) {
+      document.querySelectorAll('#app .completion-details-button > span').forEach(label => set(label, 'font-size', '16px'));
       document.querySelectorAll('#app .requester-home-section.requester-search-section .requester-photo-card').forEach(card => {
         const title = card.querySelector('.request-title, h3[data-fit-card-title]');
         if (title) {
