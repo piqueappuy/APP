@@ -42,6 +42,14 @@
         set(node, 'display', 'flex'); set(node, 'flex-direction', 'column'); set(node, 'gap', '2px');
       });
       const provider = card.querySelector('.detail-professional-data');
+      const professionalBlock = card.querySelector('.selected-professional-section .order-professional');
+      if (professionalBlock) {
+        set(professionalBlock, 'display', 'grid'); set(professionalBlock, 'grid-template-columns', 'minmax(0,1fr)');
+        set(professionalBlock, 'row-gap', '8px');
+        [...professionalBlock.children].forEach(child => { set(child, 'grid-column', '1'); set(child, 'margin', '0'); });
+      }
+      const professionalHeading = card.querySelector('.selected-professional-heading');
+      if (professionalHeading) { set(professionalHeading, 'border-bottom', '0'); set(professionalHeading, 'padding-bottom', '0'); }
       if (provider) {
         const tags = provider.querySelector('.detail-service-tags');
         const trade = tags?.querySelector('.pique-meta-tag:first-child');
@@ -55,7 +63,13 @@
             set(tags, 'grid-column', '2'); set(tags, 'display', 'flex');
             set(tags, 'width', '100%'); set(tags, 'min-width', '0');
             const zoneTag = tags.querySelector('.pique-meta-tag:nth-child(2)');
-            if (zoneTag) { set(zoneTag, 'width', '100%'); set(zoneTag, 'max-width', 'none'); set(zoneTag, 'flex', '1 1 auto'); set(zoneTag, 'box-sizing', 'border-box'); }
+            if (zoneTag) {
+              set(zoneTag, 'width', '100%'); set(zoneTag, 'max-width', 'none'); set(zoneTag, 'flex', '1 1 auto'); set(zoneTag, 'box-sizing', 'border-box');
+              set(zoneTag, 'background', 'transparent'); set(zoneTag, 'border', '0'); set(zoneTag, 'border-left', '1px solid rgba(215,232,255,.7)');
+              set(zoneTag, 'box-shadow', 'none'); set(zoneTag, 'border-radius', '0'); set(zoneTag, 'padding', '0 0 0 10px');
+              const iconCell = zoneTag.querySelector('.meta-icon');
+              if (iconCell) { set(iconCell, 'border', '0'); set(iconCell, 'background', 'transparent'); set(iconCell, 'box-shadow', 'none'); }
+            }
           }
           const profile = provider.querySelector('.detail-profile-button');
           if (profile) { set(profile, 'grid-column', '3'); set(profile, 'width', 'max-content'); set(profile, 'max-width', '100%'); set(profile, 'margin', '0'); }
@@ -64,10 +78,11 @@
       const hints = card.querySelector('.selected-professional-section .requester-agreed-summary');
       if (hints) {
         set(hints, 'display', 'grid'); set(hints, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
-        set(hints, 'gap', '12px'); set(hints, 'width', '100%');
+        set(hints, 'gap', '8px'); set(hints, 'width', '100%'); set(hints, 'margin', '0'); set(hints, 'padding', '0'); set(hints, 'border-left', '0');
         [...hints.children].forEach(hint => {
           set(hint, 'width', '100%'); set(hint, 'min-width', '0'); set(hint, 'max-width', 'none');
           set(hint, 'justify-self', 'stretch'); set(hint, 'box-sizing', 'border-box');
+          set(hint, 'min-height', '58px');
         });
       }
     });

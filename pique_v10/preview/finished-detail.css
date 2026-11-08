@@ -1,0 +1,12 @@
+#app .selected-request-card.order-completed .selected-professional-heading::after,
+#app .selected-request-card.order-completed .detail-professional-data::before,
+#app .selected-request-card.order-completed .requester-agreed-summary::before {
+  display: none !important;
+  content: none !important;
+}
+
+#app .selected-request-card.order-completed .selected-professional-heading,
+#app .selected-request-card.order-completed .detail-professional-data {
+  border-bottom: 0 !important;
+  border-top: 0 !important;
+}
