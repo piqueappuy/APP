@@ -80,9 +80,10 @@
           set(person, 'grid-column', '1 / -1');
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
+            const oneRow = width >= 1000;
             set(person, 'width', '100%');
-            set(person, 'grid-template-columns', 'max-content minmax(0,1fr) max-content');
-            set(person, 'grid-template-rows', 'auto');
+            set(person, 'grid-template-columns', oneRow ? 'max-content minmax(0,1fr) max-content' : 'max-content minmax(0,1fr)');
+            set(person, 'grid-template-rows', oneRow ? 'auto' : 'auto auto');
             set(person, 'gap', '12px');
             const identity = person.querySelector('.chosen-identity');
             const zone = person.querySelector('.chosen-provider-location');
@@ -165,10 +166,12 @@
             }
             if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
             if (profile) {
-              set(profile, 'grid-column', '3'); set(profile, 'grid-row', '1'); set(profile, 'width', 'max-content');
+              set(profile, 'grid-column', oneRow ? '3' : '1 / -1');
+              set(profile, 'grid-row', oneRow ? '1' : '2');
+              set(profile, 'width', oneRow ? 'max-content' : '100%');
               set(profile, 'align-self', 'center'); set(profile, 'white-space', 'nowrap');
               set(profile, 'min-width', '0'); set(profile, 'max-width', '100%');
-              set(profile, 'padding', '0 12px');
+              set(profile, 'padding', '0 12px'); set(profile, 'margin', '0');
               set(profile, 'font-size', '16px');
               profile.querySelectorAll('span').forEach(label => set(label, 'font-size', '16px'));
             }
@@ -241,7 +244,7 @@
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
-          ['grid-column','grid-row','width','min-width','max-width','font-size','align-self','white-space','padding'].forEach(key => button.style.removeProperty(key));
+          ['grid-column','grid-row','width','min-width','max-width','font-size','align-self','white-space','padding','margin'].forEach(key => button.style.removeProperty(key));
           button.querySelectorAll('span').forEach(label => label.style.removeProperty('font-size'));
         });
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
