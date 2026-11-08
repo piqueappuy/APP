@@ -51,7 +51,12 @@
           set(provider, 'align-items', 'center'); set(provider, 'gap', '12px');
           const identity = provider.querySelector('.detail-provider-identity');
           if (identity) { set(identity, 'grid-column', '1'); set(identity, 'align-self', 'center'); }
-          if (tags) { set(tags, 'grid-column', '2'); set(tags, 'width', '100%'); set(tags, 'min-width', '0'); }
+          if (tags) {
+            set(tags, 'grid-column', '2'); set(tags, 'display', 'flex');
+            set(tags, 'width', '100%'); set(tags, 'min-width', '0');
+            const zoneTag = tags.querySelector('.pique-meta-tag:nth-child(2)');
+            if (zoneTag) { set(zoneTag, 'width', '100%'); set(zoneTag, 'max-width', 'none'); set(zoneTag, 'flex', '1 1 auto'); set(zoneTag, 'box-sizing', 'border-box'); }
+          }
           const profile = provider.querySelector('.detail-profile-button');
           if (profile) { set(profile, 'grid-column', '3'); set(profile, 'width', 'max-content'); set(profile, 'max-width', '100%'); set(profile, 'margin', '0'); }
         }
@@ -60,7 +65,10 @@
       if (hints) {
         set(hints, 'display', 'grid'); set(hints, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
         set(hints, 'gap', '12px'); set(hints, 'width', '100%');
-        [...hints.children].forEach(hint => { set(hint, 'width', '100%'); set(hint, 'min-width', '0'); set(hint, 'box-sizing', 'border-box'); });
+        [...hints.children].forEach(hint => {
+          set(hint, 'width', '100%'); set(hint, 'min-width', '0'); set(hint, 'max-width', 'none');
+          set(hint, 'justify-self', 'stretch'); set(hint, 'box-sizing', 'border-box');
+        });
       }
     });
     document.querySelectorAll('#app .validation-meta-item, #app .pique-meta-tag.labeled-meta-tag').forEach(tag => {
