@@ -65,7 +65,7 @@
             set(person, 'width', '100%');
             set(person, 'grid-template-columns', 'minmax(0,1fr) minmax(0,1fr)');
             set(person, 'grid-template-rows', 'auto auto');
-            set(person, 'gap', '8px 16px');
+            set(person, 'gap', '12px 16px');
             const identity = person.querySelector('.chosen-identity');
             const zone = person.querySelector('.chosen-provider-location');
             const rating = person.querySelector('.chosen-rating');
@@ -78,10 +78,34 @@
               set(identity, 'gap', '10px');
               const name = identity.querySelector('.chosen-professional-name');
               if (name) { set(name, 'font-size', '17px'); set(name, 'line-height', '1.2'); }
+              let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
+              if (name && !nameBlock) {
+                nameBlock = document.createElement('div');
+                nameBlock.dataset.chosenNameBlock = '';
+                identity.insertBefore(nameBlock, name);
+                nameBlock.append(name);
+              }
+              if (nameBlock) {
+                set(nameBlock, 'display', 'flex'); set(nameBlock, 'flex-direction', 'column');
+                set(nameBlock, 'justify-content', 'center'); set(nameBlock, 'gap', '5px');
+                set(nameBlock, 'min-width', '0');
+                let ratingLine = nameBlock.querySelector('[data-chosen-rating-line]');
+                if (!ratingLine) {
+                  ratingLine = document.createElement('span');
+                  ratingLine.dataset.chosenRatingLine = '';
+                  nameBlock.append(ratingLine);
+                }
+                const score = person.querySelector('.combined-rating-score')?.textContent?.trim() || '';
+                const opinions = person.querySelector('.combined-opinions-count')?.textContent?.trim() || '';
+                ratingLine.textContent = `${score ? `★ ${score}` : ''}${score && opinions ? '  ·  ' : ''}${opinions}`;
+                set(ratingLine, 'display', 'block'); set(ratingLine, 'font-size', '12px');
+                set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1.2');
+                set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
+                identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => set(node, 'display', 'none'));
+              }
             }
             if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
-            if (rating) { set(rating, 'grid-column', '2'); set(rating, 'grid-row', '2'); set(rating, 'align-self', 'center'); }
-            if (profile) { set(profile, 'grid-column', '1'); set(profile, 'grid-row', '2'); }
+            if (profile) { set(profile, 'grid-column', '1 / -1'); set(profile, 'grid-row', '2'); set(profile, 'width', '100%'); }
             const reference = professional.closest('.order')?.querySelector('.validation-meta-item');
             if (reference) {
               const referenceStyle = getComputedStyle(reference);
@@ -92,8 +116,7 @@
               // Render clean cards using the same geometry as the tags above.
               [zone, rating].filter(Boolean).forEach(node => set(node, 'display', 'none'));
               const cards = [
-                ['zone', 'BARRIO', zone?.querySelector('.meta-value')?.textContent?.trim() || '', zone?.querySelector('svg')],
-                ['opinions', 'OPINIONES', rating?.querySelector('.combined-opinions-count')?.textContent?.trim().replace(/\s*OPINIONES\s*/i, '') || '0', rating?.querySelector('.combined-opinions-count svg')]
+                ['zone', 'BARRIO', zone?.querySelector('.meta-value')?.textContent?.trim() || '', zone?.querySelector('svg')]
               ];
               cards.forEach(([kind, labelText, valueText, sourceIcon], index) => {
                 let card = person.querySelector(`:scope > [data-chosen-card="${kind}"]`);
@@ -113,7 +136,7 @@
                 const [label, value] = copy.children;
                 label.textContent = labelText;
                 value.textContent = valueText;
-                set(card, 'grid-column', '2'); set(card, 'grid-row', String(index + 1));
+                set(card, 'grid-column', '2'); set(card, 'grid-row', '1');
                 set(card, 'display', 'grid'); set(card, 'grid-template-columns', '40px minmax(0,1fr)');
                 set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', tagHeight);
                 ['background','border','border-radius','box-shadow'].forEach(key => set(card, key, referenceStyle.getPropertyValue(key)));
@@ -139,6 +162,16 @@
       } else {
         professional.querySelectorAll('[data-chosen-card]').forEach(card => card.remove());
         professional.querySelectorAll('.chosen-provider-location,.chosen-rating').forEach(node => node.style.removeProperty('display'));
+        professional.querySelectorAll('[data-chosen-name-block]').forEach(block => {
+          const identity = block.parentElement;
+          const name = block.querySelector('.chosen-professional-name');
+          if (name) identity.insertBefore(name, block);
+          block.remove();
+          identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
+        });
+        professional.querySelectorAll('.professional-profile-button').forEach(button => {
+          ['grid-column','grid-row','width'].forEach(key => button.style.removeProperty(key));
+        });
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
         professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => {node.style.removeProperty('grid-column');node.style.removeProperty('grid-row');});
         ['grid-column','grid-row','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
