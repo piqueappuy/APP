@@ -24,6 +24,24 @@
       set(button, 'padding', desktop ? '10px 18px' : tablet ? '9px 14px' : '8px 12px');
     });
 
+    document.querySelectorAll('#app .requester-agreed-summary .validation-hint-track').forEach(track => set(track, 'display', 'none'));
+    document.querySelectorAll('#app .validation-meta-item, #app .pique-meta-tag.labeled-meta-tag').forEach(tag => {
+      if (tag.querySelector('.meta-label')?.textContent.trim().toUpperCase() !== 'CREADO') return;
+      const date = tag.querySelector('.meta-date');
+      const time = tag.querySelector('.meta-time');
+      if (!date || !time) return;
+      let divider = tag.querySelector('[data-created-divider]');
+      if (!divider) {
+        divider = document.createElement('span');
+        divider.dataset.createdDivider = '';
+        divider.setAttribute('aria-hidden', 'true');
+        divider.textContent = '|';
+        time.before(divider);
+      }
+      set(divider, 'display', getComputedStyle(time).display === 'none' ? 'none' : 'inline');
+      set(divider, 'margin', '0 5px');
+    });
+
     if (desktop) {
       document.querySelectorAll('#app .completion-details-button > span').forEach(label => set(label, 'font-size', '16px'));
       document.querySelectorAll('#app .requester-home-section.requester-search-section .requester-photo-card').forEach(card => {
@@ -93,21 +111,47 @@
                 if (!ratingLine) {
                   ratingLine = document.createElement('span');
                   ratingLine.dataset.chosenRatingLine = '';
-                  const sourceIcon = person.querySelector('.combined-opinions-count svg');
-                  if (sourceIcon) ratingLine.append(sourceIcon.cloneNode(true));
-                  ratingLine.append(document.createElement('span'));
+                  const scoreGroup = document.createElement('span');
+                  scoreGroup.dataset.chosenScore = '';
+                  const scoreIcon = person.querySelector('.combined-rating-score svg');
+                  if (scoreIcon) scoreGroup.append(scoreIcon.cloneNode(true));
+                  scoreGroup.append(document.createElement('span'));
+                  const divider = document.createElement('span');
+                  divider.dataset.chosenDivider = '';
+                  divider.setAttribute('aria-hidden', 'true');
+                  const opinionsGroup = document.createElement('span');
+                  opinionsGroup.dataset.chosenOpinions = '';
+                  const opinionsIcon = person.querySelector('.combined-opinions-count svg');
+                  if (opinionsIcon) opinionsGroup.append(opinionsIcon.cloneNode(true));
+                  opinionsGroup.append(document.createElement('span'));
+                  ratingLine.append(scoreGroup, divider, opinionsGroup);
                   nameBlock.append(ratingLine);
                 }
+                const score = person.querySelector('.combined-rating-score')?.textContent?.trim() || '';
                 const opinions = person.querySelector('.combined-opinions-count')?.textContent?.trim() || '';
-                ratingLine.querySelector('span').textContent = opinions;
+                const scoreGroup = ratingLine.querySelector('[data-chosen-score]');
+                const opinionsGroup = ratingLine.querySelector('[data-chosen-opinions]');
+                const divider = ratingLine.querySelector('[data-chosen-divider]');
+                scoreGroup.querySelector('span').textContent = score;
+                opinionsGroup.querySelector('span').textContent = opinions;
                 set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
-                set(ratingLine, 'gap', '4px'); set(ratingLine, 'font-size', '12px');
+                set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', '12px');
                 set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1.2');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
-                const opinionsIcon = ratingLine.querySelector('svg');
-                if (opinionsIcon) { set(opinionsIcon, 'display', 'block'); set(opinionsIcon, 'width', '12px'); set(opinionsIcon, 'height', '12px'); set(opinionsIcon, 'fill', 'none'); set(opinionsIcon, 'stroke', 'currentColor'); }
+                [scoreGroup, opinionsGroup].forEach(group => {
+                  set(group, 'display', 'inline-flex'); set(group, 'align-items', 'center'); set(group, 'gap', '4px');
+                  const icon = group.querySelector('svg');
+                  if (icon) { set(icon, 'display', 'block'); set(icon, 'width', '12px'); set(icon, 'height', '12px'); }
+                });
+                const star = scoreGroup.querySelector('svg');
+                if (star) { set(star, 'fill', '#ffd05a'); set(star, 'stroke', '#ffd05a'); }
+                const message = opinionsGroup.querySelector('svg');
+                if (message) { set(message, 'fill', 'none'); set(message, 'stroke', 'currentColor'); }
+                set(scoreGroup, 'display', score ? 'inline-flex' : 'none');
+                set(divider, 'display', score ? 'block' : 'none'); set(divider, 'height', '13px');
+                set(divider, 'border-left', '1px solid rgba(215,232,255,.7)');
                 const adjacentScore = identity.querySelector('.name-adjacent-rating');
-                if (adjacentScore) set(adjacentScore, 'display', 'inline-flex');
+                if (adjacentScore) set(adjacentScore, 'display', 'none');
                 identity.querySelectorAll('.chosen-inline-score').forEach(node => set(node, 'display', 'none'));
               }
             }
@@ -127,7 +171,7 @@
               // Render clean cards using the same geometry as the tags above.
               [zone, rating].filter(Boolean).forEach(node => set(node, 'display', 'none'));
               const cards = [
-                ['zone', 'BARRIO', zone?.querySelector('.meta-value')?.textContent?.trim() || '', zone?.querySelector('svg')]
+                ['zone', 'ZONA', zone?.querySelector('.meta-value')?.textContent?.trim() || '', zone?.querySelector('svg')]
               ];
               cards.forEach(([kind, labelText, valueText, sourceIcon], index) => {
                 let card = person.querySelector(`:scope > [data-chosen-card="${kind}"]`);
