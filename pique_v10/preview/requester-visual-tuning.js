@@ -81,9 +81,9 @@
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
             set(person, 'width', '100%');
-            set(person, 'grid-template-columns', 'minmax(0,1fr) minmax(0,1fr)');
+            set(person, 'grid-template-columns', 'max-content minmax(0,1fr)');
             set(person, 'grid-template-rows', 'auto auto');
-            set(person, 'gap', '12px 16px');
+            set(person, 'gap', '12px');
             const identity = person.querySelector('.chosen-identity');
             const zone = person.querySelector('.chosen-provider-location');
             const rating = person.querySelector('.chosen-rating');
@@ -194,6 +194,8 @@
                 set(card, 'grid-column', '2'); set(card, 'grid-row', '1');
                 set(card, 'display', 'grid'); set(card, 'grid-template-columns', '40px minmax(0,1fr)');
                 set(card, 'box-sizing', 'border-box'); set(card, 'width', '100%'); set(card, 'height', tagHeight);
+                set(card, 'max-width', `${reference.getBoundingClientRect().width}px`);
+                set(card, 'justify-self', 'start');
                 ['background','border','border-radius','box-shadow'].forEach(key => set(card, key, referenceStyle.getPropertyValue(key)));
                 set(iconCell, 'display', 'grid'); set(iconCell, 'place-items', 'center');
                 set(iconCell, 'height', '100%'); set(iconCell, 'border-right', '1px solid rgba(215,232,255,.65)');
