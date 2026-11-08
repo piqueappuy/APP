@@ -98,12 +98,14 @@
               set(identity, 'column-gap', '10px');
               set(identity, 'row-gap', '3px');
               set(identity, 'height', '32px'); set(identity, 'min-height', '32px'); set(identity, 'max-height', '32px');
+              set(identity, 'padding', '0');
               set(identity, 'align-items', 'center');
               set(identity, 'align-self', 'center');
               const avatar = identity.querySelector('.avatar');
               if (avatar) {
                 set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1 / 3');
                 set(avatar, 'width', '32px'); set(avatar, 'height', '32px'); set(avatar, 'align-self', 'center');
+                set(avatar, 'min-width', '0'); set(avatar, 'min-height', '0');
               }
               const name = identity.querySelector('.chosen-professional-name');
               if (name) {
@@ -253,8 +255,8 @@
           const name = block.querySelector('.chosen-professional-name');
           if (name) identity.insertBefore(name, block);
           block.remove();
-          ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self','height','min-height','max-height'].forEach(key => identity.style.removeProperty(key));
-          ['grid-column','grid-row','align-self','width','height'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
+          ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self','height','min-height','max-height','padding'].forEach(key => identity.style.removeProperty(key));
+          ['grid-column','grid-row','align-self','width','height','min-width','min-height'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
           ['grid-column','grid-row','align-self','font-size','line-height','height','min-height','margin','padding'].forEach(key => name?.style.removeProperty(key));
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
