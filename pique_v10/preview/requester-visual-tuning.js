@@ -56,11 +56,12 @@
         if (trade) set(trade, 'display', 'none');
         if (desktop && width >= 1000) {
           set(provider, 'display', 'grid'); set(provider, 'grid-template-columns', 'max-content minmax(0,1fr) max-content');
+          set(provider, 'grid-template-areas', 'none'); set(provider, 'grid-template-rows', 'auto');
           set(provider, 'align-items', 'center'); set(provider, 'gap', '12px');
           const identity = provider.querySelector('.detail-provider-identity');
-          if (identity) { set(identity, 'grid-column', '1'); set(identity, 'align-self', 'center'); }
+          if (identity) { set(identity, 'grid-column', '1'); set(identity, 'grid-row', '1'); set(identity, 'align-self', 'center'); }
           if (tags) {
-            set(tags, 'grid-column', '2'); set(tags, 'display', 'flex');
+            set(tags, 'grid-column', '2'); set(tags, 'grid-row', '1'); set(tags, 'display', 'flex');
             set(tags, 'width', '100%'); set(tags, 'min-width', '0');
             const zoneTag = tags.querySelector('.pique-meta-tag:nth-child(2)');
             if (zoneTag) {
@@ -72,7 +73,7 @@
             }
           }
           const profile = provider.querySelector('.detail-profile-button');
-          if (profile) { set(profile, 'grid-column', '3'); set(profile, 'width', 'max-content'); set(profile, 'max-width', '100%'); set(profile, 'margin', '0'); }
+          if (profile) { set(profile, 'grid-column', '3'); set(profile, 'grid-row', '1'); set(profile, 'width', 'max-content'); set(profile, 'max-width', '100%'); set(profile, 'margin', '0'); }
         }
       }
       const hints = card.querySelector('.selected-professional-section .requester-agreed-summary');
