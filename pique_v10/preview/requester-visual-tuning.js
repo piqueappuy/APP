@@ -64,7 +64,7 @@
       const summary = professional.querySelector(':scope > .requester-agreed-summary');
       if (!summary) return;
       if (desktop) {
-        // Keep the professional in the first column; give only the hints a full-width row below.
+        // Keep the provider actions in one row and the agreed hints below.
         if (summary.parentElement !== professional) professional.append(summary);
         set(professional, 'display', 'grid');
         set(professional, 'grid-template-columns', 'repeat(2,minmax(0,1fr))');
@@ -81,8 +81,8 @@
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
             set(person, 'width', '100%');
-            set(person, 'grid-template-columns', 'max-content minmax(0,1fr)');
-            set(person, 'grid-template-rows', 'auto auto');
+            set(person, 'grid-template-columns', 'max-content minmax(0,1fr) max-content');
+            set(person, 'grid-template-rows', 'auto');
             set(person, 'gap', '12px');
             const identity = person.querySelector('.chosen-identity');
             const zone = person.querySelector('.chosen-provider-location');
@@ -91,11 +91,20 @@
             if (identity) {
               set(identity, 'grid-column', '1');
               set(identity, 'grid-row', '1');
-              set(identity, 'display', 'flex');
+              set(identity, 'display', 'grid');
+              set(identity, 'grid-template-columns', '32px max-content');
+              set(identity, 'grid-template-rows', '32px 16px');
+              set(identity, 'column-gap', '10px');
+              set(identity, 'row-gap', '2px');
               set(identity, 'align-items', 'center');
-              set(identity, 'gap', '10px');
+              set(identity, 'align-self', 'center');
+              const avatar = identity.querySelector('.avatar');
+              if (avatar) { set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1'); set(avatar, 'align-self', 'center'); }
               const name = identity.querySelector('.chosen-professional-name');
-              if (name) { set(name, 'font-size', '17px'); set(name, 'line-height', '1.2'); }
+              if (name) {
+                set(name, 'font-size', '17px'); set(name, 'line-height', '1.2');
+                set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'center');
+              }
               let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
               if (name && !nameBlock) {
                 nameBlock = document.createElement('div');
@@ -104,9 +113,7 @@
                 nameBlock.append(name);
               }
               if (nameBlock) {
-                set(nameBlock, 'display', 'flex'); set(nameBlock, 'flex-direction', 'column');
-                set(nameBlock, 'justify-content', 'center'); set(nameBlock, 'gap', '5px');
-                set(nameBlock, 'min-width', '0');
+                set(nameBlock, 'display', 'contents');
                 let ratingLine = nameBlock.querySelector('[data-chosen-rating-line]');
                 if (!ratingLine) {
                   ratingLine = document.createElement('span');
@@ -135,6 +142,7 @@
                 scoreGroup.querySelector('span').textContent = score;
                 opinionsGroup.querySelector('span').textContent = opinions;
                 set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
+                set(ratingLine, 'grid-column', '2'); set(ratingLine, 'grid-row', '2');
                 set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', '12px');
                 set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1.2');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
@@ -157,7 +165,10 @@
             }
             if (zone) { set(zone, 'grid-column', '2'); set(zone, 'grid-row', '1'); set(zone, 'align-self', 'center'); }
             if (profile) {
-              set(profile, 'grid-column', '1 / -1'); set(profile, 'grid-row', '2'); set(profile, 'width', '100%');
+              set(profile, 'grid-column', '3'); set(profile, 'grid-row', '1'); set(profile, 'width', 'max-content');
+              set(profile, 'align-self', 'center'); set(profile, 'white-space', 'nowrap');
+              set(profile, 'min-width', '0'); set(profile, 'max-width', '100%');
+              set(profile, 'padding', '0 12px');
               set(profile, 'font-size', '16px');
               profile.querySelectorAll('span').forEach(label => set(label, 'font-size', '16px'));
             }
@@ -224,14 +235,18 @@
           const name = block.querySelector('.chosen-professional-name');
           if (name) identity.insertBefore(name, block);
           block.remove();
+          ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self'].forEach(key => identity.style.removeProperty(key));
+          ['grid-column','grid-row','align-self'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
+          ['grid-column','grid-row','align-self'].forEach(key => name?.style.removeProperty(key));
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
-          ['grid-column','grid-row','width','font-size'].forEach(key => button.style.removeProperty(key));
+          ['grid-column','grid-row','width','min-width','max-width','font-size','align-self','white-space','padding'].forEach(key => button.style.removeProperty(key));
           button.querySelectorAll('span').forEach(label => label.style.removeProperty('font-size'));
         });
         ['display','grid-template-columns','grid-template-rows','column-gap','row-gap'].forEach(key => professional.style.removeProperty(key));
         professional.querySelectorAll(':scope > .coordination-professional-heading,:scope > .professional-caption,:scope > .chosen-person,:scope > .detail-professional-data').forEach(node => {node.style.removeProperty('grid-column');node.style.removeProperty('grid-row');});
+        professional.querySelectorAll(':scope > .chosen-person').forEach(node => {['width','grid-template-columns','grid-template-rows','gap'].forEach(key => node.style.removeProperty(key));});
         ['grid-column','grid-row','width','display','grid-template-columns','gap'].forEach(key => summary.style.removeProperty(key));
       }
     });
