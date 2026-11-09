@@ -177,10 +177,11 @@
               }
               const name = identity.querySelector('.chosen-professional-name');
               if (name) {
-                set(name, 'font-size', '17px'); set(name, 'line-height', '17px');
-                set(name, 'height', '17px'); set(name, 'min-height', '0');
+                set(name, 'font-size', '17px'); set(name, 'line-height', '1');
+                set(name, 'display', 'flex'); set(name, 'align-items', 'center');
+                set(name, 'height', '32px'); set(name, 'min-height', '32px'); set(name, 'max-height', '32px');
                 set(name, 'margin', '0'); set(name, 'padding', '0');
-                set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'center');
+                set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'stretch');
               }
               let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
               if (name && !nameBlock) {
@@ -222,7 +223,7 @@
                 set(ratingLine, 'grid-column', '3'); set(ratingLine, 'grid-row', '1');
                 set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', '12px');
                 set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '12px');
-                set(ratingLine, 'height', '12px'); set(ratingLine, 'min-height', '0');
+                set(ratingLine, 'height', '32px'); set(ratingLine, 'min-height', '32px'); set(ratingLine, 'max-height', '32px');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
                 [scoreGroup, opinionsGroup].forEach(group => {
                   set(group, 'display', 'inline-flex'); set(group, 'align-items', 'center'); set(group, 'gap', '4px');
@@ -325,7 +326,7 @@
           block.remove();
           ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self','height','min-height','max-height','padding'].forEach(key => identity.style.removeProperty(key));
           ['grid-column','grid-row','align-self','width','height','min-width','min-height'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
-          ['grid-column','grid-row','align-self','font-size','line-height','height','min-height','margin','padding'].forEach(key => name?.style.removeProperty(key));
+          ['grid-column','grid-row','align-self','font-size','line-height','display','align-items','height','min-height','max-height','margin','padding'].forEach(key => name?.style.removeProperty(key));
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
