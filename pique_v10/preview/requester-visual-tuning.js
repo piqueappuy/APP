@@ -25,6 +25,12 @@
     });
 
     document.querySelectorAll('#app .requester-agreed-summary .validation-hint-track').forEach(track => set(track, 'display', 'none'));
+    document.querySelectorAll('#app .requester-home-section .order.order-completed.requester-report-finished .requester-agreed-summary .coordination-quote-hint').forEach(hint => {
+      set(hint, 'border', '1.5px solid rgba(196,226,255,.95)');
+      set(hint, 'border-radius', '10px');
+      hint.querySelectorAll('.summary-caption-group br').forEach(br => set(br, 'display', 'none'));
+      hint.querySelectorAll('.summary-caption-group > span').forEach(label => set(label, 'white-space', 'nowrap'));
+    });
     document.querySelectorAll('#app .selected-request-card.order-completed').forEach(card => {
       const panel = card.querySelector('.coordination-panel.finished-report-panel');
       if (!panel) return;
@@ -142,7 +148,7 @@
           set(person, 'grid-column', '1 / -1');
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
-            const oneRow = width >= 1000;
+            const oneRow = width >= 1240;
             set(person, 'width', '100%');
             set(person, 'grid-template-columns', oneRow ? 'max-content minmax(0,1fr) max-content' : 'max-content minmax(0,1fr)');
             set(person, 'grid-template-rows', oneRow ? 'auto' : 'auto auto');
@@ -155,17 +161,17 @@
               set(identity, 'grid-column', '1');
               set(identity, 'grid-row', '1');
               set(identity, 'display', 'grid');
-              set(identity, 'grid-template-columns', '32px max-content');
-              set(identity, 'grid-template-rows', '17px 12px');
+              set(identity, 'grid-template-columns', '32px max-content max-content');
+              set(identity, 'grid-template-rows', '32px');
               set(identity, 'column-gap', '10px');
-              set(identity, 'row-gap', '3px');
+              set(identity, 'row-gap', '0');
               set(identity, 'height', '32px'); set(identity, 'min-height', '32px'); set(identity, 'max-height', '32px');
               set(identity, 'padding', '0');
               set(identity, 'align-items', 'center');
               set(identity, 'align-self', 'center');
               const avatar = identity.querySelector('.avatar');
               if (avatar) {
-                set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1 / 3');
+                set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1');
                 set(avatar, 'width', '32px'); set(avatar, 'height', '32px'); set(avatar, 'align-self', 'center');
                 set(avatar, 'min-width', '0'); set(avatar, 'min-height', '0');
               }
@@ -213,7 +219,7 @@
                 scoreGroup.querySelector('span').textContent = score;
                 opinionsGroup.querySelector('span').textContent = opinions;
                 set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
-                set(ratingLine, 'grid-column', '2'); set(ratingLine, 'grid-row', '2');
+                set(ratingLine, 'grid-column', '3'); set(ratingLine, 'grid-row', '1');
                 set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', '12px');
                 set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '12px');
                 set(ratingLine, 'height', '12px'); set(ratingLine, 'min-height', '0');
