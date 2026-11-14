@@ -183,6 +183,7 @@
                 set(name, 'height', '32px'); set(name, 'min-height', '32px'); set(name, 'max-height', '32px');
                 set(name, 'margin', '0'); set(name, 'padding', '0');
                 set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'stretch');
+                if (isHomeFinished) set(name, 'transform', 'translateY(6px)');
               }
               let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
               if (name && !nameBlock) {
@@ -327,7 +328,7 @@
           block.remove();
           ['display','grid-template-columns','grid-template-rows','column-gap','row-gap','align-items','align-self','height','min-height','max-height','padding'].forEach(key => identity.style.removeProperty(key));
           ['grid-column','grid-row','align-self','width','height','min-width','min-height'].forEach(key => identity.querySelector('.avatar')?.style.removeProperty(key));
-          ['grid-column','grid-row','align-self','font-size','line-height','display','align-items','height','min-height','max-height','margin','padding'].forEach(key => name?.style.removeProperty(key));
+          ['grid-column','grid-row','align-self','font-size','line-height','display','align-items','height','min-height','max-height','margin','padding','transform'].forEach(key => name?.style.removeProperty(key));
           identity.querySelectorAll('.name-adjacent-rating,.chosen-inline-score').forEach(node => node.style.removeProperty('display'));
         });
         professional.querySelectorAll('.professional-profile-button').forEach(button => {
