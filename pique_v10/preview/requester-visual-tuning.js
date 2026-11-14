@@ -149,7 +149,7 @@
           set(person, 'grid-row', '2');
           if (person.classList.contains('chosen-person')) {
             const isHomeFinished = !!professional.closest('.requester-report-finished');
-            const oneRow = width >= (isHomeFinished ? 1400 : 1240);
+            const oneRow = width >= 1240;
             set(person, 'width', '100%');
             set(person, 'grid-template-columns', oneRow ? 'max-content minmax(0,1fr) max-content' : 'max-content minmax(0,1fr)');
             set(person, 'grid-template-rows', oneRow ? 'auto' : 'auto auto');
@@ -162,28 +162,28 @@
               set(identity, 'grid-column', '1');
               set(identity, 'grid-row', '1');
               set(identity, 'display', 'grid');
-              set(identity, 'grid-template-columns', '32px max-content max-content');
-              set(identity, 'grid-template-rows', '32px');
+              set(identity, 'grid-template-columns', isHomeFinished ? '40px max-content' : '32px max-content max-content');
+              set(identity, 'grid-template-rows', isHomeFinished ? '22px 16px' : '32px');
               set(identity, 'column-gap', '10px');
-              set(identity, 'row-gap', '0');
-              set(identity, 'height', '32px'); set(identity, 'min-height', '32px'); set(identity, 'max-height', '32px');
+              set(identity, 'row-gap', isHomeFinished ? '2px' : '0');
+              set(identity, 'height', isHomeFinished ? '40px' : '32px'); set(identity, 'min-height', isHomeFinished ? '40px' : '32px'); set(identity, 'max-height', isHomeFinished ? '40px' : '32px');
               set(identity, 'padding', '0');
               set(identity, 'align-items', 'center');
               set(identity, 'align-self', 'center');
               const avatar = identity.querySelector('.avatar');
               if (avatar) {
-                set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', '1');
-                set(avatar, 'width', '32px'); set(avatar, 'height', '32px'); set(avatar, 'align-self', 'center');
+                set(avatar, 'grid-column', '1'); set(avatar, 'grid-row', isHomeFinished ? '1 / 3' : '1');
+                set(avatar, 'width', isHomeFinished ? '40px' : '32px'); set(avatar, 'height', isHomeFinished ? '40px' : '32px'); set(avatar, 'align-self', 'center');
                 set(avatar, 'min-width', '0'); set(avatar, 'min-height', '0');
               }
               const name = identity.querySelector('.chosen-professional-name');
               if (name) {
-                set(name, 'font-size', isHomeFinished ? '21px' : '17px'); set(name, 'line-height', '1');
-                set(name, 'display', 'flex'); set(name, 'align-items', 'center');
-                set(name, 'height', '32px'); set(name, 'min-height', '32px'); set(name, 'max-height', '32px');
+                set(name, 'font-size', isHomeFinished ? '18px' : '17px'); set(name, 'line-height', isHomeFinished ? '22px' : '1');
+                set(name, 'display', isHomeFinished ? 'block' : 'flex'); set(name, 'align-items', 'center');
+                set(name, 'height', isHomeFinished ? '22px' : '32px'); set(name, 'min-height', isHomeFinished ? '22px' : '32px'); set(name, 'max-height', isHomeFinished ? '22px' : '32px');
                 set(name, 'margin', '0'); set(name, 'padding', '0');
                 set(name, 'grid-column', '2'); set(name, 'grid-row', '1'); set(name, 'align-self', 'stretch');
-                if (isHomeFinished) set(name, 'transform', 'translateY(6px)');
+                if (isHomeFinished) name.style.removeProperty('transform');
               }
               let nameBlock = identity.querySelector(':scope > [data-chosen-name-block]');
               if (name && !nameBlock) {
@@ -222,22 +222,22 @@
                 scoreGroup.querySelector('span').textContent = score;
                 opinionsGroup.querySelector('span').textContent = opinions;
                 set(ratingLine, 'display', 'inline-flex'); set(ratingLine, 'align-items', 'center');
-                set(ratingLine, 'grid-column', '3'); set(ratingLine, 'grid-row', '1');
-                set(ratingLine, 'gap', '8px'); set(ratingLine, 'font-size', isHomeFinished ? '21px' : '12px');
-                set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', '1');
-                set(ratingLine, 'height', '32px'); set(ratingLine, 'min-height', '32px'); set(ratingLine, 'max-height', '32px');
+                set(ratingLine, 'grid-column', isHomeFinished ? '2' : '3'); set(ratingLine, 'grid-row', isHomeFinished ? '2' : '1');
+                set(ratingLine, 'gap', isHomeFinished ? '6px' : '8px'); set(ratingLine, 'font-size', isHomeFinished ? '13px' : '12px');
+                set(ratingLine, 'font-weight', '700'); set(ratingLine, 'line-height', isHomeFinished ? '16px' : '1');
+                set(ratingLine, 'height', isHomeFinished ? '16px' : '32px'); set(ratingLine, 'min-height', isHomeFinished ? '16px' : '32px'); set(ratingLine, 'max-height', isHomeFinished ? '16px' : '32px');
                 set(ratingLine, 'color', '#e5f2ff'); set(ratingLine, 'white-space', 'nowrap');
                 [scoreGroup, opinionsGroup].forEach(group => {
                   set(group, 'display', 'inline-flex'); set(group, 'align-items', 'center'); set(group, 'gap', '4px');
                   const icon = group.querySelector('svg');
-                  if (icon) { set(icon, 'display', 'block'); set(icon, 'width', isHomeFinished ? '18px' : '12px'); set(icon, 'height', isHomeFinished ? '18px' : '12px'); }
+                  if (icon) { set(icon, 'display', 'block'); set(icon, 'width', '12px'); set(icon, 'height', '12px'); }
                 });
                 const star = scoreGroup.querySelector('svg');
                 if (star) { set(star, 'fill', '#ffd05a'); set(star, 'stroke', '#ffd05a'); }
                 const message = opinionsGroup.querySelector('svg');
                 if (message) { set(message, 'fill', 'none'); set(message, 'stroke', 'currentColor'); }
                 set(scoreGroup, 'display', score ? 'inline-flex' : 'none');
-                set(divider, 'display', score ? 'block' : 'none'); set(divider, 'height', isHomeFinished ? '18px' : '12px');
+                set(divider, 'display', score ? 'block' : 'none'); set(divider, 'height', '12px');
                 set(divider, 'border-left', '1px solid rgba(215,232,255,.7)');
                 const adjacentScore = identity.querySelector('.name-adjacent-rating');
                 if (adjacentScore) set(adjacentScore, 'display', 'none');
